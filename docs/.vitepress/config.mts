@@ -22,7 +22,7 @@ export default defineConfig({
       ],
     },
     socialLinks: [
-      { icon: 'github', link: 'https://github.com' },
+      { icon: 'github', link: 'https://github.com/AxelWT/my-vitepress-blog' },
     ],
   },
 })
