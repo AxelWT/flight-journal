@@ -17,6 +17,7 @@ export default defineConfig({
             items: [
             { text: '快速开始', link: '/guide/getting-started' },
             { text: 'VitePress 使用指南', link: '/guide/vitepress-guide' },
+            { text: '写作与部署教程', link: '/guide/workflow' },
           ],
         },
       ],
