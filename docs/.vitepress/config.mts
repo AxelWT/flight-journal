@@ -11,7 +11,7 @@ export default defineConfig({
             {text: '探索', link: '/explore/getting-started'},
             {text: '笔记', link: '/notes/getting-started'},
             {text: '读书', link: '/read/getting-started'},
-            {text: '指南', link: '/guide/getting-started'},
+            // {text: '指南', link: '/guide/getting-started'},
             {text: '介绍', link: '/about'},
         ],
         sidebar: {
@@ -28,6 +28,12 @@ export default defineConfig({
                     text: '',
                     items: [
                         {text: '快速开始', link: '/notes/getting-started'},
+                    ],
+                },
+                {
+                    text: '心得',
+                    items: [
+                        {text: '待办清单', link: '/notes/self/todo'},
                     ],
                 },
                 {
@@ -58,12 +64,6 @@ export default defineConfig({
                         {text: 'Python 语法笔记', link: '/notes/python/python-syntax-notes'},
                         {text: '爬虫指南', link: '/notes/python/scraper-guide'},
                         {text: 'Tmux 指南', link: '/notes/python/tmux-guide'},
-                    ],
-                },
-                {
-                    text: '心得',
-                    items: [
-                        {text: '待办清单', link: '/notes/self/todo'},
                     ],
                 },
                 {
@@ -138,5 +138,12 @@ export default defineConfig({
         socialLinks: [
             {icon: 'github', link: 'https://github.com/AxelWT/flight-journal'},
         ],
+        footer: {
+            message: 'Move fast and break things',
+            copyright: 'Copyright © 2026. All Rights Reserved.',
+        },
+        search: {
+            provider: 'local',
+        },
     },
 })
