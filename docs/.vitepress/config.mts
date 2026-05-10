@@ -30,9 +30,14 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '书',
+                    text: '大佬',
                     items: [
                         {text: '2026-05-10 Marc Andreessen', link: '/explore/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
+                    ],
+                },
+                {
+                    text: '书',
+                    items: [
                         {text: '2026-05-10 《思考，快与慢》', link: '/explore/book/2026-05-10-思考快与慢-Thinking-Fast-and-Slow'},
                     ],
                 },
