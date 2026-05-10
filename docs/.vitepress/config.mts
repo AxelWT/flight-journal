@@ -17,7 +17,7 @@ export default defineConfig({
         sidebar: {
             '/explore/': [
                 {
-                    text: 'AI 探索',
+                    text: '',
                     items: [
                         {text: '2026-05-10 CRDT：让多人协作"无冲突"同步的数学魔法', link: '/explore/2026-05-10-CRDT-让多人协作无冲突同步的数学魔法'},
                         {text: '2026-05-10 gRPC — 把远程调用做成"本地函数"', link: '/explore/2026-05-10-gRPC-把远程调用做成本地函数'},
