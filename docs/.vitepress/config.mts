@@ -8,12 +8,21 @@ export default defineConfig({
     themeConfig: {
         nav: [
             {text: '首页', link: '/'},
+            {text: '探索', link: '/explore/getting-started'},
             {text: '笔记', link: '/notes/getting-started'},
             {text: '读书', link: '/read/getting-started'},
             {text: '指南', link: '/guide/getting-started'},
             {text: '介绍', link: '/about'},
         ],
         sidebar: {
+            '/explore/': [
+                {
+                    text: 'AI 探索',
+                    items: [
+                        {text: '快速开始', link: '/explore/getting-started'},
+                    ],
+                },
+            ],
             '/notes/': [
                 {
                     text: '笔记',
