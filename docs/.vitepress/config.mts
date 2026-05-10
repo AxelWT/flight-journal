@@ -9,7 +9,6 @@ export default defineConfig({
         nav: [
             {text: '首页', link: '/'},
             {text: '探索', link: '/explore/getting-started'},
-            {text: '书', link: '/book/getting-started'},
             {text: '笔记', link: '/notes/getting-started'},
             {text: '读书', link: '/read/getting-started'},
             // {text: '指南', link: '/guide/getting-started'},
@@ -31,23 +30,10 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: 'Tycoon',
+                    text: '书',
                     items: [
                         {text: '2026-05-10 Marc Andreessen', link: '/explore/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
-                    ],
-                },
-            ],
-            '/book/': [
-                {
-                    text: '',
-                    items: [
-                        {text: '快速开始', link: '/book/getting-started'},
-                    ],
-                },
-                {
-                    text: '心理学',
-                    items: [
-                        {text: '2026-05-10 《思考，快与慢》', link: '/book/2026-05-10-思考快与慢-Thinking-Fast-and-Slow'},
+                        {text: '2026-05-10 《思考，快与慢》', link: '/explore/book/2026-05-10-思考快与慢-Thinking-Fast-and-Slow'},
                     ],
                 },
             ],

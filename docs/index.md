@@ -7,18 +7,18 @@ hero:
   tagline: 后端开发 · AI 探索 · 读书笔记 · 投资思考
   actions:
     - theme: brand
+      text: 探索
+      link: /explore/getting-started
+    - theme: alt
       text: 笔记
       link: /notes/getting-started
     - theme: alt
       text: 读书
       link: /read/getting-started
-    - theme: alt
-      text: 探索
-      link: /explore/getting-started
 
 features:
-  - title: 后端技术
-    details: Java、分布式系统、微服务架构、性能调优等实战经验与技术沉淀。
+  - title: 工程技术
+    details: Java、 Python、分布式系统、微服务架构、性能调优等实战经验与技术沉淀。
   - title: AI 探索
     details: LLM 微调、Agent 开发、提示词工程等 AI 领域的学习与实践记录。
   - title: 读书笔记
