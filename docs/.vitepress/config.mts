@@ -33,6 +33,10 @@ export default defineConfig({
                     text: '投资',
                     items: [
                         {text: '投资入门笔记', link: '/read/invest/invest-101'},
+                        {text: '经济学原理', link: '/read/invest/经济学原理'},
+                        {text: '原则：应对变化中的世界秩序', link: '/read/invest/原则-应对变化中的世界秩序'},
+                        {text: '富爸爸穷爸爸', link: '/read/invest/富爸爸穷爸爸'},
+                        {text: '交易心理分析', link: '/read/invest/交易心理分析'},
                     ],
                 },
                 {
