@@ -41,6 +41,7 @@ export default defineConfig({
                 {
                     text: '大咖访谈',
                     items: [
+                        {text: '2026-05-11 Marc Andreessen：从网景到a16z，硅谷活化石的AI预言', link: '/tycoon/2026-05-11-Marc-Andreessen从网景到a16z硅谷活化石的AI预言'},
                         {text: '2026-05-10 Marc Andreessen', link: '/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
                     ],
                 },
