@@ -46,9 +46,36 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '个人',
+                    text: 'Python',
+                    items: [
+                        {text: 'Asyncio 事件循环指南', link: '/notes/python/asyncio-event-loop-guide'},
+                        {text: '环境变量作用域与存储', link: '/notes/python/environment-variables-scope-storage'},
+                        {text: 'Git Worktree 指南', link: '/notes/python/git-worktree-guide'},
+                        {text: 'Monkey Patch 指南', link: '/notes/python/monkey-patch-guide'},
+                        {text: 'Psutil 系统监控', link: '/notes/python/psutil-system-monitor'},
+                        {text: 'Pydantic 指南', link: '/notes/python/pydantic-guide'},
+                        {text: 'Python 经典技巧', link: '/notes/python/python-classic-techniques'},
+                        {text: 'Python 语法笔记', link: '/notes/python/python-syntax-notes'},
+                        {text: '爬虫指南', link: '/notes/python/scraper-guide'},
+                        {text: 'Tmux 指南', link: '/notes/python/tmux-guide'},
+                    ],
+                },
+                {
+                    text: '心得',
                     items: [
                         {text: '待办清单', link: '/notes/self/todo'},
+                    ],
+                },
+                {
+                    text: 'Java',
+                    items: [
+                        {text: '网站搭建流程', link: '/notes/java/网站搭建流程'},
+                    ],
+                },
+                {
+                    text: '摄影',
+                    items: [
+                        {text: '《美国纽约摄影学院摄影教材》', link: '/notes/art/《美国纽约摄影学院摄影教材》'},
                     ],
                 },
             ],
