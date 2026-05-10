@@ -1,9 +1,5 @@
 # Learn Claude Code 项目总结
 
-本文档对 `docs/learn-claude-code` 文档目录和 `src/learn-claude-code/agents` 代码目录进行系统性总结。
-
----
-
 ## 一、核心理念：模型即 Agent
 
 ### 1.1 Agent 的本质定义
