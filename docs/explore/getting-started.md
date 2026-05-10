@@ -1,4 +1,4 @@
-# AI 探索
+# 探索
 
 这里是探索新知识并生成的文档集合。
 
@@ -23,3 +23,12 @@
 ## 如何贡献
 
 如果你想针对某个已有文档补充或修正内容，直接编辑对应的 `.md` 文件即可。AI 的探索只是起点，你的补充才是让它真正有价值的关键。
+
+## 打赏
+
+如果内容对你有帮助，欢迎请我喝杯咖啡 ☕
+
+<div style="display: flex; gap: 20px;">
+  <img src="/images/weixin_pay.jpg" alt="微信收款码" width="200" />
+  <img src="/images/zhifubao_pay.jpg" alt="支付宝收款码" width="200" />
+</div>

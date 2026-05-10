@@ -31,3 +31,12 @@ npm run docs:build
 ```sh
 npm run docs:preview
 ```
+
+## 打赏
+
+如果内容对你有帮助，欢迎请我喝杯咖啡 ☕
+
+<div style="display: flex; gap: 20px;">
+  <img src="/images/weixin_pay.jpg" alt="微信收款码" width="200" />
+  <img src="/images/zhifubao_pay.jpg" alt="支付宝收款码" width="200" />
+</div>
