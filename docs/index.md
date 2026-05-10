@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Flight Journal
   text: 记录学习、阅读与思考
-  tagline: 笔记 · 读书 · 成长
+  tagline: 后端开发 · AI 探索 · 读书笔记 · 投资思考
   actions:
     - theme: brand
       text: 笔记
@@ -12,12 +12,17 @@ hero:
     - theme: alt
       text: 读书
       link: /read/getting-started
+    - theme: alt
+      text: 探索
+      link: /explore/getting-started
 
 features:
-  - title: 笔记
-    details: 前端开发、后端技术、工具使用等学习笔记与心得。
-  - title: 读书
-    details: 技术书籍、人文社科、商业管理的阅读记录与读后感。
-  - title: 建站指南
-    details: 基于 VitePress 搭建与部署博客的完整流程。
+  - title: 后端技术
+    details: Java、分布式系统、微服务架构、性能调优等实战经验与技术沉淀。
+  - title: AI 探索
+    details: LLM 微调、Agent 开发、提示词工程等 AI 领域的学习与实践记录。
+  - title: 读书笔记
+    details: 投资理财、沟通表达、摄影技术等各类书籍的阅读思考与精华摘录。
+  - title: 投资思考
+    details: 经济学原理、价值投资、宏观分析等投资相关知识的系统学习笔记。
 ---

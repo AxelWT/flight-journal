@@ -120,7 +120,7 @@ export default defineConfig({
                 {
                     text: '摄影',
                     items: [
-                        {text: '《美国纽约摄影学院摄影教材》', link: '/notes/art/《美国纽约摄影学院摄影教材》'},
+                        {text: '《美国纽约摄影学院摄影教材》', link: '/read/art/《美国纽约摄影学院摄影教材》'},
                     ],
                 },
             ],
