@@ -81,13 +81,7 @@ export default defineConfig({
                         {text: 'MySQL 数据库', link: '/notes/java/mysql数据库'},
                         {text: '实战踩坑', link: '/notes/java/实战踩坑'},
                         {text: '项目构建工具', link: '/notes/java/项目构建工具'},
-                        {text: 'K8s 管理', link: '/notes/java/K8S管理'},
-                    ],
-                },
-                {
-                    text: '摄影',
-                    items: [
-                        {text: '《美国纽约摄影学院摄影教材》', link: '/notes/art/《美国纽约摄影学院摄影教材》'},
+                        {text: 'K8s管理', link: '/notes/java/K8S管理'},
                     ],
                 },
             ],
@@ -121,6 +115,12 @@ export default defineConfig({
                     text: '沟通',
                     items: [
                         {text: '《好好说话》', link: '/read/communication/《好好说话》'},
+                    ],
+                },
+                {
+                    text: '摄影',
+                    items: [
+                        {text: '《美国纽约摄影学院摄影教材》', link: '/notes/art/《美国纽约摄影学院摄影教材》'},
                     ],
                 },
             ],
