@@ -19,8 +19,8 @@ export default defineConfig({
                 {
                     text: 'AI 探索',
                     items: [
+                        {text: '2026-05-10 CRDT：让多人协作"无冲突"同步的数学魔法', link: '/explore/2026-05-10-CRDT-让多人协作无冲突同步的数学魔法'},
                         {text: '快速开始', link: '/explore/getting-started'},
-                        {text: 'CRDT：让多人协作"无冲突"同步的数学魔法', link: '/explore/CRDT-让多人协作无冲突同步的数学魔法'},
                     ],
                 },
             ],
