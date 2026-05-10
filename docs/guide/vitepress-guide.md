@@ -266,15 +266,15 @@ function foo() {
 ```md
 ::: code-group
 
-```npm
+```bash
 npm install vitepress
 ```
 
-```yarn
+```bash
 yarn add vitepress
 ```
 
-```pnpm
+```bash
 pnpm add -D vitepress
 ```
 

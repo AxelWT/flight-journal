@@ -15,6 +15,9 @@ hero:
     - theme: alt
       text: 读书
       link: /read/getting-started
+    - theme: alt
+      text: 介绍
+      link: /about
 
 features:
   - title: 工程技术
