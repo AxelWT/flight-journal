@@ -4,7 +4,7 @@ export default defineConfig({
     lang: 'zh-CN',
     title: '我的博客',
     description: '基于 VitePress 的个人博客',
-    base: '/my-vitepress-blog/',
+    base: '/flight-journal/',
     themeConfig: {
         nav: [
             {text: '首页', link: '/'},
@@ -54,7 +54,7 @@ export default defineConfig({
             ],
         },
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/AxelWT/my-vitepress-blog'},
+            {icon: 'github', link: 'https://github.com/AxelWT/flight-journal'},
         ],
     },
 })

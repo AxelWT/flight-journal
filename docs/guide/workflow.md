@@ -249,7 +249,7 @@ git push
 
 ### 4.3 查看部署进度
 
-1. 打开 `https://github.com/AxelWT/my-vitepress-blog/actions`
+1. 打开 `https://github.com/AxelWT/flight-journal/actions`
 2. 可以看到最新的工作流运行记录
 3. 点击进入可查看每一步的日志
 
@@ -257,7 +257,7 @@ git push
 
 ### 4.4 部署完成
 
-通常 1-2 分钟后部署完成，访问 **https://axelwt.github.io/my-vitepress-blog/** 即可看到更新。
+通常 1-2 分钟后部署完成，访问 **https://axelwt.github.io/flight-journal/** 即可看到更新。
 
 ---
 
@@ -298,7 +298,7 @@ git push
 
 ### 本地预览正常但线上样式错乱？
 
-确认 `config.mts` 中 `base` 设置为 `/my-vitepress-blog/`。缺少此配置会导致资源路径错误。
+确认 `config.mts` 中 `base` 设置为 `/flight-journal/`。缺少此配置会导致资源路径错误。
 
 ### 想撤销刚推送的内容？
 
