@@ -9,6 +9,7 @@ export default defineConfig({
         nav: [
             {text: '首页', link: '/'},
             {text: '探索', link: '/explore/getting-started'},
+            {text: '大咖', link: '/tycoon/getting-started'},
             {text: '笔记', link: '/notes/getting-started'},
             {text: '读书', link: '/read/getting-started'},
             // {text: '指南', link: '/guide/getting-started'},
@@ -27,6 +28,20 @@ export default defineConfig({
                     items: [
                         {text: '2026-05-10-CRDT：让多人协作"无冲突"同步的数学魔法', link: '/explore/tech/2026-05-10-CRDT-让多人协作无冲突同步的数学魔法'},
                         {text: '2026-05-10-gRPC — 把远程调用做成"本地函数"', link: '/explore/tech/2026-05-10-gRPC-把远程调用做成本地函数'},
+                    ],
+                },
+            ],
+            '/tycoon/': [
+                {
+                    text: '',
+                    items: [
+                        {text: '快速开始', link: '/tycoon/getting-started'},
+                    ],
+                },
+                {
+                    text: '大咖访谈',
+                    items: [
+                        {text: '2026-05-10 Marc Andreessen', link: '/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
                     ],
                 },
             ],
