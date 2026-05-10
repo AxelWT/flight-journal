@@ -9,7 +9,6 @@ export default defineConfig({
         nav: [
             {text: '首页', link: '/'},
             {text: '探索', link: '/explore/getting-started'},
-            {text: '大咖', link: '/explore/tycoon'},
             {text: '笔记', link: '/notes/getting-started'},
             {text: '读书', link: '/read/getting-started'},
             // {text: '指南', link: '/guide/getting-started'},
@@ -33,7 +32,6 @@ export default defineConfig({
                 {
                     text: 'Tycoon',
                     items: [
-                        {text: '2026-05-11 Marc Andreessen：从网景到a16z，硅谷活化石的AI预言', link: '/explore/tycoon/2026-05-11-Marc-Andreessen从网景到a16z硅谷活化石的AI预言'},
                         {text: '2026-05-10 Marc Andreessen', link: '/explore/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
                     ],
                 },
