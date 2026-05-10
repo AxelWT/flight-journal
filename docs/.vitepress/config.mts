@@ -2,7 +2,7 @@ import {defineConfig} from 'vitepress'
 
 export default defineConfig({
     lang: 'zh-CN',
-    title: '我的博客',
+    title: 'Flight Journal',
     description: '基于 VitePress 的个人博客',
     base: '/flight-journal/',
     themeConfig: {
