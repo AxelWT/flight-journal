@@ -1,19 +1,5 @@
 # 数据处理
 
-## 目录
-
-- [5.DATASETS 库](#5datasets-库)
-  - [1.数据加载](#1数据加载)
-  - [2.数据切片](#2数据切片)
-  - [3.大数据处理](#3大数据处理)
-  - [4.创建自己的数据集](#4创建自己的数据集)
-  - [5.使用 FAISS 进行语义搜索](#5使用-faiss-进行语义搜索)
-    - [什么是 Embedding？](#什么是-embedding)
-    - [为什么是 768 维 Embedding？](#为什么是-768-维-embedding)
-    - [Embedding 与 RAG 的联系](#embedding-与-rag-的联系)
-    - [Agentic RAG（Agent 风格 RAG）](#agentic-ragagent-风格-rag)
-    - [检索文档过长超出上下文的解决方案](#检索文档过长超出上下文的解决方案)
-
 ---
 
 ## 5.DATASETS 库
