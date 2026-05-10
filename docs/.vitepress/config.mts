@@ -25,9 +25,30 @@ export default defineConfig({
             ],
             '/notes/': [
                 {
-                    text: '笔记',
+                    text: '',
                     items: [
                         {text: '快速开始', link: '/notes/getting-started'},
+                    ],
+                },
+                {
+                    text: 'Agent',
+                    items: [
+                        {text: 'Learn Claude Code 项目总结', link: '/notes/agent/learn-claude-code项目总结'},
+                    ],
+                },
+                {
+                    text: 'LLM',
+                    items: [
+                        {text: '微调课程 Part 1：微调基础', link: '/notes/llm/llm-course-part-1-fine-tuning'},
+                        {text: '微调课程 Part 2：数据处理', link: '/notes/llm/llm-course-part-2-data-processing'},
+                        {text: '微调课程 Part 3：分词器', link: '/notes/llm/llm-course-part-3-tokenizers'},
+                        {text: '微调课程总结', link: '/notes/llm/llm-course微调课程总结'},
+                    ],
+                },
+                {
+                    text: '个人',
+                    items: [
+                        {text: '待办清单', link: '/notes/self/todo'},
                     ],
                 },
             ],
