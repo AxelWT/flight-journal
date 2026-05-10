@@ -2,22 +2,22 @@
 layout: home
 
 hero:
-  name: 我的博客
-  text: 基于 VitePress 的静态站点
-  tagline: 简洁、快速、优雅
+  name: Flight Journal
+  text: 记录学习、阅读与思考
+  tagline: 笔记 · 读书 · 成长
   actions:
     - theme: brand
-      text: 快速开始
-      link: /guide/getting-started
+      text: 笔记
+      link: /notes/getting-started
     - theme: alt
-      text: GitHub
-      link: https://github.com
+      text: 读书
+      link: /read/getting-started
 
 features:
-  - title: 简洁
-    details: 基于 Markdown 编写内容，专注于写作本身。
-  - title: 快速
-    details: 由 Vite 驱动，即时热更新， 极速构建。
-  - title: 优雅
-    details: 开箱即用的美观主题，支持自定义样式。
+  - title: 笔记
+    details: 前端开发、后端技术、工具使用等学习笔记与心得。
+  - title: 读书
+    details: 技术书籍、人文社科、商业管理的阅读记录与读后感。
+  - title: 建站指南
+    details: 基于 VitePress 搭建与部署博客的完整流程。
 ---
