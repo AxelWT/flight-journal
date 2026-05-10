@@ -70,6 +70,18 @@ export default defineConfig({
                     text: 'Java',
                     items: [
                         {text: '网站搭建流程', link: '/notes/java/网站搭建流程'},
+                        {text: '加解密服务', link: '/notes/java/加解密服务'},
+                        {text: 'Java 服务调优', link: '/notes/java/Java服务调优'},
+                        {text: 'JVM 分析工具', link: '/notes/java/JVM分析工具'},
+                        {text: 'APM 工具', link: '/notes/java/APM工具'},
+                        {text: 'Dubbo 框架', link: '/notes/java/Dubbo框架'},
+                        {text: '服务限流组件', link: '/notes/java/服务限流组件'},
+                        {text: 'Redis 缓存数据库', link: '/notes/java/Redis缓存数据库'},
+                        {text: 'Kafka 消息队列', link: '/notes/java/kafka消息队列'},
+                        {text: 'MySQL 数据库', link: '/notes/java/mysql数据库'},
+                        {text: '实战踩坑', link: '/notes/java/实战踩坑'},
+                        {text: '项目构建工具', link: '/notes/java/项目构建工具'},
+                        {text: 'K8s 管理', link: '/notes/java/K8S管理'},
                     ],
                 },
                 {
