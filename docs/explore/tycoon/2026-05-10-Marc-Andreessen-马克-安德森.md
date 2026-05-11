@@ -1,4 +1,5 @@
 ---
+title: Marc Andreessen：互联网的先知与冒险家
 date: 2026-05-10
 source: Marc Andreessen 2026 AMA 访谈
 ---

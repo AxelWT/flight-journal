@@ -1,10 +1,15 @@
-import {defineConfig} from 'vitepress'
+import {defineConfig, createContentLoader} from 'vitepress'
+import {writeFileSync} from 'node:fs'
+import {resolve} from 'node:path'
 
 export default defineConfig({
     lang: 'zh-CN',
     title: 'Flight Journal',
     description: '基于 VitePress 的个人博客',
     base: '/flight-journal/',
+    head: [
+        ['link', {rel: 'alternate', type: 'application/rss+xml', title: 'Flight Journal RSS', href: '/flight-journal/feed.xml'}],
+    ],
     themeConfig: {
         nav: [
             {text: '首页', link: '/'},
@@ -167,6 +172,7 @@ export default defineConfig({
         },
         socialLinks: [
             {icon: 'github', link: 'https://github.com/AxelWT/flight-journal'},
+            {icon: 'rss', link: '/flight-journal/feed.xml'},
         ],
         footer: {
             message: 'Move fast and break things',
@@ -176,4 +182,52 @@ export default defineConfig({
             provider: 'local',
         },
     },
+    async buildEnd(siteConfig) {
+        const posts = await createContentLoader('explore/**/*.md', {
+            excerpt: true,
+            render: true,
+        }).load()
+
+        const articles = posts
+            .filter(p => p.frontmatter.date)
+            .sort((a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date))
+            .slice(0, 20)
+
+        const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flight Journal</title>
+    <link>https://axelwt.github.io/flight-journal/</link>
+    <description>基于 VitePress 的个人博客</description>
+    <language>zh-CN</language>
+    <atom:link href="https://axelwt.github.io/flight-journal/feed.xml" rel="self" type="application/rss+xml"/>
+${articles.map(p => `    <item>
+      <title>${escapeXml(p.frontmatter.title ?? '')}</title>
+      <link>https://axelwt.github.io${p.url}</link>
+      <pubDate>${new Date(p.frontmatter.date).toUTCString()}</pubDate>
+      <description>${escapeXml(stripHtml(p.excerpt ?? ''))}</description>
+    </item>`).join('\n')}
+  </channel>
+</rss>`
+
+        writeFileSync(resolve(siteConfig.outDir, 'feed.xml'), rss)
+    },
 })
+
+function escapeXml(str: string): string {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;')
+}
+
+function stripHtml(html: string): string {
+    return html
+        .replace(/<[^>]*>/g, '')
+        .replace(/&ZeroWidthSpace;/g, '')
+        .replace(/\n+/g, ' ')
+        .trim()
+        .slice(0, 200)
+}
