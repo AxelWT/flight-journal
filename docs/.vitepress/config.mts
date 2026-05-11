@@ -149,6 +149,7 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
+                        {text: '2026-05-11 大比赛后的"小菜一碟"心态，是好是坏？', link: '/read/communication/2026-05-11-大比赛后的心态-小菜一碟是好是坏'},
                         {text: '《好好说话》', link: '/read/communication/《好好说话》'},
                         {text: '《蛤蟆先生去看心理医生》', link: '/read/communication/《蛤蟆先生去看心理医生》'},
                     ],
