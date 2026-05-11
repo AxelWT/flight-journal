@@ -1,294 +1,258 @@
-# Monkey Patch 完全指南
+# Python 猴子补丁（Monkey Patch）指南
 
-## 什么是 Monkey Patch？
+> **最后更新**: 2026-05-11
 
-**Monkey Patch（猴子补丁）** 是一种在**运行时动态修改代码**的技术，通过替换模块、类或方法的实现来改变其行为，而无需修改原始源代码。
+---
 
-### 核心原理
+## 一、什么是猴子补丁？
 
-Python 中一切皆对象，包括函数、类、模块。你可以在运行时重新赋值，从而改变其行为：
+猴子补丁（Monkey Patch）是指在运行时动态修改模块、类或对象的属性和方法。Python 的动态特性使得这一操作非常容易，但也带来了风险。
+
+**核心原理**：Python 中一切皆对象，函数和属性可以在运行时被替换。
 
 ```python
-# 原始函数
-def greet():
-    return "Hello"
+import some_module
 
-# 运行时替换（这就是 monkey patch）
-greet = lambda: "Hi"
+# 替换模块中的函数
+some_module.original_function = my_replacement
 
-print(greet())  # 输出: "Hi"
+# 替换类的方法
+SomeClass.original_method = my_method
 ```
 
 ---
 
-## 典型应用场景与示例
+## 二、常见使用场景
 
-### 1. 监控与调试（最常见）
+### 2.1 测试中替换依赖（最安全的场景）
 
-监控网络请求、API 调用等，无需修改原有代码。
+```python
+import json
+from unittest.mock import patch
+
+# 使用 unittest.mock（推荐，自动恢复）
+def test_api_call():
+    with patch('requests.get') as mock_get:
+        mock_get.return_value.json.return_value = {"status": "ok"}
+
+        result = call_api("https://example.com")
+        assert result["status"] == "ok"
+        mock_get.assert_called_once()
+```
+
+### 2.2 修复第三方库的 Bug
+
+```python
+# 第三方库有个 bug，等待官方修复太久
+import third_party_lib
+
+def _fixed_method(self, data):
+    """修复了空值处理的版本"""
+    if data is None:
+        return self.default_value
+    return self._original_process(data)
+
+# 应用补丁
+third_party_lib.SomeClass.buggy_method = _fixed_method
+```
+
+### 2.3 性能优化替换
+
+```python
+# 用 gevent 替换标准库的阻塞 I/O
+import gevent.monkey
+gevent.monkey.patch_all()  # 将 socket、threading 等替换为协程版本
+```
+
+### 2.4 添加调试信息
 
 ```python
 import requests
-from functools import wraps
-import time
 
-# 保存原始方法
-original_request = requests.Session.request
+_original_get = requests.get
 
-# 创建包装函数
-@wraps(original_request)
-def monitored_request(self, method, url, **kwargs):
-    start = time.time()
-    print(f"[请求] {method} {url}")
-
-    response = original_request(self, method, url, **kwargs)
-
-    elapsed = time.time() - start
-    print(f"[响应] {response.status_code} | 耗时 {elapsed:.2f}s")
-
+def _debug_get(*args, **kwargs):
+    print(f"[DEBUG] GET {args[0]}")
+    response = _original_get(*args, **kwargs)
+    print(f"[DEBUG] Response: {response.status_code}")
     return response
 
-# 应用 monkey patch
-requests.Session.request = monitored_request
-
-# 现在所有 requests 调用都会被监控
-requests.get("https://api.github.com")  # 自动打印日志
+requests.get = _debug_get
 ```
 
-### 2. 修复第三方库的 Bug
+---
 
-当第三方库有问题且无法立即升级时，临时修复。
+## 三、替换技巧
+
+### 3.1 替换模块级函数
 
 ```python
-# 假设某个库的函数有 bug
-from some_library import buggy_function
+import math
 
-# 保存原始版本
-_original = buggy_function
-
-def fixed_function(*args, **kwargs):
-    # 添加修复逻辑
-    if args and args[0] is None:
-        args = (0,) + args[1:]  # 修复 None 参数问题
-    return _original(*args, **kwargs)
+# 保存原始函数（以便恢复或调用）
+_original_sqrt = math.sqrt
 
 # 替换
-some_library.buggy_function = fixed_function
+def custom_sqrt(x):
+    print(f"Computing sqrt({x})")
+    return _original_sqrt(x)
+
+math.sqrt = custom_sqrt
 ```
 
-### 3. 单元测试 Mock
-
-在测试中替换数据库、网络等依赖为假数据。
+### 3.2 替换实例方法
 
 ```python
-# 原始代码
-class UserService:
-    def get_user(self, user_id):
-        # 实际查询数据库
-        return Database.query(f"SELECT * FROM users WHERE id = {user_id}")
+class Dog:
+    def speak(self):
+        return "Woof!"
 
-# 测试时 monkey patch
-def test_get_user():
-    # 替换数据库查询为假数据
-    Database.query = lambda sql: {"id": 1, "name": "Test User"}
+# 替换实例方法（需注意绑定问题）
+dog = Dog()
 
-    service = UserService()
-    user = service.get_user(1)
+# 方式一：替换实例属性（只影响该实例）
+import types
+dog.speak = types.MethodType(lambda self: "Meow!", dog)
 
-    assert user["name"] == "Test User"
+# 方式二：替换类方法（影响所有实例）
+Dog.speak = lambda self: "Meow!"
 ```
 
-### 4. 扩展类的方法
-
-给现有类添加新方法，无需继承。
+### 3.3 替换类方法 / 静态方法
 
 ```python
-# 给 str 类添加一个新方法
-def remove_spaces(self):
-    return self.replace(" ", "")
+class MyClass:
+    @classmethod
+    def create(cls):
+        return cls()
 
-str.remove_spaces = remove_spaces
+    @staticmethod
+    def helper():
+        return "help"
 
-# 现在所有字符串都有这个方法
-text = "hello world"
-print(text.remove_spaces())  # 输出: "helloworld"
+# 替换 classmethod
+MyClass.create = classmethod(lambda cls: "custom create")
+
+# 替换 staticmethod
+MyClass.helper = staticmethod(lambda: "custom help")
 ```
 
-### 5. 动态功能开关
-
-根据配置动态启用/禁用功能。
+### 3.4 替换 `__init__` 方法
 
 ```python
-import logging
-
-class ConfigurableLogger:
+class Config:
     def __init__(self):
-        self._original_info = logging.info
-        self._enabled = True
+        self.debug = False
 
-    def enable(self):
-        logging.info = self._original_info
-        self._enabled = True
+_original_init = Config.__init__
 
-    def disable(self):
-        logging.info = lambda *args, **kwargs: None
-        self._enabled = False
+def _patched_init(self):
+    _original_init(self)
+    self.debug = True  # 强制开启 debug
 
-logger_ctrl = ConfigurableLogger()
-logger_ctrl.disable()  # 全局禁用日志
-logger_ctrl.enable()   # 恢复日志
+Config.__init__ = _patched_init
 ```
 
 ---
 
-## 优缺点分析
+## 四、安全地应用补丁
 
-### 优点
-
-| 优点 | 说明 |
-|------|------|
-| **零侵入** | 无需修改原有代码，适合监控/调试 |
-| **全局生效** | 所有调用自动使用新版本 |
-| **灵活可控** | 随时可以启用、禁用、恢复 |
-| **快速修复** | 可临时修复第三方库问题 |
-
-### 缺点与风险
-
-| 缺点 | 说明 |
-|------|------|
-| **隐蔽性** | 修改发生在运行时，难以发现和追踪 |
-| **版本兼容** | 依赖库升级后，patch 可能失效 |
-| **命名冲突** | 多人同时 patch 同一对象可能冲突 |
-| **调试困难** | 行为不符合预期时，难以定位问题 |
-| **维护成本** | 代码行为与源码不一致，增加理解难度 |
-
----
-
-## 最佳实践
-
-### 1. 保存原始版本（便于恢复）
+### 4.1 contextmanager 模式（推荐）
 
 ```python
-original = module.function
+from contextlib import contextmanager
 
-# 应用 patch
-module.function = patched_function
-
-# 完成后恢复
-module.function = original
-```
-
-### 2. 使用 `@wraps` 保留元信息
-
-```python
-from functools import wraps
-
-@wraps(original_function)
-def patched_function(*args, **kwargs):
-    return original_function(*args, **kwargs)
-```
-
-### 3. 添加清晰的标识
-
-```python
-patched_function.__monkey_patched__ = True
-patched_function.__patch_reason__ = "监控网络请求"
-```
-
-### 4. 控制 patch 作用域
-
-```python
-# 方式一：使用上下文管理器
-class MonkeyPatchContext:
-    def __init__(self, obj, attr, new_func):
-        self.obj = obj
-        self.attr = attr
-        self.new_func = new_func
-        self.original = getattr(obj, attr)
-
-    def __enter__(self):
-        setattr(self.obj, self.attr, self.new_func)
-        return self
-
-    def __exit__(self, *args):
-        setattr(self.obj, self.attr, self.original)
+@contextmanager
+def monkey_patched(obj, attr, replacement):
+    """临时替换属性，退出后自动恢复"""
+    original = getattr(obj, attr)
+    try:
+        setattr(obj, attr, replacement)
+        yield
+    finally:
+        setattr(obj, attr, original)
 
 # 使用
-with MonkeyPatchContext(requests.Session, 'request', monitored_request):
-    requests.get("https://example.com")  # 在此范围内生效
-# 离开上下文后自动恢复
+with monkey_patched(math, 'sqrt', custom_sqrt):
+    result = math.sqrt(4)  # 使用 custom_sqrt
+# 退出后 math.sqrt 恢复原样
 ```
 
-### 5. 文档记录
+### 4.2 装饰器模式
 
 ```python
-"""
-Monkey Patch 说明：
-- 目标: requests.Session.request
-- 原因: 监控所有网络请求的流量和耗时
-- 影响: 全局生效，所有 requests 调用
-- 恢复: 调用 monitor.stop() 恢复原始方法
-"""
+def patch_decorator(obj, attr, replacement):
+    """装饰器：仅在函数执行期间替换"""
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            original = getattr(obj, attr)
+            setattr(obj, attr, replacement)
+            try:
+                return func(*args, **kwargs)
+            finally:
+                setattr(obj, attr, original)
+        return wrapper
+    return decorator
+
+@patch_decorator(math, 'sqrt', custom_sqrt)
+def compute():
+    return math.sqrt(4)
 ```
 
----
-
-## 完整示例：网络监控器
-
-以下是 `monitor_wrapper.py` 中的实现模式：
+### 4.3 使用 unittest.mock（最佳实践）
 
 ```python
-class NetworkMonitor:
-    def __init__(self):
-        self._original_request = None  # 保存原始方法
-        self._patched = False           # 状态标记
+from unittest.mock import patch
 
-    def start(self):
-        """启动监控 - 应用 monkey patch"""
-        if self._patched:
-            return
+# 上下文管理器
+with patch('module.function', return_value=42):
+    result = module.function()  # 返回 42
 
-        # 1. 保存原始方法
-        self._original_request = requests.Session.request
+# 装饰器
+@patch('module.function', return_value=42)
+def test_something(mock_func):
+    result = module.function()
+    assert result == 42
 
-        # 2. 创建包装函数
-        @wraps(self._original_request)
-        def monitored_request(session_self, method, url, **kwargs):
-            # 监控逻辑...
-            return self._original_request(session_self, method, url, **kwargs)
-
-        # 3. 应用 patch
-        requests.Session.request = monitored_request
-        self._patched = True
-
-    def stop(self):
-        """停止监控 - 恢复原始方法"""
-        if not self._patched:
-            return
-
-        # 恢复原始方法
-        requests.Session.request = self._original_request
-        self._patched = False
+# 对象属性
+with patch.object(some_instance, 'method', return_value="mocked"):
+    result = some_instance.method()  # "mocked"
 ```
 
 ---
 
-## "Monkey" 名称由来
+## 五、风险与最佳实践
 
-说法不一，常见的解释：
+### 5.1 风险
 
-1. **"游击补丁"演变**：从 "guerrilla patch"（游击补丁）→ "gorilla" → "monkey"
-2. **形象比喻**：像猴子一样"到处乱动"，改变原有的结构
-3. **玩笑命名**：程序员文化的幽默命名方式
+| 风险 | 说明 | 示例 |
+|------|------|------|
+| 不可预测的行为 | 其他代码可能依赖被替换的原始实现 | 替换 `json.dumps` 后，所有序列化行为改变 |
+| 难以调试 | 补丁在运行时生效，代码阅读时看不到 | Bug 只在特定执行顺序下出现 |
+| 时序依赖 | 补丁的先后顺序影响结果 | gevent 必须在其他 import 之前 patch |
+| 线程安全 | 多线程环境下动态替换可能导致竞争 | 一个线程看到原函数，另一个看到补丁 |
+
+### 5.2 最佳实践
+
+1. **优先使用 `unittest.mock.patch`**：自动恢复，不会遗漏
+2. **补丁范围尽量小**：使用 context manager 限制补丁的生命周期
+3. **记录补丁原因**：在代码注释中说明为什么需要补丁，以及何时可以移除
+4. **保存原始引用**：如果补丁中需要调用原始实现，务必保存引用
+5. **避免在生产环境中使用**：生产环境优先用继承、依赖注入等替代方案
+6. **补丁要尽早应用**：特别是 gevent 等，在其他 import 之前执行
+
+### 5.3 替代方案
+
+当想用猴子补丁时，先考虑以下替代方案：
+
+| 猴子补丁场景 | 替代方案 |
+|-------------|---------|
+| 测试中替换依赖 | `unittest.mock.patch` + 依赖注入 |
+| 修改第三方库行为 | 继承 + 重写方法 |
+| 添加功能 | 装饰器 / 包装器模式 |
+| 修复 Bug | Fork + 修改源码 / 向上游提 PR |
+| 横切关注点 | 信号/钩子机制（如 Django signals） |
 
 ---
 
-## 总结
-
-| 要点 | 建议 |
-|------|------|
-| **何时使用** | 监控、调试、测试 mock、临时修复 |
-| **何时避免** | 生产环境核心逻辑、长期方案 |
-| **关键原则** | 保存原始版本、使用 @wraps、清晰标识、及时恢复 |
-
-Monkey patch 是一把"双刃剑"，用得好可以快速解决问题，用不好会造成难以追踪的 bug。理解原理、谨慎使用、遵循最佳实践是关键。
+*最后更新: 2026-05-11*

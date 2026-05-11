@@ -1,505 +1,522 @@
-# Python asyncio 事件循环机制总结
+# Python asyncio 事件循环完全指南
 
-## 一、入门问题
-
-### asyncio 协程使用时，什么函数需要加 async，什么函数调用前需要加 await 呢？
-
-理解 `asyncio` 的核心在于区分 **“普通的厨师”** 和 **“会分身的厨师”**。
-
-在 Python 中，`async` 和 `await` 是成对出现的协作标志。我们可以通过以下逻辑清晰地界定它们的使用场景：
-
-- 当你定义一个函数，且这个函数内部包含**耗时等待**（如网络请求、磁盘 IO、数据库读写）或者你希望它能**被并发执行**时，就需要使用
-  `async def`。
-
-* **定义协程对象：** 使用 `async def` 定义的不再是普通的函数，而是一个**协程函数**。直接调用它不会执行代码，而是返回一个“协程对象”。
-* **允许内部使用 `await`：** 只有在 `async def` 定义的函数内部，才能使用 `await` 关键字。
-
-
-- 当你调用一个**协程函数**（即 `async def` 定义的函数）时，必须在前面加上 `await`。
-
-* **含义：** `await` 的意思是：“我现在要在这里等这个任务结果，在等待的过程中，CPU 可以先去处理别的 `async` 任务。”
-* **对象：** 只能 `await` 可等待对象（Awaitable），最常见的就是协程对象、`Task` 或 `Future`。
-
-> **核心原则：** 所有的异步操作，如果不 `await`，它就只是一个静止的对象，不会真正运行并拿到结果。
-
-- 为了方便记忆，你可以参考这张表格：
-
-| 场景           | 关键字使用                   | 备注                 |
-|:-------------|:------------------------|:-------------------|
-| **定义**一个异步函数 | `async def func():`     | 声明这是一个可以挂起的函数      |
-| **调用**一个异步函数 | `result = await func()` | 挂起当前协程，等待结果返回      |
-| **定义**普通计算函数 | `def func():`           | 不涉及 IO 等待的纯逻辑运算    |
-| **调用**普通函数   | `result = func()`       | 直接阻塞执行，不能加 `await` |
-| **顶层启动**协程   | `asyncio.run(main())`   | 将协程转为同步入口的唯一方式     |
-
-- 错误：在普通函数里用 `await`
-
-```python
-def my_function():
-    await asyncio.sleep(1)  # SyntaxError: 'await' outside function
-```
-
-**修正：** 必须把 `my_function` 也变成 `async def`。
-
-- 错误：调用异步函数忘了加 `await`
-
-```python
-async def main():
-    asyncio.sleep(1)  # 警告：RuntimeWarning: coroutine 'sleep' was never awaited
-```
-
-**修正：** 必须写成 `await asyncio.sleep(1)`。
-
-- 错误：在异步函数里用同步阻塞函数
-
-```python
-async def main():
-    time.sleep(1)  # 致命错误：这会把整个程序的“分身”全部定住
-```
-
-**修正：** 异步环境必须配合异步库（如用 `aiohttp` 代替 `requests`）。
-
-### 所有函数都可以定义为async 吗，需要有异步实现吗，还是说定义为async 就可以自动异步实现？
-
-这是一个非常关键的误解，也是很多初学者在学习异步编程时踩的第一个坑。
-
-简单直接地回答：**不是所有函数都应该定义为 `async`，而且 `async` 关键字本身并不会“自动”让你的代码变快或变成异步执行。**
-
-- `async` 只是一个“通行证”
-
-当你把一个函数定义为 `async def` 时，你只是在告诉 Python：**“这个函数可以被挂起”**。
-
-* 它就像是一个**协议**。定义为 `async` 后，这个函数就变成了一个“协程对象”。
-* **它不改变逻辑本质：** 如果你在 `async` 函数里面写了一个死循环或者 `time.sleep(10)`，程序依然会死死地卡在那里 10
-  秒。它并不会因为加了 `async` 就自动分身去干别的。
-
-
-- 必须有“底层的异步支持”
-
-异步的本质是 **“非阻塞 I/O”**。要实现真正的异步，你的函数内部必须调用了支持异步的底层函数。
-
-* **真正的异步调用：** 比如 `await asyncio.sleep(1)`、`await aiohttp.get(...)`。这些底层库在等待网络返回时，会主动把 CPU
-  的控制权交还给事件循环（Event Loop）。
-* **伪异步调用：** 如果你在 `async` 函数里写了 `result = requests.get(...)`（这是一个同步库），那么整个程序依然会在这里阻塞，直到请求完成，哪怕你外面包了多少层
-  `async` 也没用。
-
-
-- 为什么不能把“所有函数”都定义为 `async`？
-
-虽然技术上你可以把所有 `def` 都改成 `async def`，但这会带来三个严重的问题：
-
-A. 额外的开销 (Overhead)
-
-协程的创建、调度和销毁是由 Python 的事件循环管理的。对于简单的加减法、逻辑判断（CPU 密集型），普通函数的执行速度远快于协程。给这些函数加
-`async` 就像是**为了去隔壁房间拿张纸而特意写了一份申请报告**，完全多此一举。
-
-B. “传染性”带来的复杂度
-
-`async` 具有很强的传染性：
-
-* 如果你把 `func_a` 定义为异步，那么所有调用 `func_a` 的函数 `func_b` 也必须是异步的，否则你拿不到 `func_a` 的返回结果。
-* 这会导致你的整个代码库被迫全部重写为异步架构，增加了维护难度。
-
-C. 阻塞风险
-
-如果你习惯了到处写 `async`，很容易在某个异步函数中不小心混入一个同步的阻塞操作（比如读了一个巨大的文件）。由于异步程序通常运行在
-**单线程**上，这一个阻塞操作就会让所有的并发任务全部瘫痪。
-
-- 总结：什么时候用什么？
-
-| 函数类型     | 定义方式                | 适用场景                                             |
-|:---------|:--------------------|:-------------------------------------------------|
-| **同步函数** | `def func():`       | 纯计算逻辑、数学运算、内存操作、小规模循环。                           |
-| **异步函数** | `async def func():` | **I/O 密集型任务**：访问数据库、调用 Web API、读写网络 Socket、延时等待。 |
-
-核心建议
-
-* **不要为了异步而异步。** 只有当你确定某个操作涉及 **等待（Wait）**（等待网络、等待磁盘、等待定时器）时，才去寻找对应的异步库并使用
-  `async`。
-* **检查底层：** 在使用 `async` 之前，先确认你调用的库（如数据库驱动、网络请求库）是否支持 `await`。
+> **适用版本**: Python 3.10+（部分特性需 3.11+）
+> **最后更新**: 2026-05-11
 
 ---
 
-## 二、现代 asyncio 写法
+## 一、事件循环是什么？
 
-### test.py 代码示例
+事件循环（Event Loop）是 asyncio 的核心引擎，负责：
+
+1. **调度协程**：将协程包装为 Task 并安排执行
+2. **驱动 I/O**：监听网络/文件 I/O 的就绪状态，在就绪时恢复等待的协程
+3. **执行回调**：在合适的时机调用通过 `call_soon`、`call_later` 等注册的回调函数
+4. **管理定时器**：处理 `asyncio.sleep()` 等定时任务
+
+**核心思维模型**：事件循环就是一个 `while True` 循环，不断检查"谁准备好了"——就绪的协程恢复执行、就绪的 I/O 触发回调、到期的定时器被触发。
+
+```python
+# 事件循环的简化模型
+while True:
+    ready_tasks = check_who_is_ready()   # 检查哪些协程/IO/定时器就绪
+    for task in ready_tasks:
+        task.run_until_yield()            # 运行到下一个 await
+```
+
+---
+
+## 二、获取事件循环
+
+### 2.1 推荐方式：`asyncio.run()`
 
 ```python
 import asyncio
 
+async def main():
+    print("Hello, asyncio!")
 
-async def task(name, seconds):
-    print(f"{name} 开始")
-    await asyncio.sleep(seconds)
-    print(f"{name} 完成，等待了 {seconds} 秒")
-    return f"{name} 结果"
+asyncio.run(main())  # 创建事件循环 → 运行协程 → 关闭循环
+```
 
+**要点**：
+
+- `asyncio.run()` 是 Python 3.7+ 的标准入口，会自动创建、运行、关闭事件循环
+- 每次调用都创建一个**全新**的事件循环，不要重复调用
+- 只能在**没有运行中事件循环**时调用（不能在协程内部再调用）
+
+### 2.2 底层 API：手动管理循环
+
+```python
+loop = asyncio.new_event_loop()   # 创建新循环
+asyncio.set_event_loop(loop)      # 设为当前线程的默认循环
+loop.run_until_complete(main())   # 运行直到协程完成
+loop.close()                      # 关闭循环
+```
+
+**何时需要手动管理**：
+
+- 需要在循环运行前设置策略（如 Windows 上的 `ProactorEventLoop`）
+- 嵌入到已有事件循环框架中（如 Jupyter、某些 GUI 框架）
+- 需要精细化控制循环生命周期
+
+### 2.3 获取已存在的循环
+
+```python
+# 获取当前线程的事件循环（无则创建）
+loop = asyncio.get_event_loop()
+
+# 安全获取（Python 3.10+，推荐）
+try:
+    loop = asyncio.get_running_loop()
+except RuntimeError:
+    # 没有运行中的循环
+    loop = asyncio.new_event_loop()
+```
+
+> **注意**：`get_event_loop()` 在 Python 3.12+ 的行为发生了变化——当没有当前事件循环时不再自动创建，而是抛出 `RuntimeError`。推荐使用 `get_running_loop()` 或 `new_event_loop()`。
+
+---
+
+## 三、Task 与 Future
+
+### 3.1 Task：协程的执行包装
+
+Task 是对协程的包装，让协程可以被事件循环调度执行。
+
+```python
+async def fetch(url):
+    await asyncio.sleep(1)
+    return f"Data from {url}"
 
 async def main():
-    # 并发执行 3 个任务
-    results = await asyncio.gather(
-        task("任务A", 5),
-        task("任务B", 3),
-        task("任务C", 1),
-    )
-    print(f"所有结果: {results}")
+    # 方式一：自动调度（推荐）
+    task = asyncio.create_task(fetch("https://example.com"))
 
+    # 方式二：底层 API
+    loop = asyncio.get_running_loop()
+    task = loop.create_task(fetch("https://example.com"))
+
+    result = await task
+    print(result)
+```
+
+**`create_task` vs `ensure_future`**：
+
+| 特性 | `create_task` | `ensure_future` |
+|------|--------------|-----------------|
+| 推荐度 | **推荐**（Python 3.7+） | 旧版 API |
+| 输入类型 | 仅接受协程 | 接受协程、Future、Task |
+| 返回类型 | 始终返回 Task | 可能返回原 Future |
+| 调试信息 | 更好的异常追踪 | 较弱 |
+
+### 3.2 TaskGroup：结构化并发（Python 3.11+）
+
+```python
+async def main():
+    async with asyncio.TaskGroup() as tg:
+        task1 = tg.create_task(fetch("https://api1.com"))
+        task2 = tg.create_task(fetch("https://api2.com"))
+        task3 = tg.create_task(fetch("https://api3.com"))
+
+    # 退出 with 块时，所有任务已完成
+    # 任何一个任务异常 → ExceptionGroup 包含所有异常
+    print(task1.result(), task2.result(), task3.result())
+```
+
+**TaskGroup 的优势**：
+
+- **结构化并发**：所有子任务的生命周期限定在 `with` 块内
+- **异常安全**：一个任务异常不会让其他任务静默失败，所有异常收集到 `ExceptionGroup`
+- **不会遗漏任务**：必须等待所有任务完成才能退出 `with` 块
+
+### 3.3 Future：结果的占位符
+
+Future 是一个表示"未来某个时刻会产生的结果"的对象。Task 是 Future 的子类。
+
+```python
+async def main():
+    loop = asyncio.get_running_loop()
+    future = loop.create_future()
+
+    # 模拟：1秒后设置结果
+    loop.call_later(1.0, future.set_result, "Done!")
+
+    result = await future  # 阻塞直到结果就绪
+    print(result)  # "Done!"
+```
+
+**Future vs Task**：
+
+- **Future**：底层原语，需要手动 `set_result()` 设置结果
+- **Task**：高级抽象，自动驱动协程执行并设置结果
+
+大多数情况下你只需使用 Task，直接操作 Future 的场景很少（如与回调式 API 桥接）。
+
+---
+
+## 四、事件循环的调度方法
+
+### 4.1 回调调度
+
+```python
+loop = asyncio.get_running_loop()
+
+# 立即调度（下一个事件循环迭代执行）
+loop.call_soon(callback, arg1, arg2)
+
+# 延迟调度（5秒后执行）
+loop.call_later(5.0, callback, arg1, arg2)
+
+# 在指定时间点执行
+import time
+loop.call_at(loop.time() + 5.0, callback, arg1, arg2)
+```
+
+### 4.2 线程安全调度
+
+从其他线程向事件循环提交回调：
+
+```python
+import threading
+
+def worker(loop):
+    # 在子线程中安全地向事件循环提交回调
+    asyncio.call_soon_threadsafe(callback, arg1, loop=loop)
+
+async def main():
+    loop = asyncio.get_running_loop()
+    thread = threading.Thread(target=worker, args=(loop,))
+    thread.start()
+    await asyncio.sleep(2)
+    thread.join()
+```
+
+**典型场景**：子线程完成 I/O 操作后，需要通过事件循环通知协程。
+
+### 4.3 执行阻塞代码
+
+事件循环中绝对不能运行阻塞调用（如 `requests.get()`、`time.sleep()`、`subprocess.run()`），否则会卡住整个循环。
+
+```python
+async def main():
+    loop = asyncio.get_running_loop()
+
+    # 在线程池中执行阻塞函数
+    result = await loop.run_in_executor(None, blocking_function, arg1)
+
+    # 使用自定义线程池
+    from concurrent.futures import ThreadPoolExecutor
+    executor = ThreadPoolExecutor(max_workers=4)
+    result = await loop.run_in_executor(executor, blocking_function, arg1)
+
+    # CPU 密集型任务应使用进程池
+    from concurrent.futures import ProcessPoolExecutor
+    executor = ProcessPoolExecutor()
+    result = await loop.run_in_executor(executor, cpu_intensive_function, arg1)
+```
+
+**选择线程池还是进程池**：
+
+| 类型 | 适用场景 | 原因 |
+|------|---------|------|
+| ThreadPoolExecutor | I/O 密集型阻塞调用 | GIL 不会成为瓶颈，线程切换开销小 |
+| ProcessPoolExecutor | CPU 密集型计算 | 绕过 GIL，利用多核并行 |
+
+---
+
+## 五、asyncio 同步原语
+
+asyncio 提供了与 `threading` 模块对应的同步原语，但它们的实现机制不同——threading 依赖操作系统锁，asyncio 依赖事件循环的协作式调度。
+
+```python
+# Lock - 防止多个协程同时访问共享资源
+lock = asyncio.Lock()
+async with lock:
+    await safe_operation()
+
+# Event - 协程间通知
+event = asyncio.Event()
+# 等待方
+await event.wait()
+# 通知方
+event.set()
+
+# Condition - 更复杂的等待/通知模式
+cond = asyncio.Condition()
+async with cond:
+    await cond.wait_for(lambda: resource_ready())
+    await use_resource()
+
+# Semaphore - 限制并发数
+sem = asyncio.Semaphore(10)
+async with sem:
+    await limited_operation()  # 最多10个协程同时执行
+
+# Queue - 协程间安全传递数据
+queue = asyncio.Queue(maxsize=100)
+await queue.put(item)
+item = await queue.get()
+```
+
+---
+
+## 六、常见模式与最佳实践
+
+### 6.1 并发执行多个协程
+
+```python
+# 方式一：gather（经典方式）
+results = await asyncio.gather(
+    fetch("https://api1.com"),
+    fetch("https://api2.com"),
+    fetch("https://api3.com"),
+    return_exceptions=True  # 异常作为结果返回，而非抛出
+)
+
+# 方式二：TaskGroup（Python 3.11+，推荐）
+async with asyncio.TaskGroup() as tg:
+    t1 = tg.create_task(fetch("https://api1.com"))
+    t2 = tg.create_task(fetch("https://api2.com"))
+    t3 = tg.create_task(fetch("https://api3.com"))
+results = [t1.result(), t2.result(), t3.result()]
+```
+
+### 6.2 超时控制
+
+```python
+# Python 3.11+ 推荐：asyncio.timeout
+async with asyncio.timeout(5.0):
+    result = await slow_operation()
+# 超时抛出 TimeoutError
+
+# 旧版兼容：wait_for
+try:
+    result = await asyncio.wait_for(slow_operation(), timeout=5.0)
+except asyncio.TimeoutError:
+    print("Operation timed out")
+
+# 屏蔽取消（防止超时取消后的清理操作被中断）
+async def robust_operation():
+    try:
+        await asyncio.wait_for(slow_operation(), timeout=5.0)
+    except asyncio.TimeoutError:
+        with asyncio.shield(cleanup_coro()):  # cleanup 不会被取消
+            pass
+```
+
+### 6.3 取消任务
+
+```python
+async def main():
+    task = asyncio.create_task(long_running())
+
+    await asyncio.sleep(3)
+    task.cancel()  # 请求取消
+
+    try:
+        await task
+    except asyncio.CancelledError:
+        print("Task was cancelled")
+```
+
+**协程如何响应取消**：
+
+```python
+async def long_running():
+    try:
+        while True:
+            await do_work()
+    except asyncio.CancelledError:
+        # 执行清理
+        await cleanup()
+        raise  # 重新抛出，让调用者知道任务被取消
+```
+
+> **重要**：捕获 `CancelledError` 后务必重新 `raise`，否则任务不会被标记为已取消，`TaskGroup` 等结构化并发机制可能无法正确工作。
+
+### 6.4 生产者-消费者模式
+
+```python
+async def producer(queue: asyncio.Queue):
+    for i in range(10):
+        await asyncio.sleep(0.1)
+        await queue.put(f"item-{i}")
+    await queue.put(None)  # 哨兵值，通知消费者结束
+
+async def consumer(queue: asyncio.Queue):
+    while True:
+        item = await queue.get()
+        if item is None:
+            queue.task_done()
+            break
+        await process(item)
+        queue.task_done()
+
+async def main():
+    queue = asyncio.Queue(maxsize=5)
+    await asyncio.gather(producer(queue), consumer(queue))
+```
+
+### 6.5 速率限制
+
+```python
+async def rate_limited(tasks, rate=10):
+    """限制每秒提交的任务数"""
+    semaphore = asyncio.Semaphore(rate)
+    interval = 1.0 / rate
+
+    async def limited(task):
+        async with semaphore:
+            await asyncio.sleep(interval)
+            return await task
+
+    return await asyncio.gather(*[limited(t) for t in tasks])
+```
+
+---
+
+## 七、事件循环策略
+
+事件循环策略（Event Loop Policy）决定事件循环的创建方式和选择哪种循环实现。
+
+```python
+import asyncio
+
+# Windows：使用 ProactorEventLoop（支持子进程、高性能 I/O）
+if sys.platform == 'win32':
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+
+# macOS：使用 kqueue 选择器（默认 uvloop 不可用时的回退）
+# Linux：默认使用 epoll 选择器
+```
+
+**uvloop 加速**（仅限 Linux/macOS）：
+
+```python
+# pip install uvloop
+import uvloop
+uvloop.install()  # 在 asyncio.run() 之前调用
+
+# uvloop 用 Cython 实现了事件循环，性能比内置循环提升 2-4 倍
+```
+
+---
+
+## 八、调试技巧
+
+### 8.1 启用调试模式
+
+```python
+# 方式一：通过 asyncio.run
+asyncio.run(main(), debug=True)
+
+# 方式二：环境变量
+# PYTHONASYNCIODEBUG=1 python app.py
+
+# 方式三：手动设置
+loop = asyncio.get_event_loop()
+loop.set_debug(True)
+```
+
+**调试模式会启用**：
+
+- 未 await 协程的警告（会打印 "coroutine was never awaited"）
+- 记录耗时超过 100ms 的回调（帮助发现阻塞操作）
+- 更详细的异常堆栈（Task 的 `repr()` 包含创建位置）
+
+### 8.2 常见错误排查
+
+| 错误 | 原因 | 解决方案 |
+|------|------|---------|
+| `RuntimeError: no running event loop` | 在协程外调用 `create_task` | 确保 `create_task` 在 `async` 函数内 |
+| `RuntimeError: coroutine was never awaited` | 创建了协程但未 await | 使用 `await` 或 `create_task` |
+| `RuntimeWarning: coroutine was never awaited` | 遗漏了 `await` | 检查函数是否是 `async def` |
+| 事件循环卡死 | 在协程中执行了阻塞调用 | 使用 `run_in_executor` |
+| `TimeoutError` | 操作超时 | 增加超时时间或优化操作 |
+
+### 8.3 实用调试代码
+
+```python
+import asyncio
+
+async def debug_tasks():
+    """打印当前所有任务"""
+    tasks = asyncio.all_tasks()
+    for task in tasks:
+        print(f"  {task.get_name()}: {task.get_coro()} "
+              f"done={task.done()} cancelled={task.cancelled()}")
+
+# 给 Task 命名，方便调试（Python 3.11+）
+task = asyncio.create_task(fetch(url), name="fetch-api-1")
+```
+
+---
+
+## 九、完整示例：异步 HTTP 客户端
+
+```python
+import asyncio
+import aiohttp  # pip install aiohttp
+from typing import Optional
+
+class AsyncHTTPClient:
+    def __init__(self, max_concurrent: int = 10, timeout: float = 30.0):
+        self.semaphore = asyncio.Semaphore(max_concurrent)
+        self.timeout = aiohttp.ClientTimeout(total=timeout)
+        self.session: Optional[aiohttp.ClientSession] = None
+
+    async def __aenter__(self):
+        self.session = aiohttp.ClientSession(timeout=self.timeout)
+        return self
+
+    async def __aexit__(self, *args):
+        if self.session:
+            await self.session.close()
+
+    async def get(self, url: str) -> str:
+        async with self.semaphore:
+            async with self.session.get(url) as resp:
+                resp.raise_for_status()
+                return await resp.text()
+
+    async def fetch_all(self, urls: list[str]) -> list[str]:
+        async with asyncio.TaskGroup() as tg:
+            tasks = [tg.create_task(self.get(url)) for url in urls]
+        return [t.result() for t in tasks]
+
+async def main():
+    urls = [
+        "https://httpbin.org/get",
+        "https://httpbin.org/ip",
+        "https://httpbin.org/headers",
+    ]
+
+    async with AsyncHTTPClient(max_concurrent=5) as client:
+        results = await client.fetch_all(urls)
+        for url, result in zip(urls, results):
+            print(f"{url}: {len(result)} bytes")
 
 asyncio.run(main())
 ```
 
-### 运行结果
+---
 
-```
-任务A 开始
-任务B 开始
-任务C 开始
-任务C 完成，等待了 1 秒
-任务B 完成，等待了 3 秒
-任务A 完成，等待了 5 秒
-所有结果: ['任务A 结果', '任务B 结果', '任务C 结果']
-```
+## 十、速查表
 
-三个任务并发执行，总耗时约 5 秒（最长的那个），而不是 1+3+5=9 秒。
+| 操作 | 代码 |
+|------|------|
+| 运行协程 | `asyncio.run(main())` |
+| 创建任务 | `asyncio.create_task(coro)` |
+| 并发等待 | `await asyncio.gather(*tasks)` |
+| 超时控制 | `async with asyncio.timeout(5.0):` |
+| 取消任务 | `task.cancel()` |
+| 睡眠 | `await asyncio.sleep(1.0)` |
+| 执行阻塞调用 | `await loop.run_in_executor(None, func)` |
+| 信号量限流 | `asyncio.Semaphore(n)` |
+| 当前所有任务 | `asyncio.all_tasks()` |
+| 当前事件循环 | `asyncio.get_running_loop()` |
 
 ---
 
-## 三、问题与解答
-
-### 问题 1：阻塞 vs 非阻塞
-
-```python
-# 阻塞等待 - 整个程序停止，什么都做不了
-import time
-
-time.sleep(10)  # CPU 完全空闲，无法做其他事
-
-# 非阻塞等待 - 当前协程暂停，但事件循环可以执行其他任务
-import asyncio
-
-await asyncio.sleep(10)  # 当前协程让出控制权
-```
-
----
-
-### 问题 2：await 时的执行流程
-
-**问**：我调试发现，协程执行时碰到 await 就退出了，然后执行下一个协程，是这样吗？
-
-**答**：是的，完全正确！
-
-#### 协程执行流程
-
-```
-task("任务A", 5)  ──→ await asyncio.sleep(5) ──→ 暂停，让出控制权
-                                              ↓
-task("任务B", 3)  ──→ await asyncio.sleep(3) ──→ 暂停，让出控制权
-                                              ↓
-task("任务C", 1)  ──→ await asyncio.sleep(1) ──→ 暂停，让出控制权
-                                              ↓
-                                         事件循环等待
-                                              ↓
-                                      1秒后 C 的 sleep 完成
-                                              ↓
-task("任务C", 1)  ←────────────────── 恢复执行，print("完成")
-```
-
-#### 核心机制
-
-| 概念      | 说明                                   |
-|---------|--------------------------------------|
-| `await` | 当前协程**暂停**，保存状态，**让出控制权**给事件循环       |
-| 事件循环    | 找到下一个**可执行**的协程继续运行                  |
-| 协程恢复    | 当 `await` 的操作完成（如 sleep 到期），协程从暂停点继续 |
-
-`await` 是一个"挂起点"：
-
-- 协程说"我在等什么东西，你们先执行别的"
-- 事件循环说"好，那我执行下一个准备好了的协程"
-- 等等待的条件满足后，协程说"我好了，继续"
-
----
-
-### 问题 3：协程如何通知事件循环
-
-**问**：await 的协程执行完 asyncio.sleep 之后，如何通知事件循环呢？
-
-**答**：
-
-这涉及到 asyncio 的底层机制：**Future 对象**。
-
-#### 核心机制
-
-```
-await asyncio.sleep(1)
-       ↓
-┌─────────────────────────────────────────┐
-│  1. sleep() 创建一个 Future 对象          │
-│  2. 向事件循环注册一个定时器回调             │
-│  3. 协程挂起，保存状态                     │
-└─────────────────────────────────────────┘
-                    ↓
-              事件循环继续执行其他协程
-                    ↓
-              1秒后，定时器触发
-                    ↓
-┌─────────────────────────────────────────┐
-│  4. 事件循环调用 future.set_result()      │
-│  5. 触发协程的回调，将其放入就绪队列          │
-│  6. 事件循环恢复协程执行                    │
-└─────────────────────────────────────────┘
-```
-
-#### 简化版源码理解
-
-```python
-async def sleep(delay):
-    # 创建一个 Future 对象
-    future = asyncio.get_running_loop().create_future()
-
-    # 向事件循环注册定时器回调
-    loop.call_later(delay, future.set_result, None)
-
-    # 挂起当前协程，等待 future 完成
-    await future
-```
-
-#### 关键点
-
-| 组件                    | 作用                    |
-|-----------------------|-----------------------|
-| `Future`              | 协程和事件循环之间的"信物"，用于传递结果 |
-| `loop.call_later()`   | 注册定时器回调               |
-| `future.set_result()` | 标记完成，触发回调             |
-| 回调链                   | 将协程重新放入就绪队列           |
-
-协程不是"主动通知"事件循环，而是通过 **Future 的完成回调** 被动地被事件循环重新调度。
-
----
-
-### 问题 4：定时器如何被感知
-
-**问**：谁来感知 1s 后呢，是事件循环在主动轮询还是系统事件通知？
-
-**答**：
-
-**两者结合，以系统事件通知为主**。
-
-#### 事件循环主循环
-
-```
-┌─────────────────────────────────────────────────────┐
-│                    事件循环主循环                     │
-├─────────────────────────────────────────────────────┤
-│  1. 检查定时器堆，找出最近到期的任务时间            │
-│  2. 调用系统调用：                                   │
-│     selector.select(timeout=最近到期时间)           │
-│  3. 阻塞等待：                                       │
-│     - 有 I/O 事件就绪 → 返回                         │
-│     - timeout 到期 → 返回                           │
-│  4. 处理就绪的事件和到期的定时器                     │
-└─────────────────────────────────────────────────────┘
-```
-
-#### 底层机制：I/O 多路复用
-
-| 操作系统    | 系统调用     | 原理               |
-|---------|----------|------------------|
-| Linux   | `epoll`  | 内核通知哪些文件描述符可读/可写 |
-| macOS   | `kqueue` | 同上               |
-| Windows | `IOCP`   | 完成端口通知           |
-
-#### 定时器感知原理
-
-```python
-# 事件循环伪代码
-def run_forever(self):
-    while True:
-        # 1. 获取最近要触发的定时器时间
-        timeout = self._get_next_timer_deadline()  # 比如 1 秒后
-
-        # 2. 调用系统调用，阻塞等待 I/O 或超时
-        events = selector.select(timeout=timeout)  # ← 关键！
-
-        # 3. 处理 I/O 事件
-        for event in events:
-            self._handle_io_event(event)
-
-        # 4. 处理到期的定时器
-        self._run_timers()  # 这里执行 sleep 到期的回调
-```
-
-**不是轮询**，而是**一次系统调用同时等待 I/O 和超时**：
-
-```c
-// epoll 示例（Linux）
-epoll_wait(epfd, events, maxevents, timeout_ms);
-//              ↑ 线程阻塞，直到：
-//                 - 有 I/O 事件发生，或
-//                 - timeout 到期
-```
-
-所以：
-
-- **I/O 事件**：内核主动通知（事件驱动）
-- **定时器**：通过 `select/epoll` 的 `timeout` 参数"顺便"感知
-
-这是高效的——一个系统调用搞定两件事，CPU 利用率接近 100%，线程不会空转。
-
----
-
-### 问题 5：set_result 与 send() 的关系
-
-**问**：future.set_result() 中会执行 yield 的操作，比如通过 send() 方法从 yield 断点处继续执行吗？
-
-**答**：
-
-`future.set_result()` **不会直接调用 `send()`**，而是通过**回调链**间接触发。
-
-#### 完整链路
-
-```
-future.set_result(None)
-       ↓
-┌─────────────────────────────────────┐
-│  Future 内部：                       │
-│  1. 设置 self._result = result      │
-│  2. 标记 self._done = True          │
-│  3. 调用所有注册的回调函数           │
-│     for cb in self._callbacks:      │
-│         cb(self)                    │
-└─────────────────────────────────────┘
-       ↓
-回调被执行（协程被放入就绪队列）
-       ↓
-事件循环下一轮迭代
-       ↓
-调用 coro.send(result)
-       ↓
-协程从 await 处恢复执行
-```
-
-#### 验证代码
-
-```python
-import asyncio
-
-
-async def test():
-    print("开始")
-    result = await asyncio.sleep(1, "返回值")
-    print(f"恢复，收到: {result}")
-
-
-# 展开后的等价逻辑（简化版）
-def test_coro():
-    print("开始")
-    future = asyncio.sleep(1, "返回值")  # 返回一个 Future
-    yield future  # 挂起，返回 future 给事件循环
-
-    # --- 事件循环调用 send() 后从这里恢复 ---
-    result = future.result()  # 获取结果
-    print(f"恢复，收到: {result}")
-```
-
-#### 关键源码简化
-
-```python
-class Future:
-    def set_result(self, result):
-        self._result = result
-        self._done = True
-
-        # 触发回调
-        for callback in self._callbacks:
-            callback(self)
-
-    def __await__(self):
-        if not self._done:
-            yield self  # 挂起，返回自己给事件循环
-        return self._result  # send() 后从这里继续
-
-
-# 回调函数：将协程放回就绪队列
-def _set_result(future):
-    # 事件循环会调用 coro.send() 恢复协程
-    loop._ready.append((coro.send, None, ()))
-```
-
-#### 总结
-
-| 步骤 | 动作                           | 谁执行        |
-|----|------------------------------|------------|
-| 1  | `await future` → 协程挂起        | 协程         |
-| 2  | `future.set_result()` → 触发回调 | 定时器/I/O 完成 |
-| 3  | 回调将协程放入就绪队列                  | 回调函数       |
-| 4  | `coro.send(result)` → 协程恢复   | 事件循环       |
-
-所以 `send()` 是由**事件循环**调用的，`set_result()` 只是设置结果并触发回调链。
-
----
-
-## 四、总结图
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        asyncio 执行模型                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   协程 ──await──→ 挂起，返回 Future 给事件循环                   │
-│                    ↓                                            │
-│              事件循环执行其他协程                                │
-│                    ↓                                            │
-│         系统调用 epoll_wait/select (等待 I/O 或超时)            │
-│                    ↓                                            │
-│         I/O 就绪 或 定时器到期                                   │
-│                    ↓                                            │
-│         future.set_result() 触发回调                             │
-│                    ↓                                            │
-│         回调将协程放入就绪队列                                    │
-│                    ↓                                            │
-│         事件循环调用 coro.send(result)                           │
-│                    ↓                                            │
-│   协程 ──从 await 处恢复执行                                     │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-总结图 单线程事件循环架构图
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    单个 Python 进程                          │
-├─────────────────────────────────────────────────────────────┤
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │                事件循环 (Event Loop)                 │  │
-│  │  ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌───────┐  │  │
-│  │  │ 协程A   │  │ 协程B   │  │ 协程C   │  │ ...   │  │  │
-│  │  └─────────┘  └─────────┘  └─────────┘  └───────┘  │  │
-│  │        │           │           │         │         │  │
-│  │  ┌─────┴───────────┴───────────┴─────────┴─────┐  │  │
-│  │  │              就绪队列 (Ready Queue)          │  │  │
-│  │  └─────────────────────────────────────────────┘  │  │
-│  │        │                                          │  │
-│  │  ┌─────┴──────────────────────────────────────┐  │  │
-│  │  │            选择器 (Selector)               │◄─┼──┼── 监听
-│  │  │     (epoll/kqueue/select)                  │  │  │  系统I/O事件
-│  │  └────────────────────────────────────────────┘  │  │
-│  └──────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-```
-
-Q: Python 的 async 事件调度器只有一个线程在工作吗？
-A: 默认是单线程，但可以配置为多线程或多进程。
-默认单线程：一个事件循环在一个线程中调度所有协程
-可扩展为多线程：通过 run_in_executor(ThreadPoolExecutor)或运行多个事件循环
-可扩展为多进程：通过 run_in_executor(ProcessPoolExecutor)或多进程+asyncio
-架构灵活性：可以根据负载类型选择合适模式
-核心思想：
-I/O密集型​ → 优先使用单线程​ asyncio（最高效）
-CPU密集型​ → 配合多进程（绕过GIL）
-阻塞操作​ → 配合线程池（不阻塞事件循环）
-超高并发​ → 保持单线程（减少上下文切换）
-asyncio 的设计哲学是"单线程处理高并发I/O，必要时扩展到多线程/多进程"，这种设计在 Web 服务器、爬虫、微服务等场景中被证明非常高效。
-
----
+*适用版本: Python 3.10+ | 重点更新: Python 3.11+ TaskGroup/timeout | 最后更新: 2026-05-11*

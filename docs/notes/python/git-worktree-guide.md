@@ -1,213 +1,142 @@
 # Git Worktree 使用指南
 
-## 什么是 Git Worktree？
-
-Git Worktree 允许同一个仓库在不同目录同时 checkout 不同分支，实现并行工作而不互相干扰。
-
-**核心特点：**
-- 共享同一个 `.git` 数据库（提交历史、分支信息共享）
-- 不同目录 checkout 不同分支的文件
-- 磁盘占用小，切换快
+> **最后更新**: 2026-05-11
 
 ---
 
-## 常用命令
+## 一、什么是 Git Worktree？
 
-### 创建 Worktree
+Git Worktree 允许你同时检出同一个仓库的多个分支到不同目录，无需克隆多个副本。
+
+**核心优势**：
+
+- **并行开发**：同时在不同分支上工作，无需 `git stash` 来回切换
+- **无需重新克隆**：共享 `.git` 目录，节省磁盘空间和克隆时间
+- **快速上下文切换**：不同工作目录对应不同分支，IDE 各自独立
+
+**典型场景**：
+
+- 在 feature 分支开发时，需要紧急修复 main 上的 bug
+- 同时进行代码审查和功能开发
+- 在一个分支运行长时间测试，同时在另一个分支继续工作
+
+---
+
+## 二、基本操作
+
+### 2.1 创建 Worktree
 
 ```bash
-# 创建新分支并 checkout 到指定目录
-git worktree add -b <新分支名> <目录路径> <基础分支>
+# 从已有分支创建 worktree
+git worktree add ../hotfix-dir hotfix-branch
 
-# 示例：基于 main 创建 feature-a 分支到 .worktrees/feature-a 目录
-git worktree add -b feature-a .worktrees/feature-a main
+# 创建新分支并关联到 worktree
+git worktree add -b new-feature ../feature-dir main
+# -b new-feature: 创建并切换到新分支
+# ../feature-dir: worktree 存放目录
+# main: 新分支基于 main 创建
 
-# 已有分支 checkout 到新目录
-git worktree add <目录路径> <已有分支名>
-```
-
-### 查看所有 Worktree
-
-```bash
+# 查看所有 worktree
 git worktree list
+# 输出示例：
+# /home/user/project        abc1234 [main]
+# /home/user/hotfix-dir     def5678 [hotfix-branch]
+# /home/user/feature-dir    ghi9012 [new-feature]
 ```
 
-输出示例：
-```
-/main-repo          main
-/worktrees/feature-a  feature-a
-/worktrees/hotfix     hotfix
-```
-
-### 删除 Worktree
+### 2.2 在 Worktree 中工作
 
 ```bash
-# 正常删除（需要分支干净，无未提交改动）
-git worktree remove <目录路径>
+# 进入 worktree 目录
+cd ../hotfix-dir
 
-# 强制删除（即使有未提交改动）
-git worktree remove --force <目录路径>
-
-# 示例
-git worktree remove .worktrees/feature-a
+# 正常的 git 操作都可用
+git status
+git add .
+git commit -m "fix: urgent bug fix"
+git push origin hotfix-branch
 ```
 
-### 清理残留记录
+### 2.3 删除 Worktree
 
 ```bash
-# 清理已删除目录但还残留的 worktree 记录
+# 先移除 worktree
+git worktree remove ../hotfix-dir
+
+# 如果目录有未提交的修改，需要强制删除
+git worktree remove --force ../hotfix-dir
+
+# 如果手动删除了目录，清理残留记录
 git worktree prune
 ```
 
-### 移动 Worktree
+---
+
+## 三、完整工作流示例
+
+### 场景：紧急修复中断 feature 开发
 
 ```bash
-git worktree move <源路径> <目标路径>
+# 1. 正在 feature 分支开发
+cd ~/project
+git branch  # * feature-login
+
+# 2. 收到紧急 bug 报告，创建 hotfix worktree
+git worktree add ../hotfix-critical -b hotfix/critical-bug main
+
+# 3. 在 hotfix worktree 中修复
+cd ../hotfix-critical
+vim src/auth.py
+git add src/auth.py
+git commit -m "fix: critical auth bypass"
+git push origin hotfix/critical-bug
+
+# 4. 合并到 main 并推送
+git checkout main  # 注意：这里在 worktree 内切换
+git merge hotfix/critical-bug
+git push origin main
+
+# 5. 回到 feature 继续开发（无需 stash 或 rebase）
+cd ~/project
+# 代码状态和之前完全一样，没有被打断
+
+# 6. 清理 worktree
+git worktree remove ../hotfix-critical
 ```
 
 ---
 
-## 核心规则
+## 四、注意事项
 
-**同一个分支不能同时在多个目录 checkout**
+| 规则 | 说明 |
+|------|------|
+| 同一分支不能同时检出 | 同一分支只能存在于一个 worktree 中，否则会冲突 |
+| worktree 共享 .git | 所有 worktree 共享同一个仓库对象，提交历史同步 |
+| 子模块需独立初始化 | 新 worktree 中的子模块需要单独 `git submodule update --init` |
+| IDE 配置独立 | 每个 worktree 目录有独立的 IDE 工作区配置 |
 
-如果 `feature-a` 分支已经在 `.worktrees/feature-a` 目录被 checkout：
-- 不能在主目录执行 `git checkout feature-a`
-- 想在 `feature-a` 分支工作，必须进入 `.worktrees/feature-a` 目录
+### 常见问题
 
----
+**Q: `git worktree add` 报错 "branch already checked out"？**
+A: 该分支已在其他 worktree 中检出。需要先从那个 worktree 切换到别的分支，或者用 `-b` 创建新分支。
 
-## 常见工作流程
+**Q: 删除 worktree 目录后 `git worktree list` 还有记录？**
+A: 运行 `git worktree prune` 清理过时的记录。
 
-### 1. 并行开发多个功能
-
-```bash
-# 创建 worktree
-git worktree add -b feature-a .worktrees/feature-a main
-git worktree add -b feature-b .worktrees/feature-b main
-
-# 开发功能 A
-cd .worktrees/feature-a
-# 写代码、测试、提交...
-
-# 开发功能 B（独立目录，互不干扰）
-cd .worktrees/feature-b
-# 写代码、测试、提交...
-
-# 合并到主分支
-cd ../..
-git merge feature-a
-git merge feature-b
-
-# 清理
-git worktree remove .worktrees/feature-a
-git worktree remove .worktrees/feature-b
-```
-
-### 2. 紧急 Hotfix（不打断当前工作）
-
-```bash
-# 正在开发 feature，突然要修 bug
-# 不 stash、不切换，直接创建 worktree
-git worktree add -b hotfix-123 .worktrees/hotfix main
-
-cd .worktrees/hotfix
-# 修复 bug、提交、测试...
-
-cd ../..
-git merge hotfix-123
-git worktree remove .worktrees/hotfix
-
-# 继续开发 feature（完全没被打断）
-```
-
-### 3. PR Review / 对比分支
-
-```bash
-# 创建 worktree 看 PR 代码
-git worktree add .worktrees/pr-review pr-branch
-
-# 用 IDE 打开对比
-code .worktrees/pr-review   # PR 版本
-code .                      # 当前版本
-
-# 看完删除
-git worktree remove .worktrees/pr-review
-```
-
-### 4. 长期维护多个版本
-
-```bash
-# 同时维护多个发布版本
-git worktree add .worktrees/v1.x v1.0
-git worktree add .worktrees/v2.x v2.0
-git worktree add .worktrees/dev develop
-```
+**Q: worktree 之间可以共享 stash 吗？**
+A: 可以。`git stash` 是仓库级的，所有 worktree 共享同一个 stash 列表，可以在任意 worktree 中 `git stash pop`。
 
 ---
 
-## Worktree 内的提交如何合并到主分支
+## 五、与 Git Submodule 对比
 
-```bash
-# 1. 在 worktree 目录提交改动
-cd .worktrees/feature-a
-git add .
-git commit -m "完成功能 A"
-
-# 2. 回到主目录合并
-cd ../..
-git merge feature-a
-
-# 或者只合并某个提交
-git cherry-pick <commit-hash>
-```
+| 特性 | Git Worktree | Git Submodule |
+|------|-------------|---------------|
+| 目的 | 同仓库多分支并行 | 嵌入其他仓库 |
+| 仓库数量 | 1 个 | 多个 |
+| 提交同步 | 自动同步 | 需手动更新引用 |
+| 适用场景 | 并行开发/紧急修复 | 依赖管理/代码复用 |
 
 ---
 
-## 目录结构示例
-
-```
-main-repo/                  # 主目录（main 分支）
-├── .git/                   # Git 数据库（共享）
-├── src/
-├── README.md
-│
-.worktrees/
-├── feature-a/              # feature-a 分支
-│   ├── .git                # 指向主目录 .git 的链接
-│   ├── src/
-│   ├── README.md
-│
-├── hotfix/                 # hotfix 分支
-│   ├── .git
-│   ├── src/
-│   └── README.md
-```
-
----
-
-## 最佳实践
-
-1. **命名有规律**：`.worktrees/<branch-name>` 或 `.worktrees/<task-name>`
-2. **用完就删**：Worktree 是临时的，完成任务就 `git worktree remove`
-3. **定期清理**：`git worktree prune` 清理残留记录
-4. **IDE 多窗口**：VSCode 等可以打开多个目录，各 worktree 独立窗口
-
----
-
-## 对比：Worktree vs Clone
-
-| 方式 | 仓库数据 | 工作目录 | 磁盘占用 | 提交互通 |
-|------|----------|----------|----------|----------|
-| `git clone` | 完全独立 | 完全独立 | 大 | 不互通 |
-| `git worktree` | 共享 `.git` | 各目录独立 | 小 | 互通 |
-
----
-
-## 一句话总结
-
-**Git Worktree = 不切换分支就能同时在多个分支工作**
-
-- 开新功能不用 stash 当前改动
-- 紧急修 bug 不打断正在进行的工作
-- 多人协作各干各的目录，互不干扰
+*最后更新: 2026-05-11*
