@@ -194,17 +194,18 @@ export default defineConfig({
             .sort((a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date))
             .slice(0, 20)
 
+        const base = siteConfig.site.base.replace(/\/$/, '')
         const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Flight Journal</title>
-    <link>https://axelwt.github.io/flight-journal/</link>
+    <link>https://axelwt.github.io${base}/</link>
     <description>基于 VitePress 的个人博客</description>
     <language>zh-CN</language>
-    <atom:link href="https://axelwt.github.io/flight-journal/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://axelwt.github.io${base}/feed.xml" rel="self" type="application/rss+xml"/>
 ${articles.map(p => `    <item>
       <title>${escapeXml(p.frontmatter.title ?? '')}</title>
-      <link>https://axelwt.github.io${p.url}</link>
+      <link>https://axelwt.github.io${base}${p.url}</link>
       <pubDate>${new Date(p.frontmatter.date).toUTCString()}</pubDate>
       <description>${escapeXml(stripHtml(p.excerpt ?? ''))}</description>
     </item>`).join('\n')}
