@@ -5,7 +5,7 @@ import {resolve} from 'node:path'
 export default defineConfig({
     lang: 'zh-CN',
     title: 'Flight Journal',
-    description: '基于 VitePress 的个人博客',
+    description: 'Felix的个人博客',
     base: '/flight-journal/',
     head: [
         ['link', {rel: 'alternate', type: 'application/rss+xml', title: 'Flight Journal RSS', href: '/flight-journal/feed.xml'}],
