@@ -171,7 +171,7 @@ export default defineConfig({
             ],
         },
         socialLinks: [
-            {icon: 'github', link: 'https://github.com/AxelWT/flight-journal'},
+            // {icon: 'github', link: 'https://github.com/AxelWT/flight-journal'},
             {icon: 'rss', link: '/flight-journal/feed.xml'},
         ],
         footer: {
