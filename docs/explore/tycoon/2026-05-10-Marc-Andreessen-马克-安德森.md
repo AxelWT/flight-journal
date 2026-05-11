@@ -53,7 +53,3 @@ source: Marc Andreessen 2026 AMA 访谈
 > **"We're only in the first inning."**
 
 一个经历了互联网从无到有的人告诉你：AI的浪潮比互联网还大，而且才刚刚开始。如果连他都觉得早，那你也不用焦虑自己错过了什么——绝大多数人还完全没意识到正发生什么。
-
----
-
-📅 2026-05-10 · 📎 [原文链接](https://github.com/AxelWT/flight-journal)
