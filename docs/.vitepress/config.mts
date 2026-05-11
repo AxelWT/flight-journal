@@ -53,7 +53,7 @@ export default defineConfig({
                 {
                     text: '心得',
                     items: [
-                        {text: '待办清单', link: '/notes/self/todo'},
+                        {text: '心得-2026', link: '/notes/self/Insights-2026'},
                     ],
                 },
                 {
