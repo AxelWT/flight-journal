@@ -121,6 +121,8 @@ export default defineConfig({
                         {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
                         {text: '《富爸爸穷爸爸》', link: '/read/invest/《富爸爸穷爸爸》'},
                         {text: '《穷查理宝典》', link: '/read/invest/《穷查理宝典》'},
+                        {text: '《纳瓦尔宝典》', link: '/read/invest/《纳瓦尔宝典》'},
+                        {text: '《非对称风险》', link: '/read/invest/《非对称风险》'},
                         {text: '《交易心理分析》', link: '/read/invest/《交易心理分析》'},
                         {text: '基金知识笔记', link: '/read/invest/基金知识笔记'},
                         {text: '如何读懂经济和金融指标', link: '/read/invest/如何读懂经济和金融指标'},
