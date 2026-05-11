@@ -207,7 +207,7 @@ ${articles.map(p => `    <item>
       <title>${escapeXml(p.frontmatter.title ?? '')}</title>
       <link>https://axelwt.github.io${base}${p.url}</link>
       <pubDate>${new Date(p.frontmatter.date).toUTCString()}</pubDate>
-      <description>${escapeXml(stripHtml(p.excerpt ?? ''))}</description>
+      <description><![CDATA[${p.html ?? ''}]]></description>
     </item>`).join('\n')}
   </channel>
 </rss>`
@@ -225,11 +225,3 @@ function escapeXml(str: string): string {
         .replace(/'/g, '&apos;')
 }
 
-function stripHtml(html: string): string {
-    return html
-        .replace(/<[^>]*>/g, '')
-        .replace(/&ZeroWidthSpace;/g, '')
-        .replace(/\n+/g, ' ')
-        .trim()
-        .slice(0, 200)
-}
