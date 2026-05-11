@@ -31,6 +31,7 @@ export default defineConfig({
                     text: '技术',
                     items: [
                         {text: '2026-05-11 AI Agent：从"问答工具"到"数字员工"的进化', link: '/explore/tech/2026-05-11-AI-Agent-人工智能智能体-从问答工具到数字员工的进化'},
+                        {text: '2026-05-11 后量子密码学（PQC）', link: '/explore/tech/2026-05-11-后量子密码学-PQC-Post-Quantum-Cryptography'},
                         {text: '2026-05-11 费曼学习法四步法', link: '/explore/tech/2026-05-11-费曼学习法四步法-Feynman-Technique'},
                         {text: '2026-05-10-CRDT：让多人协作"无冲突"同步的数学魔法', link: '/explore/tech/2026-05-10-CRDT-让多人协作无冲突同步的数学魔法'},
                         {text: '2026-05-10-gRPC — 把远程调用做成"本地函数"', link: '/explore/tech/2026-05-10-gRPC-把远程调用做成本地函数'},
