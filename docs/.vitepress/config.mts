@@ -38,6 +38,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-05-11 《人类简史：从动物到上帝》', link: '/explore/book/2026-05-11-人类简史从动物到上帝-Sapiens'},
                         {text: '2026-05-10 《思考，快与慢》', link: '/explore/book/2026-05-10-思考快与慢-Thinking-Fast-and-Slow'},
                     ],
                 },
