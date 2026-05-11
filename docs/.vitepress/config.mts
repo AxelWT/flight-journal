@@ -98,6 +98,7 @@ export default defineConfig({
                         {text: 'Dubbo 框架', link: '/notes/java/Dubbo框架'},
                         {text: '服务限流组件', link: '/notes/java/服务限流组件'},
                         {text: 'Redis 缓存数据库', link: '/notes/java/Redis缓存数据库'},
+                        {text: '12306 系统抢票原理', link: '/notes/java/12306系统抢票原理'},
                         {text: 'Kafka 消息队列', link: '/notes/java/kafka消息队列'},
                         {text: 'MySQL 数据库', link: '/notes/java/mysql数据库'},
                         {text: '实战踩坑', link: '/notes/java/实战踩坑'},
@@ -123,6 +124,8 @@ export default defineConfig({
                         {text: '《穷查理宝典》', link: '/read/invest/《穷查理宝典》'},
                         {text: '《纳瓦尔宝典》', link: '/read/invest/《纳瓦尔宝典》'},
                         {text: '《非对称风险》', link: '/read/invest/《非对称风险》'},
+                        {text: '《段永平投资问答录》', link: '/read/invest/《段永平投资问答录》'},
+                        {text: '《炒股的智慧》', link: '/read/invest/《炒股的智慧》'},
                         {text: '《交易心理分析》', link: '/read/invest/《交易心理分析》'},
                         {text: '基金知识笔记', link: '/read/invest/基金知识笔记'},
                         {text: '如何读懂经济和金融指标', link: '/read/invest/如何读懂经济和金融指标'},
@@ -138,6 +141,7 @@ export default defineConfig({
                     text: '沟通',
                     items: [
                         {text: '《好好说话》', link: '/read/communication/《好好说话》'},
+                        {text: '《蛤蟆先生去看心理医生》', link: '/read/communication/《蛤蟆先生去看心理医生》'},
                     ],
                 },
                 {
