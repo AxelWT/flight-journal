@@ -1,9 +1,5 @@
 # Flight Journal
 
-基于 [VitePress](https://vitepress.dev) 的个人博客，部署在 GitHub Pages。
-
-线上地址：[https://axelwt.github.io/flight-journal/](https://axelwt.github.io/flight-journal/)
-
 ## 项目结构
 
 ```
