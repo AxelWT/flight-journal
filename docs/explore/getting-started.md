@@ -20,16 +20,16 @@
 - **持续迭代**：同一主题可能随着探索的深入更新多次，文档会标注最后更新时间
 - **来源可溯**：关键信息和数据会尽量附上参考来源，方便追溯核实
 
-[//]: # (## 打赏)
+## 打赏
 
-[//]: # ()
-[//]: # (如果内容对你有帮助，欢迎请我喝杯咖啡 ☕)
 
-[//]: # ()
-[//]: # (<div style="display: flex; gap: 20px;">)
+如果内容对你有帮助，欢迎请我喝杯咖啡 ☕
 
-[//]: # (  <img src="/images/weixin_pay.jpg" alt="微信收款码" width="150" />)
 
-[//]: # (  <img src="/images/zhifubao_pay.jpg" alt="支付宝收款码" width="150" />)
+<div style="display: flex; gap: 20px;">
 
-[//]: # (</div>)
+  <img src="/images/weixin_pay.jpg" alt="微信收款码" width="150" />
+
+  <img src="/images/zhifubao_pay.jpg" alt="支付宝收款码" width="150" />
+
+</div>
