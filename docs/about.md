@@ -1,6 +1,15 @@
-# 关于我
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-bottom: 16px;">
 
-我是王腾飞（Felix），一名后端开发工程师，同时也是一名 AI 开发工程师。目前在一家互联网公司从事开发工作，日常主要与 Java、分布式系统、微服务架构打交道，也在不断探索 AI 和大模型相关的前沿技术。
+  <img src="/images/felix.jpg" alt="felix自画像" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
+
+  <div>
+    <h1 style="margin: 0; border: none; padding: 0;">王腾飞 Felix</h1>
+    <p style="margin: 4px 0 0; color: var(--vp-c-text-2); font-size: 15px;">后端开发工程师 / AI 开发工程师</p>
+  </div>
+
+</div>
+
+一名后端开发工程师，同时也是一名 AI 开发工程师。目前在一家互联网公司从事开发工作，日常主要与 Java、分布式系统、微服务架构打交道，也在不断探索 AI 和大模型相关的前沿技术。
 
 ## 职业背景
 
