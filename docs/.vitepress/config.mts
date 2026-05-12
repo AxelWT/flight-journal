@@ -40,6 +40,7 @@ export default defineConfig({
                 {
                     text: '大佬',
                     items: [
+                        {text: '2026-05-12 Dario Amodei：AI时代的冷峻预言者', link: '/explore/tycoon/2026-05-12-Dario-Amodei-AI时代的冷峻预言者'},
                         {text: '2026-05-11 理查德·费曼', link: '/explore/tycoon/2026-05-11-理查德费曼-Richard-Feynman'},
                         {text: '2026-05-10 Marc Andreessen', link: '/explore/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
                     ],
