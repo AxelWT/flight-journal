@@ -4,7 +4,7 @@
 
 每次切换模型供应商都需要手动编辑 `~/.claude/settings.json` 中的 `ANTHROPIC_BASE_URL`、`ANTHROPIC_AUTH_TOKEN`、`ANTHROPIC_MODEL` 和 `model` 字段，非常不便。
 
-## 三种解决方案
+## 几种解决方案
 
 | 方案 | 原理 | 适合场景 |
 |------|------|----------|
@@ -14,7 +14,7 @@
 
 ---
 
-## 方案二：Shell 别名
+## 方案：Shell 别名
 
 在 `~/.zshrc` 中为每个供应商设置一个别名，每个别名通过环境变量覆盖对应的配置项。启动时选择对应的别名即可。
 
@@ -42,7 +42,7 @@ alias claude-or='ANTHROPIC_BASE_URL="https://openrouter.ai/api/v1/" ANTHROPIC_AU
 
 ---
 
-## 方案三：切换脚本
+## 方案：切换脚本
 
 由两个文件组成：
 
