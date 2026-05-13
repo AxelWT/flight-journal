@@ -42,6 +42,7 @@ export default defineConfig({
                 {
                     text: '大佬',
                     items: [
+                        {text: '2026-05-13 从"最聪明的人"到AGI预言家：Demis Hassabis', link: '/explore/tycoon/2026-05-13-从最聪明的人到AGI预言家DemisHassabis'},
                         {text: '2026-05-12 Dario Amodei：AI时代的冷峻预言者', link: '/explore/tycoon/2026-05-12-Dario-Amodei-AI时代的冷峻预言者'},
                         {text: '2026-05-11 理查德·费曼', link: '/explore/tycoon/2026-05-11-理查德费曼-Richard-Feynman'},
                         {text: '2026-05-10 Marc Andreessen', link: '/explore/tycoon/2026-05-10-Marc-Andreessen-马克-安德森'},
