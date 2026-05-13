@@ -30,6 +30,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '2026-05-13 WebAssembly：从浏览器小工具到改变软件世界的"万能运行时"', link: '/explore/tech/2026-05-13-WebAssembly从浏览器小工具到改变软件世界的万能运行时'},
                         {text: '2026-05-12 WebTransport：Web 实时通信的下一次进化', link: '/explore/tech/2026-05-12-WebTransport-Web-实时通信的下一次进化'},
                         {text: '2026-05-12 油猴（Tampermonkey）：浏览器里的瑞士军刀', link: '/explore/tech/2026-05-12-油猴-Tampermonkey-浏览器里的瑞士军刀'},
                         {text: '2026-05-11 AI Agent：从"问答工具"到"数字员工"的进化', link: '/explore/tech/2026-05-11-AI-Agent-人工智能智能体-从问答工具到数字员工的进化'},
