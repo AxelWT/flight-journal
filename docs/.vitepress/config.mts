@@ -76,6 +76,7 @@ export default defineConfig({
                     items: [
                         {text: 'Learn Claude Code 项目总结', link: '/notes/agent/learn-claude-code项目总结'},
                         {text: 'Play Agents App', link: '/notes/agent/play-agents-app'},
+                        {text: 'Claude Code 切换模型供应商', link: '/notes/agent/claude-provider-switch'},
                     ],
                 },
                 {
