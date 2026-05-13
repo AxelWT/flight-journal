@@ -74,7 +74,7 @@
 }
 .contact-item:hover {
   border-color: var(--vp-c-brand-1);
-  background: var(--vp-c-bg-mute);
+  background: var(--vp-c-bg-soft);
   transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
