@@ -30,6 +30,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '2026-05-14 OLTP VS OLAP', link: '/explore/tech/2026-05-14-oltp-vs-olap'},
                         {text: '2026-05-13 WebAssembly：从浏览器小工具到改变软件世界的"万能运行时"', link: '/explore/tech/2026-05-13-WebAssembly从浏览器小工具到改变软件世界的万能运行时'},
                         {text: '2026-05-13 eBPF（extended Berkeley Packet Filter）——Linux 内核的超能力', link: '/explore/tech/2026-05-13-eBPF-Linux-内核的超能力'},
                         {text: '2026-05-12 WebTransport：Web 实时通信的下一次进化', link: '/explore/tech/2026-05-12-WebTransport-Web-实时通信的下一次进化'},
