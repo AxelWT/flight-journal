@@ -45,6 +45,7 @@ export default defineConfig({
                 {
                     text: '大佬',
                     items: [
+                        {text: '2026-05-15 黄仁勋（Jensen Huang）', link: '/explore/tycoon/2026-05-15-黄仁勋-jensen-huang'},
                         {text: '2026-05-14 硅谷"SPAC之王"——Chamath Palihapitiya', link: '/explore/tycoon/2026-05-14-硅谷spac之王-chamath-palihapitiya'},
                         {text: '2026-05-13 从"最聪明的人"到AGI预言家：Demis Hassabis', link: '/explore/tycoon/2026-05-13-从最聪明的人到AGI预言家DemisHassabis'},
                         {text: '2026-05-13 温斯顿·丘吉尔：坐在火山口上的铁血首相', link: '/explore/tycoon/2026-05-13-温斯顿丘吉尔坐在火山口上的铁血首相'},
