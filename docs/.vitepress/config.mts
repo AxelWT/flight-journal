@@ -105,6 +105,7 @@ export default defineConfig({
                         {text: 'Python 经典技巧', link: '/notes/python/python-classic-techniques'},
                         {text: 'Python 语法笔记', link: '/notes/python/python-syntax-notes'},
                         {text: '爬虫指南', link: '/notes/python/scraper-guide'},
+                        {text: '爬虫模板/干活', link: '/notes/python/scraper-guide-template'},
                         {text: 'Tmux 指南', link: '/notes/python/tmux-guide'},
                     ],
                 },
