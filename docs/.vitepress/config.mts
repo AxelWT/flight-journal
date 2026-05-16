@@ -30,6 +30,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '2026-05-16 零知识证明：证明「我知道」却不用「告诉你」', link: '/explore/tech/2026-05-16-零知识证明-证明我知道却不用告诉你'},
                         {text: '2026-05-14 OLTP VS OLAP', link: '/explore/tech/2026-05-14-oltp-vs-olap'},
                         {text: '2026-05-13 WebAssembly：从浏览器小工具到改变软件世界的"万能运行时"', link: '/explore/tech/2026-05-13-WebAssembly从浏览器小工具到改变软件世界的万能运行时'},
                         {text: '2026-05-13 eBPF（extended Berkeley Packet Filter）——Linux 内核的超能力', link: '/explore/tech/2026-05-13-eBPF-Linux-内核的超能力'},
