@@ -129,6 +129,12 @@ export default defineConfig({
                         {text: 'K8s管理', link: '/notes/java/K8S管理'},
                     ],
                 },
+                {
+                    text: '工具',
+                    items: [
+                        {text: '2026-05-16 网页颜色自定义油猴脚本', link: '/notes/tool/2026-05-16-网页颜色自定义油猴脚本'},
+                    ],
+                },
             ],
             '/read/': [
                 {
