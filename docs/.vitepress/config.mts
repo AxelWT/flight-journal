@@ -130,9 +130,9 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '工具',
+                    text: 'Tool',
                     items: [
-                        {text: '2026-05-16 网页颜色自定义油猴脚本', link: '/notes/tool/2026-05-16-网页颜色自定义油猴脚本'},
+                        {text: '网页颜色自定义油猴脚本', link: '/notes/tool/网页颜色自定义油猴脚本'},
                     ],
                 },
             ],
