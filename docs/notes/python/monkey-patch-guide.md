@@ -1,3 +1,13 @@
+---
+title: "Python 猴子补丁（Monkey Patch）指南"
+date: 2026-05-11
+description: 运行时动态修改模块、类或对象属性的方法、使用场景与风险注意事项
+tags:
+  - Python
+  - 猴子补丁
+  - 动态特性
+---
+
 # Python 猴子补丁（Monkey Patch）指南
 
 > **最后更新**: 2026-05-11

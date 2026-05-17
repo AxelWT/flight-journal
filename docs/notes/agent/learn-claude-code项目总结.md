@@ -1,3 +1,13 @@
+---
+title: "Learn Claude Code 项目总结"
+date: 2026-05-10
+description: Claude Code 核心理念总结：模型即 Agent，以及 AI Agent 开发的关键认知
+tags:
+  - Agent
+  - Claude
+  - AI
+---
+
 # Learn Claude Code 项目总结
 
 ## 一、核心理念：模型即 Agent

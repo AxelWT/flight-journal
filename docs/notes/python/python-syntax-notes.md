@@ -1,3 +1,13 @@
+---
+title: "Python 语法要点笔记"
+date: 2026-05-11
+description: Python 类型注解、数据类、模式匹配、泛型等核心语法要点整理
+tags:
+  - Python
+  - 语法
+  - 笔记
+---
+
 # Python 语法要点笔记
 
 > **最后更新**: 2026-05-11

@@ -1,3 +1,13 @@
+---
+title: "JVM 分析工具"
+date: 2026-05-10
+description: JVM GC 概览与 jstat、jmap、jstack、Arthas 等分析工具使用指南
+tags:
+  - Java
+  - JVM
+  - 工具
+---
+
 # JVM 分析工具
 
 ---

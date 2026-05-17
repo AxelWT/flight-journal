@@ -1,3 +1,13 @@
+---
+title: "Git Worktree 使用指南"
+date: 2026-05-11
+description: Git Worktree 的创建、管理与多分支并行开发工作流详解
+tags:
+  - Git
+  - 工具
+  - Worktree
+---
+
 # Git Worktree 使用指南
 
 > **最后更新**: 2026-05-11

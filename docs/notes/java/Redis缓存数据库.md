@@ -1,3 +1,13 @@
+---
+title: "Redis 开发规范"
+date: 2026-05-10
+description: Redis 键值设计规范、数据结构选型与缓存常见问题解决方案
+tags:
+  - Java
+  - Redis
+  - 缓存
+---
+
 # Redis开发规范
 
 ## 键值设计

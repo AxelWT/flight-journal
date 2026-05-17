@@ -1,3 +1,13 @@
+---
+title: "Python asyncio 事件循环完全指南"
+date: 2026-05-11
+description: 深入 asyncio 事件循环机制，包括任务调度、协程运行、线程池集成与性能优化
+tags:
+  - Python
+  - 异步
+  - asyncio
+---
+
 # Python asyncio 事件循环完全指南
 
 > **适用版本**: Python 3.10+（部分特性需 3.11+）

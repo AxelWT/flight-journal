@@ -1,3 +1,13 @@
+---
+title: "微调课程 Part 1：微调基础"
+date: 2026-05-10
+description: Transformer 模型架构、预训练与微调原理、LoRA 等参数高效微调方法
+tags:
+  - LLM
+  - 微调
+  - 深度学习
+---
+
 # 模型微调
 
 ## 1.Transformer 模型

@@ -1,3 +1,13 @@
+---
+title: "微调课程 Part 3：分词器"
+date: 2026-05-10
+description: Tokenizers 库详解，包括 BPE、WordPiece、SentencePiece 等分词算法原理与使用
+tags:
+  - LLM
+  - 分词器
+  - NLP
+---
+
 # 分词预处理和后处理
 
 ---

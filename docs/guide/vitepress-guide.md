@@ -1,3 +1,13 @@
+---
+title: "VitePress 使用指南"
+date: 2026-05-11
+description: VitePress 基于 Vite 和 Vue 的静态站点生成器使用指南，涵盖配置、主题、部署等核心功能
+tags:
+  - VitePress
+  - 指南
+  - 博客
+---
+
 # VitePress 使用指南
 
 ## 什么是 VitePress

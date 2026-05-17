@@ -1,3 +1,13 @@
+---
+title: "Play Agents App"
+date: 2026-05-11
+description: 当前热门 AI Agent 应用盘点，包括 Claude Code、OpenClaw/Hermes 等项目介绍
+tags:
+  - Agent
+  - AI
+  - 应用
+---
+
 # Play Agents App
 
 当前最热门的几个 AI Agent 应用：

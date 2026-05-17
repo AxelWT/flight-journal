@@ -1,3 +1,13 @@
+---
+title: "K8s 底层能力 Checklist"
+date: 2026-05-10
+description: K8s 健康检查、资源管理、Pod 调度与运维管理的核心知识点速查
+tags:
+  - Java
+  - K8s
+  - 运维
+---
+
 # K8s 底层能力相关 Checklist
 
 ## 理解健康检查

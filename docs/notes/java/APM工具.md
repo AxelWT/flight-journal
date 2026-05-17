@@ -1,3 +1,13 @@
+---
+title: "APM 工具"
+date: 2026-05-10
+description: Tracing API/Agent 全链路追踪、SkyWalking 等 APM 工具的原理与使用
+tags:
+  - Java
+  - APM
+  - 监控
+---
+
 # APM 工具
 
 ---

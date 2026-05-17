@@ -1,3 +1,13 @@
+---
+title: "tmux 使用指南"
+date: 2026-05-11
+description: tmux 终端复用器完整使用指南，包括会话管理、窗口操作与配置技巧
+tags:
+  - 工具
+  - tmux
+  - 终端
+---
+
 # tmux 使用指南
 
 > **版本**: tmux 3.6a

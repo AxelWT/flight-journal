@@ -1,3 +1,13 @@
+---
+title: "Dubbo 框架"
+date: 2026-05-10
+description: 从单一架构到微服务的架构演进，Dubbo 框架核心概念与服务治理实践
+tags:
+  - Java
+  - Dubbo
+  - 微服务
+---
+
 # Dubbo 框架
 
 ---

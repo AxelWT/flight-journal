@@ -1,3 +1,13 @@
+---
+title: "Claude Code 切换模型供应商"
+date: 2026-05-13
+description: Claude Code 快速切换 ANTHROPIC_BASE_URL 等配置的几种方案与自动化脚本
+tags:
+  - Agent
+  - Claude
+  - 工具
+---
+
 # Claude Code 切换模型供应商
 
 ## 问题

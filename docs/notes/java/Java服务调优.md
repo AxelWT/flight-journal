@@ -1,3 +1,13 @@
+---
+title: "Java 服务调优"
+date: 2026-05-10
+description: JVM 启动参数调优、GC 策略选择与线上服务性能优化实践
+tags:
+  - Java
+  - JVM
+  - 调优
+---
+
 # Java 服务调优
 
 ## JVM 启动参数推荐值

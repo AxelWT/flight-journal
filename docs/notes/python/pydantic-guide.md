@@ -1,3 +1,13 @@
+---
+title: "Pydantic 完全指南"
+date: 2026-05-11
+description: Pydantic V2 数据验证、模型定义、序列化与 V1 迁移的完整指南
+tags:
+  - Python
+  - Pydantic
+  - 数据验证
+---
+
 # Pydantic 完全指南
 
 > **适用版本**: Pydantic V2（兼容 V1 迁移提示）

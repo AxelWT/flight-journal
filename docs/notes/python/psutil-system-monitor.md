@@ -1,3 +1,13 @@
+---
+title: "psutil：Python 系统监控指南"
+date: 2026-05-11
+description: psutil 库实现 CPU、内存、磁盘、网络与进程监控的完整用法
+tags:
+  - Python
+  - 系统监控
+  - psutil
+---
+
 # psutil：Python 系统监控指南
 
 > **安装**: `pip install psutil`

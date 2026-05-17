@@ -1,3 +1,13 @@
+---
+title: "Kafka 消息队列"
+date: 2026-05-10
+description: Kafka 核心概念、Producer/Consumer 模型与消息可靠性保障机制
+tags:
+  - Java
+  - Kafka
+  - 消息队列
+---
+
 # Kafka 消息队列
 
 ## 基础概念

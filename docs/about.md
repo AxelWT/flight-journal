@@ -1,3 +1,11 @@
+---
+title: "关于我"
+date: 2026-05-13
+description: 个人介绍页面
+tags:
+  - 关于
+---
+
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-bottom: 16px;">
 
   <img src="/images/felix.jpg" alt="felix自画像" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />

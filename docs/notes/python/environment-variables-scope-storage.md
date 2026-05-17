@@ -1,3 +1,13 @@
+---
+title: "Python 环境变量：作用域与存储"
+date: 2026-05-11
+description: Python 环境变量的作用域规则、os.environ 操作与 .env 文件管理的完整指南
+tags:
+  - Python
+  - 环境变量
+  - 配置
+---
+
 # Python 环境变量：作用域与存储
 
 > **最后更新**: 2026-05-11

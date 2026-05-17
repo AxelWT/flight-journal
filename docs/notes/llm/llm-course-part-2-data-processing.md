@@ -1,3 +1,13 @@
+---
+title: "微调课程 Part 2：数据处理"
+date: 2026-05-10
+description: Datasets 库使用、数据加载与预处理、数据集划分与清洗方法
+tags:
+  - LLM
+  - 数据处理
+  - NLP
+---
+
 # 数据处理
 
 ---

@@ -1,3 +1,13 @@
+---
+title: "MySQL 开发规范"
+date: 2026-05-10
+description: MySQL DML/DDL 操作规范、索引设计与 SQL 优化最佳实践
+tags:
+  - Java
+  - MySQL
+  - 数据库
+---
+
 # MySQL开发规范
 
 ## DML/DDL操作规范
