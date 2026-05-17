@@ -58,6 +58,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-05-16 《有限与无限的游戏》完整深度解读', link: '/explore/book/2026-05-16-有限与无限的游戏-完整深度解读'},
                         {text: '2026-05-14 《思考，快与慢》——你的大脑，其实有两个"你"', link: '/explore/book/2026-05-14-思考快与慢-你的大脑其实有两个你'},
                         {text: '2026-05-12 《被讨厌的勇气》', link: '/explore/book/2026-05-12-被讨厌的勇气'},
                         {text: '2026-05-11 《人类简史：从动物到上帝》', link: '/explore/book/2026-05-11-人类简史从动物到上帝-Sapiens'},
