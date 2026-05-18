@@ -175,6 +175,7 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
+                        {text: '不要害怕别人会超过我', link: '/read/communication/不要害怕别人会超过我'},
                         {text: '你越是放松，结果往往越好', link: '/read/communication/你越是放松，结果往往越好'},
                         {text: '小菜一碟的心态是好是坏', link: '/read/communication/小菜一碟的心态是好是坏'},
                         {text: '《好好说话》', link: '/read/communication/《好好说话》'},
