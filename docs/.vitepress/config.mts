@@ -175,6 +175,7 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
+                        {text: '你越是放松，结果往往越好', link: '/read/communication/你越是放松，结果往往越好'},
                         {text: '小菜一碟的心态是好是坏', link: '/read/communication/小菜一碟的心态是好是坏'},
                         {text: '《好好说话》', link: '/read/communication/《好好说话》'},
                         {text: '《蛤蟆先生去看心理医生》', link: '/read/communication/《蛤蟆先生去看心理医生》'},
