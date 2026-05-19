@@ -48,6 +48,7 @@ export default defineConfig({
                 {
                     text: '大佬',
                     items: [
+                        {text: '2026-05-19 Gavin Baker：科技投资界的"逆向大师"', link: '/explore/tycoon/2026-05-19-gavin-baker-科技投资界的逆向大师'},
                         {text: '2026-05-18 Sam Altman：AI 时代的造船人', link: '/explore/tycoon/2026-05-18-Sam Altman：AI 时代的造船人'},
                         {text: '2026-05-18 沈南鹏：中国创投教父的四十年', link: '/explore/tycoon/2026-05-18-沈南鹏：中国创投教父的四十年'},
                         {text: '2026-05-18 姜诚：中泰资管百亿基金经理深度调研', link: '/explore/tycoon/2026-05-18-姜诚：中泰资管百亿基金经理深度调研'},
