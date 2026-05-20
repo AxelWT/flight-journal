@@ -186,6 +186,7 @@ export default defineConfig({
                         {text: '《好好说话》', link: '/read/communication/《好好说话》'},
                         {text: '《蛤蟆先生去看心理医生》', link: '/read/communication/《蛤蟆先生去看心理医生》'},
                         {text: '情绪粒度：你到底在感受什么', link: '/read/communication/情绪粒度-你到底在感受什么'},
+                        {text: '《情绪是如何被建构的》', link: '/read/communication/《情绪是如何被建构的》'},
                     ],
                 },
                 {
