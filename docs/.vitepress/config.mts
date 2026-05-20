@@ -173,14 +173,14 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
-                        {text: '不要总想在对话中争输赢', link: '/read/communication/不要总想在对话中争输赢'},
-                        {text: '不要害怕别人会超过我', link: '/read/communication/不要害怕别人会超过我'},
-                        {text: '你越是放松，结果往往越好', link: '/read/communication/你越是放松，结果往往越好'},
-                        {text: '小菜一碟的心态是好是坏', link: '/read/communication/小菜一碟的心态是好是坏'},
-                        {text: '《好好说话》', link: '/read/communication/《好好说话》'},
-                        {text: '《蛤蟆先生去看心理医生》', link: '/read/communication/《蛤蟆先生去看心理医生》'},
-                        {text: '情绪粒度：你到底在感受什么', link: '/read/communication/情绪粒度-你到底在感受什么'},
-                        {text: '《情绪是如何被建构的》', link: '/read/communication/《情绪是如何被建构的》'},
+                        {text: '不要总想在对话中争输赢', link: '/read/dialogue/不要总想在对话中争输赢'},
+                        {text: '不要害怕别人会超过我', link: '/read/dialogue/不要害怕别人会超过我'},
+                        {text: '你越是放松，结果往往越好', link: '/read/dialogue/你越是放松，结果往往越好'},
+                        {text: '小菜一碟的心态是好是坏', link: '/read/dialogue/小菜一碟的心态是好是坏'},
+                        {text: '《好好说话》', link: '/read/dialogue/《好好说话》'},
+                        {text: '《蛤蟆先生去看心理医生》', link: '/read/dialogue/《蛤蟆先生去看心理医生》'},
+                        {text: '情绪粒度：你到底在感受什么', link: '/read/dialogue/情绪粒度-你到底在感受什么'},
+                        {text: '《情绪是如何被建构的》', link: '/read/dialogue/《情绪是如何被建构的》'},
                     ],
                 },
                 {
