@@ -81,12 +81,6 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '心得',
-                    items: [
-                        {text: '心得-2026', link: '/notes/self/Insights-2026'},
-                    ],
-                },
-                {
                     text: 'Agent',
                     items: [
                         {text: 'Learn Claude Code 项目总结', link: '/notes/agent/learn-claude-code项目总结'},
