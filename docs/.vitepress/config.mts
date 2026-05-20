@@ -95,6 +95,8 @@ export default defineConfig({
                         {text: '微调课程 Part 2：数据处理', link: '/notes/llm/llm-course-part-2-data-processing'},
                         {text: '微调课程 Part 3：分词器', link: '/notes/llm/llm-course-part-3-tokenizers'},
                         {text: '微调课程总结', link: '/notes/llm/llm-course微调课程总结'},
+                        {text: 'NLP 发展全览', link: '/notes/llm/nlp-development'},
+                        {text: 'LLM 工程开发全览', link: '/notes/llm/llm-engineering-development'},
                     ],
                 },
                 {
