@@ -24,7 +24,11 @@ tags:
 
 ---
 
-## 方案：Shell 别名
+## 方案一：/model 命令
+
+- 要求，该 base_url的供应商支持多个模型或者多个版本
+
+## 方案二：Shell 别名
 
 在 `~/.zshrc` 中为每个供应商设置一个别名，每个别名通过环境变量覆盖对应的配置项。启动时选择对应的别名即可。
 
@@ -52,7 +56,7 @@ alias claude-or='ANTHROPIC_BASE_URL="https://openrouter.ai/api/v1/" ANTHROPIC_AU
 
 ---
 
-## 方案：切换脚本
+## 方案三：切换脚本
 
 由两个文件组成：
 
@@ -288,6 +292,19 @@ case "${1:-}" in
     cmd_switch "$1"
     ;;
 esac
+```
+
+### 将~/.local/bin/目录添加到系统的 PATH 环境变量中
+
+- 此举的作用是，执行脚本时就不需要找绝对路径（~/.local/bin/claude-switch）下的脚本来执行了，而是在终端直接输入 claude-switch就可以识别到该脚本并执行
+
+```bash
+# 将下面这行命令加到 ~/.zshrc 文件中
+# User's bash script load location
+export PATH="$HOME/.local/bin:$PATH"
+
+# 最后记得让改动的变量生效
+source ~/.zshrc
 ```
 
 ### 用法速查
