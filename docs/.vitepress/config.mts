@@ -105,6 +105,16 @@ export default defineConfig({
                     ],
                 },
                 {
+                    text: 'Architecture',
+                    items: [
+                        {text: '互联网软件行业发展史', link: '/notes/arch/互联网软件行业发展史'},
+                        {text: '分布式系统与微服务核心技术全景', link: '/notes/arch/分布式系统与微服务核心技术全景'},
+                        {text: 'Raft共识算法: 让一群机器说同样的话', link: '/notes/arch/Raft共识算法让一群机器说同样的话'},
+                        {text: 'OLTP VS OLAP', link: '/notes/arch/oltp-vs-olap'},
+                        {text: '12306 系统抢票原理', link: '/notes/arch/12306系统抢票原理'},
+                    ],
+                },
+                {
                     text: 'Python',
                     items: [
                         {text: 'Asyncio 事件循环指南', link: '/notes/python/asyncio-event-loop-guide'},
@@ -131,7 +141,6 @@ export default defineConfig({
                         {text: 'Dubbo 框架', link: '/notes/java/Dubbo框架'},
                         {text: '服务限流组件', link: '/notes/java/服务限流组件'},
                         {text: 'Redis 缓存数据库', link: '/notes/java/Redis缓存数据库'},
-                        {text: '12306 系统抢票原理', link: '/notes/java/12306系统抢票原理'},
                         {text: 'Kafka 消息队列', link: '/notes/java/kafka消息队列'},
                         {text: 'MySQL 数据库', link: '/notes/java/mysql数据库'},
                         {text: '实战踩坑', link: '/notes/java/实战踩坑'},
