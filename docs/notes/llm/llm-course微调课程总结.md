@@ -747,5 +747,6 @@ LLM总结：综合所有文档生成回答
 - [Datasets 文档](https://huggingface.co/docs/datasets)
 - [Tokenizers 文档](https://huggingface.co/docs/tokenizers)
 - [Accelerate 文档](https://huggingface.co/docs/accelerate)
+- [learn-llm 课程中的所有源码实现](https://github.com/AxelWT/learn-llm)
 
 ---
