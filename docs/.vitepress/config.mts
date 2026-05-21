@@ -13,9 +13,9 @@ export default defineConfig({
     themeConfig: {
         nav: [
             {text: '首页', link: '/'},
-            {text: '探索', link: '/explore/getting-started'},
-            {text: '笔记', link: '/notes/getting-started'},
-            {text: '读书', link: '/read/getting-started'},
+            {text: '探索', link: '/explore/index'},
+            {text: '笔记', link: '/notes/'},
+            {text: '读书', link: '/read/'},
             // {text: '指南', link: '/guide/getting-started'},
             {text: '介绍', link: '/about'},
         ],
@@ -24,7 +24,7 @@ export default defineConfig({
                 {
                     text: '',
                     items: [
-                        {text: '快速开始', link: '/explore/getting-started'},
+                        {text: '快速开始', link: '/explore/'},
                     ],
                 },
                 {
@@ -83,7 +83,7 @@ export default defineConfig({
                 {
                     text: '',
                     items: [
-                        {text: '快速开始', link: '/notes/getting-started'},
+                        {text: '快速开始', link: '/notes/'},
                     ],
                 },
                 {
@@ -160,7 +160,7 @@ export default defineConfig({
                 {
                     text: '',
                     items: [
-                        {text: '快速开始', link: '/read/getting-started'},
+                        {text: '快速开始', link: '/read/'},
                     ],
                 },
                 {
