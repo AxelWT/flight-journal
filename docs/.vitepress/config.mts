@@ -120,7 +120,6 @@ export default defineConfig({
                     items: [
                         {text: 'Asyncio 事件循环指南', link: '/notes/python/asyncio-event-loop-guide'},
                         {text: '环境变量作用域与存储', link: '/notes/python/environment-variables-scope-storage'},
-                        {text: 'Git Worktree 指南', link: '/notes/python/git-worktree-guide'},
                         {text: 'Monkey Patch 指南', link: '/notes/python/monkey-patch-guide'},
                         {text: 'Psutil 系统监控', link: '/notes/python/psutil-system-monitor'},
                         {text: 'Pydantic 指南', link: '/notes/python/pydantic-guide'},
@@ -128,7 +127,6 @@ export default defineConfig({
                         {text: 'Python 语法笔记', link: '/notes/python/python-syntax-notes'},
                         {text: '爬虫指南', link: '/notes/python/scraper-guide'},
                         {text: '爬虫模板/干活', link: '/notes/python/scraper-guide-template'},
-                        {text: 'Tmux 指南', link: '/notes/python/tmux-guide'},
                     ],
                 },
                 {
@@ -152,6 +150,8 @@ export default defineConfig({
                 {
                     text: 'Tool',
                     items: [
+                        {text: 'Git Worktree 指南', link: '/notes/tool/git-worktree-guide'},
+                        {text: 'Tmux 指南', link: '/notes/tool/tmux-guide'},
                         {text: '网页颜色自定义油猴脚本', link: '/notes/tool/网页颜色自定义油猴脚本'},
                     ],
                 },
