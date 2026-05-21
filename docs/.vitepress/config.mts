@@ -65,6 +65,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-05-21 《Atlas of the Heart》深度调研——布琳·布朗的情感地图', link: '/explore/book/2026-05-21-atlas-of-the-heart深度调研'},
                         {text: '2026-05-18 为机器立心：迈向通用人工智能的中国路线', link: '/explore/book/2026-05-18-为机器立心：迈向通用人工智能的中国路线'},
                         {text: '2026-05-16 《有限与无限的游戏》完整深度解读', link: '/explore/book/2026-05-16-有限与无限的游戏-完整深度解读'},
                         {text: '2026-05-14 《思考，快与慢》——你的大脑，其实有两个"你"', link: '/explore/book/2026-05-14-思考快与慢-你的大脑其实有两个你'},
