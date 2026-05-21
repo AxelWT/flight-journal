@@ -190,6 +190,7 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
+                        {text: '不要陷入对方的节奏', link: '/read/dialogue/不要陷入对方的节奏'},
                         {text: '不要总想在对话中争输赢', link: '/read/dialogue/不要总想在对话中争输赢'},
                         {text: '不要害怕别人会超过我', link: '/read/dialogue/不要害怕别人会超过我'},
                         {text: '你越是放松，结果往往越好', link: '/read/dialogue/你越是放松，结果往往越好'},
