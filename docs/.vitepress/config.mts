@@ -30,6 +30,8 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '2026-05-22 微服务 · 服务网格 · 云原生：概念、核心技术与发展全景', link: '/explore/tech/2026-05-22-微服务-服务网格-云原生-概念核心技术与发展全景'},
+                        {text: '2026-05-22 AI全产业链全景调研', link: '/explore/tech/2026-05-22-AI全产业链全景调研'},
                         {text: '2026-05-22 大数据处理技术全景调研', link: '/explore/tech/2026-05-22-大数据处理技术全景调研'},
                         {text: '2026-05-22 推送网关技术全景调研', link: '/explore/tech/2026-05-22-推送网关技术全景调研'},
                         {text: '2026-05-21 HTMX：让 HTML 重新成为 Web 开发的主角', link: '/explore/tech/2026-05-21-HTMX-让HTML重新成为Web开发的主角'},
