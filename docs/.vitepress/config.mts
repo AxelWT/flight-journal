@@ -30,6 +30,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '2026-05-22 推送网关技术全景调研', link: '/explore/tech/2026-05-22-推送网关技术全景调研'},
                         {text: '2026-05-21 HTMX：让 HTML 重新成为 Web 开发的主角', link: '/explore/tech/2026-05-21-HTMX-让HTML重新成为Web开发的主角'},
                         {text: '2026-05-21 互联网软件行业发展史', link: '/explore/tech/2026-05-21-互联网软件行业发展史'},
                         {text: '2026-05-18 📡 Raft 共识算法：让一群机器说同样的话', link: '/explore/tech/2026-05-18-Raft共识算法让一群机器说同样的话'},
