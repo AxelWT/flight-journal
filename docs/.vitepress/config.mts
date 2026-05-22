@@ -111,8 +111,9 @@ export default defineConfig({
                     text: 'Architecture',
                     items: [
                         {text: '互联网软件行业发展史', link: '/notes/arch/互联网软件行业发展史'},
-                        {text: '分布式系统与微服务核心技术全景', link: '/notes/arch/分布式系统与微服务核心技术全景'},
-                        {text: 'Raft共识算法: 让一群机器说同样的话', link: '/notes/arch/Raft共识算法让一群机器说同样的话'},
+                        {text: '推送网关技术全景', link: '/notes/arch/推送网关技术全景'},
+                        {text: '分布式系统与微服务技术全景', link: '/notes/arch/分布式系统与微服务技术全景'},
+                        {text: 'Raft共识算法让一群机器说同样的话', link: '/notes/arch/Raft共识算法让一群机器说同样的话'},
                         {text: 'OLTP VS OLAP', link: '/notes/arch/oltp-vs-olap'},
                         {text: '12306 系统抢票原理', link: '/notes/arch/12306系统抢票原理'},
                     ],
