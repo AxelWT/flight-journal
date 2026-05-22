@@ -80,6 +80,12 @@ export default defineConfig({
                         {text: '2026-05-11 《人类简史：从动物到上帝》', link: '/explore/book/2026-05-11-人类简史从动物到上帝-Sapiens'},
                     ],
                 },
+                {
+                    text: '研报',
+                    items: [
+                        {text: '2026-05-22-AI全产业链全景调研', link: '/explore/research/2026-05-22-AI全产业链全景调研'},
+                    ],
+                },
             ],
             '/notes/': [
                 {
@@ -111,6 +117,7 @@ export default defineConfig({
                     text: 'Architecture',
                     items: [
                         {text: '互联网软件行业发展史', link: '/notes/arch/互联网软件行业发展史'},
+                        {text: '大数据处理技术全景', link: '/notes/arch/大数据处理技术全景'},
                         {text: '推送网关技术全景', link: '/notes/arch/推送网关技术全景'},
                         {text: '分布式系统与微服务技术全景', link: '/notes/arch/分布式系统与微服务技术全景'},
                         {text: 'Raft共识算法让一群机器说同样的话', link: '/notes/arch/Raft共识算法让一群机器说同样的话'},
