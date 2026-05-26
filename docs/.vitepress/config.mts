@@ -56,6 +56,7 @@ export default defineConfig({
                 {
                     text: '大佬',
                     items: [
+                        {text: '2026-05-27 埃隆·马斯克：给人类文明上保险的人', link: '/explore/tycoon/2026-05-27-埃隆马斯克-Elon-Musk'},
                         {text: '2026-05-23 互联网技术领域大师图谱：Martin Fowler 与同时代思想领袖群像', link: '/explore/tycoon/2026-05-23-互联网技术领域大师图谱-Martin-Fowler与同时代思想领袖群像'},
                         {text: '2026-05-21 Andrej Karpathy：AI圈最"任性"的技术传奇', link: '/explore/tycoon/2026-05-21-andrej-karpathy-ai圈最任性的技术传奇'},
                         {text: '2026-05-19 Gavin Baker：科技投资界的"逆向大师"', link: '/explore/tycoon/2026-05-19-gavin-baker-科技投资界的逆向大师'},
