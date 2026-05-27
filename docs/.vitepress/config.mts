@@ -8,6 +8,7 @@ export default defineConfig({
     description: 'Felix的个人博客',
     base: '/flight-journal/',
     head: [
+        ['link', {rel: 'icon', href: '/flight-journal/favicon.svg', type: 'image/svg+xml'}],
         ['link', {rel: 'alternate', type: 'application/rss+xml', title: 'Flight Journal RSS', href: '/flight-journal/feed.xml'}],
     ],
     themeConfig: {
