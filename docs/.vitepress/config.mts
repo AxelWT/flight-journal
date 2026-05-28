@@ -92,6 +92,7 @@ export default defineConfig({
                 {
                     text: '研报',
                     items: [
+                        {text: '2026-05-28 固态电池全景调研报告：技术路线·全产业链·行业格局', link: '/explore/research/2026-05-28-固态电池全景调研报告-技术路线-全产业链-行业格局'},
                         {text: '2026-05-23 专业机构投资者行业研究：数据源全景调研', link: '/explore/research/2026-05-23-专业机构投资者行业研究-数据源全景调研'},
                         {text: '2026-05-22-AI全产业链全景调研', link: '/explore/research/2026-05-22-AI全产业链全景调研'},
                     ],
