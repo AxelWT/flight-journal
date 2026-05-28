@@ -31,6 +31,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '2026-05-28 网络攻击与防御全景报告：技术原理·防御机制·2026新威胁', link: '/explore/tech/2026-05-28-网络攻击与防御全景报告'},
                         {text: '2026-05-23 从机器学习到深度学习：技术进化路线全景调研', link: '/explore/tech/2026-05-23-从机器学习到深度学习-技术进化路线全景调研'},
                         {text: '2026-05-23-GitLab-CI-CD与GitHub-Actions对比', link: '/explore/tech/2026-05-23-GitLab-CI-CD与GitHub-Actions对比'},
                         {text: '2026-05-22 微服务 · 服务网格 · 云原生：概念、核心技术与发展全景', link: '/explore/tech/2026-05-22-微服务-服务网格-云原生-概念核心技术与发展全景'},
