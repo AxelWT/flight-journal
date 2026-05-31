@@ -8,13 +8,13 @@ hero:
   actions:
     - theme: brand
       text: 探索
-      link: /explore/getting-started
+      link: /explore/index
     - theme: alt
       text: 笔记
-      link: /notes/getting-started
+      link: /notes/index
     - theme: alt
       text: 读书
-      link: /read/getting-started
+      link: /read/index
     - theme: alt
       text: 介绍
       link: /about
