@@ -131,6 +131,7 @@ export default defineConfig({
                         {text: '互联网软件行业发展史', link: '/notes/arch/互联网软件行业发展史'},
                         {text: '分布式系统与微服务技术全景', link: '/notes/arch/分布式系统与微服务技术全景'},
                         {text: '从微服务到云原生', link: '/notes/arch/从微服务到云原生'},
+                        {text: '网络攻击与防御全景', link: '/notes/arch/网络攻击与防御全景'},
                         {text: 'Raft共识算法让一群机器说同样的话', link: '/notes/arch/Raft共识算法让一群机器说同样的话'},
                         {text: '大数据处理技术全景', link: '/notes/arch/大数据处理技术全景'},
                         {text: 'OLTP VS OLAP', link: '/notes/arch/oltp-vs-olap'},
