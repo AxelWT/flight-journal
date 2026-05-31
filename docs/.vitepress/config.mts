@@ -81,6 +81,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-05-31 《进化心理学》（第6版）', link: '/explore/book/2026-05-31-进化心理学-第6版-David-Buss'},
                         {text: '2026-05-24 《真实世界的脉络》完整调研', link: '/explore/book/2026-05-24-真实世界的脉络-完整调研'},
                         {text: '2026-05-21 《自私的基因》— 理查德·道金斯', link: '/explore/book/2026-05-21-自私的基因-理查德道金斯'},
                         {text: '2026-05-21 Robert Plutchik 与情绪轮盘：一张图看懂人类所有情感', link: '/explore/book/2026-05-21-robert-plutchik与情绪轮盘'},
