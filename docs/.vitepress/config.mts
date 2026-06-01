@@ -195,6 +195,7 @@ export default defineConfig({
                 {
                     text: '投资',
                     items: [
+                        {text: '《周期、估值与人性》', link: '/read/invest/周期、估值与人性'},
                         {text: '《经济学原理》', link: '/read/invest/《经济学原理》'},
                         {text: '《聪明的投资者》', link: '/read/invest/《聪明的投资者》'},
                         {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
