@@ -81,6 +81,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-06-01 《博弈论》（Game Theory）完整调研报告', link: '/explore/book/2026-06-01-博弈论-Game-Theory-完整调研报告'},
                         {text: '2026-05-31 《钱从哪里来7：重置》完整调研报告', link: '/explore/book/2026-05-31-钱从哪里来7-重置-香帅'},
                         {text: '2026-05-31 《进化心理学》（第6版）', link: '/explore/book/2026-05-31-进化心理学-第6版-David-Buss'},
                         {text: '2026-05-24 《真实世界的脉络》完整调研', link: '/explore/book/2026-05-24-真实世界的脉络-完整调研'},
@@ -195,6 +196,7 @@ export default defineConfig({
                 {
                     text: '投资',
                     items: [
+                        {text: '《周期、估值与人性》', link: '/read/invest/周期、估值与人性'},
                         {text: '《经济学原理》', link: '/read/invest/《经济学原理》'},
                         {text: '《聪明的投资者》', link: '/read/invest/《聪明的投资者》'},
                         {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
