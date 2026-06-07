@@ -235,6 +235,7 @@ export default defineConfig({
                         {text: '《Wheel of Emotions》', link: '/read/dialogue/《Wheel of Emotions》'},
                         {text: '《好好说话》', link: '/read/dialogue/《好好说话》'},
                         {text: '《蛤蟆先生去看心理医生》', link: '/read/dialogue/《蛤蟆先生去看心理医生》'},
+                        {text: '《How to Win Friends and Influence People》', link: '/read/dialogue/《How to Win Friends and Influence People》'},
                     ],
                 },
                 {
