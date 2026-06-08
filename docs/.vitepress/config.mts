@@ -200,7 +200,6 @@ export default defineConfig({
                 {
                     text: '投资',
                     items: [
-                        {text: '《周期、估值与人性》', link: '/read/invest/周期、估值与人性'},
                         {text: '《经济学原理》', link: '/read/invest/《经济学原理》'},
                         {text: '《聪明的投资者》', link: '/read/invest/《聪明的投资者》'},
                         {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
@@ -212,6 +211,7 @@ export default defineConfig({
                         {text: '《炒股的智慧》', link: '/read/invest/《炒股的智慧》'},
                         {text: '《交易心理分析》', link: '/read/invest/《交易心理分析》'},
                         {text: '《这世界既残酷也温柔》', link: '/read/invest/这世界既残酷也温柔'},
+                        {text: '《周期、估值与人性》', link: '/read/invest/周期、估值与人性'},
                         {text: '基金知识笔记', link: '/read/invest/基金知识笔记'},
                         {text: '如何读懂经济和金融指标', link: '/read/invest/如何读懂经济和金融指标'},
                         {text: '利率和汇率变动的影响', link: '/read/invest/利率和汇率变动的影响'},
@@ -235,6 +235,7 @@ export default defineConfig({
                         {text: '《Atlas of the Heart》', link: '/read/dialogue/《Atlas of the Heart》'},
                         {text: '《Wheel of Emotions》', link: '/read/dialogue/《Wheel of Emotions》'},
                         {text: '《蛤蟆先生去看心理医生》', link: '/read/dialogue/《蛤蟆先生去看心理医生》'},
+                        {text: '《活出生命的意义》', link: '/read/dialogue/《活出生命的意义》'},
                         {text: '《How to Win Friends and Influence People》', link: '/read/dialogue/《How to Win Friends and Influence People》'},
                         {text: '《好好说话》', link: '/read/dialogue/《好好说话》'},
                     ],
