@@ -189,6 +189,12 @@ export default defineConfig({
                         {text: '网页颜色自定义油猴脚本', link: '/notes/tool/网页颜色自定义油猴脚本'},
                     ],
                 },
+                {
+                    text: 'Projects',
+                    items: [
+                        {text: 'resume-gpt项目介绍', link: '/notes/projects/resume-gpt项目介绍'},
+                    ],
+                },
             ],
             '/read/': [
                 {
