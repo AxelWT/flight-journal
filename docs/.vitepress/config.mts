@@ -81,6 +81,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-06-12 《枪炮、病菌与钢铁：人类社会的命运》', link: '/explore/book/2026-06-12-枪炮病菌与钢铁'},
                         {text: '2026-06-08 《活出生命的意义》——维克多·弗兰克尔', link: '/explore/book/2026-06-08-活出生命的意义-Mans-Search-for-Meaning'},
                         {text: '2026-06-01 《博弈论》（Game Theory）完整调研报告', link: '/explore/book/2026-06-01-博弈论-Game-Theory-完整调研报告'},
                         {text: '2026-05-31 《钱从哪里来7：重置》完整调研报告', link: '/explore/book/2026-05-31-钱从哪里来7-重置-香帅'},
