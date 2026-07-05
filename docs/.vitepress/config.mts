@@ -59,6 +59,7 @@ export default defineConfig({
                 {
                     text: '大佬',
                     items: [
+                        {text: '2026-07-05 拯救Intel的男人：66岁陈立武的14个月生死时速', link: '/explore/tycoon/2026-07-05-陈立武-Lip-Bu-Tan-拯救Intel的男人'},
                         {text: '2026-06-21 沃伦·巴菲特：奥马哈先知的价值投资传奇', link: '/explore/tycoon/2026-06-21-沃伦-巴菲特-Warren-Buffett'},
                         {text: '2026-05-31 林君叡 Alfred Lin：红杉资本掌舵者的点金之路', link: '/explore/tycoon/2026-05-31-林君叡Alfred-Lin-红杉资本掌舵者的点金之路'},
                         {text: '2026-05-27 西格蒙德·弗洛伊德：精神分析之父的思想图谱', link: '/explore/tycoon/2026-05-27-西格蒙德弗洛伊德-Sigmund-Freud'},
