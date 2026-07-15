@@ -83,6 +83,7 @@ export default defineConfig({
                 {
                     text: '书',
                     items: [
+                        {text: '2026-07-15 《日常生活中的自我呈现》——欧文·戈夫曼', link: '/explore/book/2026-07-15-日常生活中的自我呈现'},
                         {text: '2026-07-05 《信息简史》——詹姆斯·格雷克', link: '/explore/book/2026-07-05-信息简史-The-Information'},
                         {text: '2026-06-12 《枪炮、病菌与钢铁：人类社会的命运》', link: '/explore/book/2026-06-12-枪炮病菌与钢铁'},
                         {text: '2026-06-08 《活出生命的意义》——维克多·弗兰克尔', link: '/explore/book/2026-06-08-活出生命的意义-Mans-Search-for-Meaning'},
