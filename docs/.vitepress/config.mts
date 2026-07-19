@@ -198,6 +198,7 @@ export default defineConfig({
                     text: 'Projects',
                     items: [
                         {text: 'resume-gpt项目介绍', link: '/notes/projects/resume-gpt项目介绍'},
+                        {text: '自托管 HTTP 隧道 ｜ pipegate', link: '/notes/projects/pipegate-overview'},
                     ],
                 },
             ],
