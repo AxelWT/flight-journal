@@ -138,6 +138,7 @@ export default defineConfig({
                         {text: '微调课程总结', link: '/notes/llm/llm-course微调课程总结'},
                         {text: 'NLP 发展全览', link: '/notes/llm/nlp-development'},
                         {text: 'LLM 工程开发全览', link: '/notes/llm/llm-engineering-development'},
+                        {text: 'LLM 结构化 JSON 输出原理', link: '/notes/llm/llm-json-schema'},
                     ],
                 },
                 {
