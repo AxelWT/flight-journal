@@ -1,4 +1,4 @@
-# LLM 结构化 JSON 输出原理
+# LLM 输出结构化 JSON原理
 
 ## 背景：让 LLM 输出结构化 JSON 的三种方式
 
