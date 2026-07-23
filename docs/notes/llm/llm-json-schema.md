@@ -1,6 +1,6 @@
-# LLM 结构化 JSON 输出原理：json_object 与 json_schema 与 function_calling
+# LLM 结构化 JSON 输出原理
 
-## 0. 背景：让 LLM 输出结构化 JSON 的三种方式
+## 背景：让 LLM 输出结构化 JSON 的三种方式
 
 OpenAI 兼容 API 里，控制模型输出结构化数据主要有三种方式：
 
