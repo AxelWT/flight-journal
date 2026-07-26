@@ -167,6 +167,7 @@ export default defineConfig({
                         {text: 'Python 语法笔记', link: '/notes/python/python-syntax-notes'},
                         {text: '爬虫指南', link: '/notes/python/scraper-guide'},
                         {text: '爬虫模板/干活', link: '/notes/python/scraper-guide-template'},
+                        {text: 'Python vs Java 异常体系', link: '/notes/python/python-vs-java-exception'},
                     ],
                 },
                 {
