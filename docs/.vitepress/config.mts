@@ -206,6 +206,7 @@ export default defineConfig({
                         {text: '内网穿透工具 ｜ pipegate', link: '/notes/projects/pipegate-overview'},
                         {text: 'tradingagents | langGraph', link: '/notes/projects/tradingagents-overview'},
                         {text: 'pi | pi-main-flow', link: '/notes/projects/pi-main-flow'},
+                        {text: 'pi | pi-session-manager', link: '/notes/projects/pi-session-manager'},
                     ],
                 },
             ],
