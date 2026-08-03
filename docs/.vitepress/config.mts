@@ -207,6 +207,7 @@ export default defineConfig({
                         {text: 'tradingagents | langGraph', link: '/notes/projects/tradingagents-overview'},
                         {text: 'pi | pi-main-flow', link: '/notes/projects/pi-main-flow'},
                         {text: 'pi | pi-session-manager', link: '/notes/projects/pi-session-manager'},
+                        {text: 'pi | pi-tree', link: '/notes/projects/pi-tree'},
                     ],
                 },
             ],
