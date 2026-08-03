@@ -205,6 +205,7 @@ export default defineConfig({
                         {text: 'frp快速部署', link: '/notes/projects/frp-deploy'},
                         {text: '内网穿透工具 ｜ pipegate', link: '/notes/projects/pipegate-overview'},
                         {text: 'tradingagents | langGraph', link: '/notes/projects/tradingagents-overview'},
+                        {text: 'pi | pi-main-flow', link: '/notes/projects/pi-main-flow'},
                     ],
                 },
             ],
