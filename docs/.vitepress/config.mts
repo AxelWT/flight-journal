@@ -246,6 +246,7 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
+                        {text: '《圆圈正义》', link: '/read/dialogue/《圆圈正义》'},
                         {text: '不要陷入对方的节奏', link: '/read/dialogue/不要陷入对方的节奏'},
                         {text: '不要总想在对话中争输赢', link: '/read/dialogue/不要总想在对话中争输赢'},
                         {text: '不要害怕别人会超过我', link: '/read/dialogue/不要害怕别人会超过我'},
