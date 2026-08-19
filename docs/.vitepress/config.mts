@@ -57,6 +57,12 @@ export default defineConfig({
                     ],
                 },
                 {
+                    text: '读书',
+                    items: [
+                        {text: '《技术的本质》', link: '/explore/book/《技术的本质》'},
+                    ],
+                },
+                {
                     text: '大佬',
                     items: [
                         {text: '拯救Intel的男人：66岁陈立武的14个月生死时速', link: '/explore/tycoon/陈立武-Lip-Bu-Tan-拯救Intel的男人'},
