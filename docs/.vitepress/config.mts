@@ -31,6 +31,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: '一致性哈希：一个环 + 顺时针找主人', link: '/explore/tech/一致性哈希-一个环加顺时针找主人'},
                         {text: 'LSM-Tree（日志结构合并树）', link: '/explore/tech/LSM-Tree-日志结构合并树'},
                         {text: 'AgentDNS：给AI装上"电话号码本"', link: '/explore/tech/AgentDNS-给AI智能体装上电话号码本'},
                         {text: '网络攻击与防御全景报告', link: '/explore/tech/网络攻击与防御全景报告'},
