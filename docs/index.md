@@ -4,7 +4,7 @@ layout: home
 hero:
   name: Flight Journal
 #  text: 记录学习、阅读与思考
-  tagline: 系统开发 · AI 探索 · 读书笔记
+#  tagline: 系统开发 · AI 探索 · 读书笔记
   actions:
     - theme: brand
       text: 探索
