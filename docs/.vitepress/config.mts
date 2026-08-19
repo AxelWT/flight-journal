@@ -58,13 +58,6 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '读书',
-                    items: [
-                        {text: '《芯片战争》', link: '/explore/book/《芯片战争》'},
-                        {text: '《技术的本质》', link: '/explore/book/《技术的本质》'},
-                    ],
-                },
-                {
                     text: '大佬',
                     items: [
                         {text: '拯救Intel的男人：66岁陈立武的14个月生死时速', link: '/explore/tycoon/陈立武-Lip-Bu-Tan-拯救Intel的男人'},
@@ -89,8 +82,10 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '书',
+                    text: '书籍',
                     items: [
+                        {text: '《芯片战争》', link: '/explore/book/《芯片战争》'},
+                        {text: '《技术的本质》', link: '/explore/book/《技术的本质》'},
                         {text: '《日常生活中的自我呈现》——欧文·戈夫曼', link: '/explore/book/日常生活中的自我呈现'},
                         {text: '《信息简史》——詹姆斯·格雷克', link: '/explore/book/信息简史-The-Information'},
                         {text: '《枪炮、病菌与钢铁：人类社会的命运》', link: '/explore/book/枪炮病菌与钢铁'},
