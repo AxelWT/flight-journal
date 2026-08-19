@@ -222,6 +222,7 @@ export default defineConfig({
                     text: '投资',
                     items: [
                         {text: '《经济学原理》', link: '/read/invest/《经济学原理》'},
+                        {text: '《经济学的思维方式》', link: '/read/invest/《经济学的思维方式》'},
                         {text: '《聪明的投资者》', link: '/read/invest/《聪明的投资者》'},
                         {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
                         {text: '《富爸爸穷爸爸》', link: '/read/invest/《富爸爸穷爸爸》'},
