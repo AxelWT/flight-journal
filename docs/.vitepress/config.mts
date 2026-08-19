@@ -60,6 +60,7 @@ export default defineConfig({
                 {
                     text: '读书',
                     items: [
+                        {text: '《芯片战争》', link: '/explore/book/《芯片战争》'},
                         {text: '《技术的本质》', link: '/explore/book/《技术的本质》'},
                     ],
                 },
