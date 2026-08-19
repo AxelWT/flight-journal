@@ -31,6 +31,7 @@ export default defineConfig({
                 {
                     text: '技术',
                     items: [
+                        {text: 'LSM-Tree（日志结构合并树）', link: '/explore/tech/LSM-Tree-日志结构合并树'},
                         {text: 'AgentDNS：给AI装上"电话号码本"', link: '/explore/tech/AgentDNS-给AI智能体装上电话号码本'},
                         {text: '网络攻击与防御全景报告', link: '/explore/tech/网络攻击与防御全景报告'},
                         {text: '从机器学习到深度学习：技术进化路线全景', link: '/explore/tech/从机器学习到深度学习-技术进化路线全景调研'},
