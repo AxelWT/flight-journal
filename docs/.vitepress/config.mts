@@ -252,6 +252,7 @@ export default defineConfig({
                 {
                     text: '沟通',
                     items: [
+                        {text: '《人的正确思想是从哪里来的》', link: '/read/dialogue/《人的正确思想是从哪里来的》'},
                         {text: '《圆圈正义》', link: '/read/dialogue/《圆圈正义》'},
                         {text: '不要陷入对方的节奏', link: '/read/dialogue/不要陷入对方的节奏'},
                         {text: '不要总想在对话中争输赢', link: '/read/dialogue/不要总想在对话中争输赢'},
