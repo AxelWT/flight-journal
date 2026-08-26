@@ -195,6 +195,14 @@ export default defineConfig({
                     ],
                 },
                 {
+                    text: 'JavaScript',
+                    items: [
+                        {text: 'JavaScript 核心语法', link: '/notes/javascript/js'},
+                        {text: 'ES6+ 与 ESM 模块', link: '/notes/javascript/esm6'},
+                        {text: 'TypeScript 核心', link: '/notes/javascript/typescript'},
+                    ],
+                },
+                {
                     text: 'Tool',
                     items: [
                         {text: 'Git Worktree 指南', link: '/notes/tool/git-worktree-guide'},
