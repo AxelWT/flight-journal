@@ -245,7 +245,7 @@ export default defineConfig({
                         {text: '《段永平投资问答录》', link: '/read/invest/《段永平投资问答录》'},
                         {text: '《炒股的智慧》', link: '/read/invest/《炒股的智慧》'},
                         {text: '《交易心理分析》', link: '/read/invest/《交易心理分析》'},
-                        {text: '《这世界既残酷也温柔》', link: '/read/invest/这世界既残酷也温柔'},
+                        {text: '《这世界既残酷也温柔》', link: '/read/invest/《这世界既残酷也温柔》'},
                         {text: '《周期、估值与人性》', link: '/read/invest/周期、估值与人性'},
                         {text: '基金知识笔记', link: '/read/invest/基金知识笔记'},
                         {text: '如何读懂经济和金融指标', link: '/read/invest/如何读懂经济和金融指标'},
