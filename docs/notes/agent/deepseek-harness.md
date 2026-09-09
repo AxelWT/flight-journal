@@ -435,27 +435,58 @@ tool/call
 
 ### 3.11 完整流程图
 
-```mermaid
-flowchart TD
-    A[InputBar<br/>ui-conversation/skeleton/InputBar.tsx] --> B[InputMachine<br/>input/machine.ts + facade.ts]
-    B -->|default-sink| C[InputHub<br/>input/hub.ts]
-    C --> D[ConversationController.sendSession<br/>client/service.ts]
-    D --> E[Session.prompt<br/>client/runtime/.../session.ts]
-    E -->|HTTP /api| F[WebApiClient + http-bridge]
-    F --> G[ApiProxy.prompt<br/>host/apiproxy/src/api-proxy.ts]
-    G -->|followup / steer| H[Agent Loop inbox<br/>core/agent-loop/src/agent.ts]
-    H --> I[kick → turn → step]
-    I --> J[preStep: systemPrompt + tools schema]
-    J --> K[ctx.llm.stream<br/>llm/llm-deepseek/src/adapter.ts]
-    K -->|SSE → StreamChunk| L{有 tool calls?}
-    L -->|否| M[assistant/chunk → assistant/message]
-    L -->|是| N[executeToolCalls 流水线<br/>pre → execute → post → result]
-    N --> I
-    M --> O[Session Event Sourcing<br/>写入 session log]
-    N --> O
-    O --> P[session-projection-* 折叠视图]
-    P -->|WebSocket| Q[前端 UI 渲染]
 ```
+ 1. InputBar                       ui-conversation/skeleton/InputBar.tsx
+        │
+        ▼
+ 2. InputMachine                   input/machine.ts + facade.ts
+        │  default-sink
+        ▼
+ 3. InputHub                       input/hub.ts
+        │
+        ▼
+ 4. ConversationController         client/service.ts
+        │  sendSession()
+        ▼
+ 5. Session.prompt                 client/runtime/.../session.ts
+        │  HTTP /api
+        ▼
+ 6. WebApiClient + http-bridge
+        │
+        ▼
+ 7. ApiProxy.prompt                host/apiproxy/src/api-proxy.ts
+        │  followup / steer
+        ▼
+ 8. Agent Loop inbox               core/agent-loop/src/agent.ts
+        │
+        ▼
+ 9. kick → turn → step ◄─────────────────┐
+        │                                │ 工具结果回来后
+        ▼                                │ 继续请求模型
+10. preStep: systemPrompt + tools schema │
+        │                                │
+        ▼                                │
+11. ctx.llm.stream                 llm/llm-deepseek/src/adapter.ts
+        │  SSE → StreamChunk           │
+        ▼                                │
+12. 有 tool calls? ───── 否 ──► assistant/chunk → assistant/message
+        │                                │
+        是                                │
+        ▼                                │
+13. executeToolCalls 流水线             │
+        pre → execute → post → result ──┘
+        │
+        ▼
+14. Session Event Sourcing         写入 session log
+        │
+        ▼
+15. session-projection-*           折叠视图
+        │  WebSocket
+        ▼
+16. 前端 UI 渲染
+```
+
+> **关键循环**：第 12 步若模型返回 tool calls，工具执行完成后会回到第 9 步继续下一个 step，直到模型不再调用工具，才进入第 14 步写入 session log。
 
 ---
 
