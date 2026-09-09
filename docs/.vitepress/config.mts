@@ -132,6 +132,7 @@ export default defineConfig({
                         {text: 'Play Agents App', link: '/notes/agent/play-agents-app'},
                         {text: 'Claude Code 切换模型供应商', link: '/notes/agent/claude-provider-switch'},
                         {text: 'DeepSeek Harness 源码学习', link: '/notes/agent/deepseek-harness'},
+                        {text: 'DeepSeek Harness-Cordis', link: '/notes/agent/deepseek-harness-cordis'},
                         {text: 'AI 持续学习', link: '/notes/agent/continuous-learning'},
                     ],
                 },
