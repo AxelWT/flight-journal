@@ -28,7 +28,8 @@
 .gate {
     position: fixed;
     inset: 0;
-    z-index: 1;
+    /* 覆盖层：需盖过导航栏（VPNav z-index 约 30） */
+    z-index: 100;
     overflow: hidden;
     background: var(--gate-bg);
 }

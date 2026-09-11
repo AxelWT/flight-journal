@@ -54,6 +54,12 @@
     --vp-font-family-mono: var(--font-mono);
 
     --vp-nav-height: 64px;
+
+    /* home hero */
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #9c6b3f 30%, #c08858);
+    --vp-home-hero-image-background-image: none;
+    --vp-home-hero-image-filter: none;
 }
 
 /* ============================================================
@@ -89,6 +95,8 @@
     --vp-button-alt-hover-border: #d4a574;
     --vp-button-alt-hover-text: #d4a574;
     --vp-button-alt-hover-bg: #1b1814;
+
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #d4a574 30%, #e0bd92);
 }
 
 /* ============================================================
@@ -167,6 +175,95 @@ body {
 }
 .VPSocialLink:hover {
     color: var(--vp-c-brand-1) !important;
+}
+
+/* ============================================================
+   Home — Hero（落叶版首页）
+   ============================================================ */
+.VPHome {
+    padding-bottom: 4rem;
+}
+.VPHero {
+    min-height: calc(100vh - var(--vp-nav-height)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+    position: relative;
+    overflow: hidden;
+}
+.VPHero .container {
+    flex-direction: column !important;
+    text-align: center;
+    align-items: center !important;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+.VPHero .main {
+    width: 100% !important;
+    max-width: 720px;
+    margin: 0 auto;
+    order: 1 !important;
+    flex-grow: 0 !important;
+    position: relative;
+    z-index: 2;
+}
+/* .heading is a flex column — center its items on the cross axis */
+.VPHero .heading {
+    align-items: center !important;
+}
+.VPHero .name {
+    font-family: var(--font-display) !important;
+    font-weight: 600 !important;
+    font-size: clamp(2.8rem, 7vw, 4.2rem) !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.15 !important;
+    -webkit-text-fill-color: var(--vp-c-brand-1) !important;
+    color: var(--vp-c-brand-1) !important;
+    background: none !important;
+    padding-bottom: 0.4rem !important;
+    margin: 0 auto 0.6rem !important;
+    width: auto !important;
+    max-width: none !important;
+}
+.VPHero .text {
+    font-family: var(--font-serif) !important;
+    font-weight: 500 !important;
+    font-size: clamp(1.3rem, 3vw, 1.7rem) !important;
+    color: var(--vp-c-text-1) !important;
+    line-height: 1.5 !important;
+    margin: 0.5rem auto 0 !important;
+    width: auto !important;
+    max-width: none !important;
+}
+.VPHero .tagline {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: clamp(1rem, 2vw, 1.2rem) !important;
+    color: var(--vp-c-text-2) !important;
+    line-height: 1.9 !important;
+    margin: 0.8rem auto 0 !important;
+    letter-spacing: 0.04em;
+    max-width: 540px;
+}
+.VPHero .image {
+    display: none !important;
+}
+.VPHero .actions {
+    justify-content: center !important;
+    margin-top: 1.8rem !important;
+}
+
+/* decorative hero flourish */
+.VPHero .main::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 1px;
+    margin: 0 auto 2.2rem;
+    background: linear-gradient(90deg, transparent, var(--vp-c-brand-2), transparent);
 }
 
 /* ============================================================
@@ -561,9 +658,28 @@ body {
 .VPDoc {
     animation: fadeInUp 0.5s ease;
 }
+.VPHome {
+    animation: fadeIn 0.6s ease;
+}
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================================
+   Mobile refinements
+   ============================================================ */
+@media (max-width: 768px) {
+    .VPHero {
+        padding-top: 3rem !important;
+    }
+    .VPHero .main::before {
+        margin-bottom: 1.4rem;
+    }
 }
 
 /* ============================================================

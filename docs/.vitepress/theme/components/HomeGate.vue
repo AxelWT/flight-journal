@@ -10,6 +10,8 @@ import GateDapple from './GateDapple.vue'
 
 const { isDark } = useData()
 
+const emit = defineEmits<{ (e: 'switchHome'): void }>()
+
 function toggleTheme() {
   isDark.value = !isDark.value
 }
@@ -44,14 +46,14 @@ function toggleTheme() {
     </div>
 
     <div class="gate-corner gate-corner--bl">
-      <a
+      <button
         class="gate-link"
-        :href="withBase('/feed.xml')"
-        target="_blank"
-        rel="noreferrer"
+        type="button"
+        aria-label="切换为落叶版首页"
+        @click="emit('switchHome')"
       >
-        RSS
-      </a>
+        落叶版
+      </button>
     </div>
 
     <div class="gate-corner gate-corner--br">
