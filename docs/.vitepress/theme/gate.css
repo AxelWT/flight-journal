@@ -251,6 +251,34 @@
     color: var(--vp-c-brand-1);
 }
 
+/* ---------- 主题切换标签（平铺，当前项高亮） ---------- */
+
+.home-theme-tabs {
+    /* 标签由 HomeHero 渲染在覆盖层之外，需高过 .gate 的 z-index: 100 */
+    z-index: 110;
+    gap: 10px;
+}
+
+.home-theme-tabs-sep {
+    font-size: 14px;
+    color: var(--gate-ink-2);
+    opacity: 0.6;
+}
+
+.home-theme-tab {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--gate-ink-2);
+    transition: color 0.25s ease;
+}
+
+.home-theme-tab--active {
+    color: var(--gate-ink);
+    font-weight: 500;
+}
+
 /* ---------- 入场 ---------- */
 
 @keyframes gate-fade {

@@ -1,50 +1,64 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useData } from 'vitepress'
-import FallingLeaves from './FallingLeaves.vue'
-import HomeGate from './HomeGate.vue'
+import { homeThemes, defaultHomeThemeKey } from '../homeThemes'
 
 /**
- * 首页双主题控制器（挂在 layout-top，全站仅首页生效）：
- *   gate    — 门厅式封面页（树影光斑，全屏覆盖在 home 布局之上）
- *   classic — 落叶动画 + 文学 hero（原 6d6b468 版首页）
- * 选择存 localStorage，左下角文字开关切换。
+ * 首页主题控制器（挂在 layout-top，全站仅首页生效）。
+ * 主题列表见 homeThemes.ts，新增主题只需在那边注册，
+ * 本组件与各主题组件互不感知。
  */
 
 const STORAGE_KEY = 'fj-home-style'
-type HomeStyle = 'gate' | 'classic'
 
 const { frontmatter } = useData()
 const isHome = computed(() => frontmatter.value.layout === 'home')
 
-// SSR 与客户端首帧都先渲染默认的「门厅」，挂载后再读本地存储，
+// SSR 与客户端首帧都先渲染默认主题，挂载后再读本地存储，
 // 避免服务端/客户端渲染不一致
-const style = ref<HomeStyle>('gate')
+const current = ref(defaultHomeThemeKey)
 
 onMounted(() => {
     const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved === 'gate' || saved === 'classic') style.value = saved
+    if (saved && homeThemes.some(t => t.key === saved)) current.value = saved
 })
 
-function toggle() {
-    style.value = style.value === 'gate' ? 'classic' : 'gate'
-    localStorage.setItem(STORAGE_KEY, style.value)
+const activeTheme = computed(
+    () => homeThemes.find(t => t.key === current.value) ?? homeThemes[0]
+)
+
+function select(key: string) {
+    if (key === current.value) return
+    current.value = key
+    localStorage.setItem(STORAGE_KEY, key)
 }
 </script>
 
 <template>
     <template v-if="isHome">
-        <!-- 门厅版：整屏覆盖 home 布局 -->
-        <HomeGate v-if="style === 'gate'" @switch-home="toggle" />
+        <!-- 当前主题 -->
+        <component :is="activeTheme.component" />
 
-        <!-- 落叶版：home 布局本身即是页面，只需补上落叶与开关 -->
-        <template v-else>
-            <FallingLeaves />
-            <div class="gate-corner gate-corner--bl">
-                <button class="gate-link" type="button" aria-label="切换为门厅版首页" @click="toggle">
-                    门厅版
+        <!-- 左下角：平铺主题标签，当前项高亮 -->
+        <nav class="gate-corner gate-corner--bl home-theme-tabs" aria-label="首页样式">
+            <template v-for="(t, i) in homeThemes" :key="t.key">
+                <span v-if="i > 0" class="home-theme-tabs-sep" aria-hidden="true">·</span>
+                <span
+                    v-if="t.key === current"
+                    class="home-theme-tab home-theme-tab--active"
+                    aria-current="true"
+                >
+                    {{ t.label }}
+                </span>
+                <button
+                    v-else
+                    class="gate-link home-theme-tab"
+                    type="button"
+                    @click="select(t.key)"
+                >
+                    {{ t.label }}
                 </button>
-            </div>
-        </template>
+            </template>
+        </nav>
     </template>
 </template>
