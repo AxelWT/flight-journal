@@ -134,11 +134,9 @@ body {
 /* ============================================================
    Navigation Bar
    ============================================================ */
-.VPNav {
-    backdrop-filter: saturate(180%) blur(10px);
-}
 .VPNavBar {
     background: color-mix(in srgb, var(--vp-c-bg) 82%, transparent) !important;
+    backdrop-filter: saturate(180%) blur(10px);
     border-bottom: 1px solid var(--vp-c-divider) !important;
 }
 .VPNavBar .title {
@@ -186,14 +184,22 @@ body {
     padding-bottom: 4rem;
 }
 .VPHero {
-    padding-top: 6rem !important;
-    padding-bottom: 3rem !important;
+    min-height: calc(100vh - var(--vp-nav-height)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+    position: relative;
+    overflow: hidden;
 }
 .VPHero .container {
     flex-direction: column !important;
     text-align: center;
     align-items: center !important;
     gap: 1.5rem;
+    position: relative;
+    z-index: 2;
 }
 .VPHero .main {
     width: 100% !important;
@@ -201,6 +207,8 @@ body {
     margin: 0 auto;
     order: 1 !important;
     flex-grow: 0 !important;
+    position: relative;
+    z-index: 2;
 }
 /* .heading is a flex column — center its items on the cross axis */
 .VPHero .heading {
