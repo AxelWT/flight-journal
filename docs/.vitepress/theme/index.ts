@@ -1,17 +1,13 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
-import { h } from 'vue'
-import FallingLeaves from './components/FallingLeaves.vue'
+import HomeGate from './components/HomeGate.vue'
 import './style.css'
+import './gate.css'
 
 export default {
     extends: DefaultTheme,
-    Layout: () => {
-        return h(DefaultTheme.Layout, null, {
-            'home-hero-info-before': () => h(FallingLeaves),
-        })
-    },
     enhanceApp({ app }) {
+        app.component('HomeGate', HomeGate)
         app.provide('site-data', {})
     },
 } satisfies Theme

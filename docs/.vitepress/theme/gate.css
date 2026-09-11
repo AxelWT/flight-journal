@@ -1,0 +1,284 @@
+/* ============================================================
+   Flight Journal — 首页门厅
+   版式与入场节奏对齐 flight-space（lefos.com）
+   整页没有可见的绿叶，只有窗外树影落在纸面上的斑驳光斑，
+   缓慢移动，让这面"墙"有真实的临场感。
+   配色沿用本站暖纸棕 / 暖墨夜色板。
+   ============================================================ */
+
+:root {
+    /* 文字与背景直接走全站 token，深浅色自动跟随 */
+    --gate-ink: var(--vp-c-text-1);
+    --gate-ink-2: var(--vp-c-text-2);
+    --gate-bg: var(--vp-c-bg);
+
+    /* 树影与光照：暖褐影子 + 左上暖白光 */
+    --gate-dapple: #4a3b2a;
+    --gate-light: rgba(255, 250, 238, 0.55);
+    --gate-shade: rgba(64, 52, 38, 0.07);
+}
+
+.dark {
+    /* 暖墨夜：树影转浅暖色（灯光透纸感） */
+    --gate-dapple: #cbb9a0;
+    --gate-light: rgba(212, 165, 116, 0.09);
+    --gate-shade: rgba(0, 0, 0, 0.32);
+}
+
+.gate {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    background: var(--gate-bg);
+}
+
+/* ---------- 光源与暗角 ---------- */
+
+.gate-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        /* 光源在左上，纸面靠光的一侧更亮 */
+        radial-gradient(125% 95% at 24% 8%, var(--gate-light), transparent 62%),
+        /* 两侧极轻的暗角，收一下画面 */
+        linear-gradient(to right, var(--gate-shade), transparent 14%),
+        linear-gradient(to left, var(--gate-shade), transparent 14%);
+}
+
+/* ============================================================
+   树影
+   ============================================================ */
+
+.gate-dapple {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* 外层：只做 transform / opacity，可被合成 */
+.dap {
+    position: absolute;
+    transform-origin: 50% 50%;
+    opacity: var(--op);
+    animation: dap-sway var(--dur) ease-in-out var(--delay) infinite;
+}
+
+/* 内层：静态承载高斯模糊，浏览器只需栅格化一次 */
+.dap-blur {
+    position: absolute;
+    inset: 0;
+}
+
+.dap-blur svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.dap-blur path {
+    fill: var(--gate-dapple);
+}
+
+/* 一阵一阵的风：荡出去、偏一点、再荡回来，中间有快有慢 */
+@keyframes dap-sway {
+    0% {
+        transform: rotate(calc(var(--rot) * -0.55))
+            translate3d(calc(var(--drift) * -0.35), 0, 0);
+        opacity: calc(var(--op) * 0.86);
+    }
+    26% {
+        transform: rotate(calc(var(--rot) * -1))
+            translate3d(calc(var(--drift) * -1), calc(var(--drift) * 0.35), 0);
+        opacity: calc(var(--op) * 0.76);
+    }
+    52% {
+        transform: rotate(calc(var(--rot) * 0.9))
+            translate3d(calc(var(--drift) * 0.85), calc(var(--drift) * -0.5), 0);
+        opacity: var(--op);
+    }
+    74% {
+        transform: rotate(calc(var(--rot) * 0.25))
+            translate3d(calc(var(--drift) * 0.4), calc(var(--drift) * -0.15), 0);
+        opacity: calc(var(--op) * 0.9);
+    }
+    100% {
+        transform: rotate(calc(var(--rot) * -0.55))
+            translate3d(calc(var(--drift) * -0.35), 0, 0);
+        opacity: calc(var(--op) * 0.86);
+    }
+}
+
+/* ============================================================
+   门厅文字
+   ============================================================ */
+
+/* 每个元素一层：整层绝对铺满并居中 */
+.gate-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+/* 在居中基础上整体下移（参考站用的就是同一个 clamp，居中后实际下移一半） */
+.gate-layer--enter {
+    margin-top: clamp(280px, 40vw, 400px);
+}
+
+/* ---------- 中央 wordmark ---------- */
+
+.gate-logo {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4.6vw, 42px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--vp-c-brand-1);
+    text-decoration: none;
+    white-space: nowrap;
+    opacity: 0;
+    animation: gate-fade 1s ease 0.5s forwards;
+    transition: opacity 0.25s ease;
+}
+
+.gate-logo:hover {
+    opacity: 0.72;
+}
+
+/* wordmark 下的一行小字 */
+.gate-tagline {
+    margin: 1.4rem 0 0;
+    font-family: var(--font-serif);
+    font-size: clamp(13px, 1.6vw, 15px);
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--gate-ink-2);
+    opacity: 0;
+    animation: gate-fade 1s ease 1.1s forwards;
+}
+
+/* ---------- 进入 ---------- */
+
+.gate-enter {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gate-ink-2);
+    text-decoration: none;
+    opacity: 0;
+    animation: gate-fade 1s ease 1.5s forwards;
+    transition: color 0.25s ease;
+}
+
+.gate-enter:hover {
+    color: var(--vp-c-brand-1);
+}
+
+/* ---------- 四角 ---------- */
+
+.gate-corner {
+    position: fixed;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    opacity: 0;
+    animation: gate-fade 1s ease 2.9s forwards;
+}
+
+.gate-corner--tr {
+    top: 16px;
+    right: 16px;
+}
+
+.gate-corner--bl {
+    bottom: 16px;
+    left: 16px;
+}
+
+.gate-corner--br {
+    bottom: 16px;
+    right: 16px;
+}
+
+@media (min-width: 640px) {
+    .gate-corner--tr {
+        top: 24px;
+        right: 24px;
+    }
+
+    .gate-corner--bl {
+        bottom: 24px;
+        left: 24px;
+    }
+
+    .gate-corner--br {
+        bottom: 24px;
+        right: 24px;
+    }
+}
+
+.gate-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--gate-ink-2);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.gate-link:hover {
+    color: var(--vp-c-brand-1);
+}
+
+/* ---------- 入场 ---------- */
+
+@keyframes gate-fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gate-logo,
+    .gate-tagline,
+    .gate-enter,
+    .gate-corner {
+        opacity: 1;
+        animation: none;
+    }
+
+    .dap {
+        animation: none;
+        opacity: var(--op);
+    }
+}
+
+/* 小屏：影子整体收敛一些，别让斑驳感压过文字 */
+@media (max-width: 640px) {
+    .dap {
+        opacity: calc(var(--op) * 0.8);
+    }
+}
