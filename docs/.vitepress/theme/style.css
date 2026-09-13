@@ -178,7 +178,7 @@ body {
 }
 
 /* ============================================================
-   Home — Hero
+   Home — Hero（落叶版首页）
    ============================================================ */
 .VPHome {
     padding-bottom: 4rem;
@@ -255,6 +255,20 @@ body {
     justify-content: center !important;
     margin-top: 1.8rem !important;
 }
+
+/* decorative hero flourish */
+.VPHero .main::before {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 1px;
+    margin: 0 auto 2.2rem;
+    background: linear-gradient(90deg, transparent, var(--vp-c-brand-2), transparent);
+}
+
+/* ============================================================
+   Buttons (e.g. 404 page)
+   ============================================================ */
 .VPButton {
     font-family: var(--font-sans) !important;
     font-weight: 500 !important;
@@ -279,98 +293,6 @@ body {
 }
 .VPButton.alt:hover {
     transform: translateY(-1px);
-}
-
-/* decorative hero flourish */
-.VPHero .main::before {
-    content: "";
-    display: block;
-    width: 48px;
-    height: 1px;
-    margin: 0 auto 2.2rem;
-    background: linear-gradient(90deg, transparent, var(--vp-c-brand-2), transparent);
-}
-
-/* ============================================================
-   Home — Features
-   ============================================================ */
-.VPFeatures {
-    padding-top: 2rem !important;
-}
-.VPFeatures .container {
-    max-width: 1080px !important;
-}
-.VPFeatures .items {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    margin: 0 !important;
-}
-.VPFeatures .item {
-    flex: 1 1 0 !important;
-    width: 0 !important;
-    max-width: none !important;
-    padding: 0 10px !important;
-    box-sizing: border-box !important;
-}
-@media (max-width: 767px) {
-    .VPFeatures .items {
-        flex-direction: column !important;
-    }
-    .VPFeatures .item {
-        width: 100% !important;
-        padding: 0 0 16px !important;
-    }
-    .VPFeatures .item:last-child {
-        padding-bottom: 0 !important;
-    }
-}
-.VPFeature {
-    border: 1px solid var(--vp-c-divider) !important;
-    border-radius: 14px !important;
-    background: var(--vp-c-bg-soft) !important;
-    padding: 24px 20px !important;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    position: relative;
-    overflow: hidden;
-}
-.VPFeature::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--vp-c-brand-2), transparent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-}
-.VPFeature:hover {
-    border-color: color-mix(in srgb, var(--vp-c-brand-2) 40%, var(--vp-c-divider)) !important;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px -16px rgba(156, 107, 63, 0.3);
-}
-.VPFeature:hover::before {
-    transform: scaleX(1);
-}
-.VPFeature .title {
-    font-family: var(--font-serif) !important;
-    font-weight: 600 !important;
-    font-size: 17px !important;
-    color: var(--vp-c-text-1) !important;
-    letter-spacing: 0.02em;
-}
-.VPFeature .details {
-    font-family: var(--font-sans) !important;
-    font-size: 13.5px !important;
-    color: var(--vp-c-text-2) !important;
-    line-height: 1.8 !important;
-    margin-top: 10px !important;
-}
-.VPFeature .link-text {
-    font-size: 13px !important;
-    color: var(--vp-c-brand-1) !important;
-    letter-spacing: 0.04em;
 }
 
 /* ============================================================
@@ -757,9 +679,6 @@ body {
     }
     .VPHero .main::before {
         margin-bottom: 1.4rem;
-    }
-    .VPFeatures .items {
-        grid-template-columns: 1fr !important;
     }
 }
 
