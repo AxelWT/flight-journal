@@ -10,9 +10,6 @@ tags:
 
 # Python asyncio 事件循环完全指南
 
-> **适用版本**: Python 3.10+（部分特性需 3.11+）
-> **最后更新**: 2026-05-11
-
 ---
 
 ## 一、事件循环是什么？
@@ -528,5 +525,3 @@ asyncio.run(main())
 | 当前事件循环 | `asyncio.get_running_loop()` |
 
 ---
-
-*适用版本: Python 3.10+ | 重点更新: Python 3.11+ TaskGroup/timeout | 最后更新: 2026-05-11*
