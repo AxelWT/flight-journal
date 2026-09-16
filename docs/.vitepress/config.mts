@@ -224,6 +224,7 @@ export default defineConfig({
                     items: [
                         {text: 'resume-gpt项目介绍', link: '/notes/projects/resume-gpt-overview'},
                         {text: 'frp快速部署', link: '/notes/projects/frp-deploy'},
+                        {text: '腾讯云建站：从裸服务器到全站 HTTPS', link: '/notes/projects/tencent-cloud-website'},
                         {text: '内网穿透工具 ｜ frp | 业内标杆', link: '/notes/projects/frp-deploy-overview'},
                         {text: '内网穿透工具 ｜ pipegate', link: '/notes/projects/pipegate-overview'},
                         {text: 'tradingagents | langGraph', link: '/notes/projects/tradingagents-overview'},
