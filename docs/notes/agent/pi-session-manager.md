@@ -1,3 +1,13 @@
+---
+title: "pi 会话机制详解:管理、切换与分支树"
+date: 2026-09-26
+description: pi 会话管理机制:jsonl 存储、生命周期、多会话切换与 /tree 分支树原理
+tags:
+  - Agent
+  - pi
+  - 源码
+---
+
 # pi 会话机制详解:管理、切换与分支树
 
 > 本文合并介绍 pi 的会话管理机制(存储、生命周期、多会话切换)与会话树(`/tree`)分支机制。源码位置均来自 [earendil-works/pi-mono](https://github.com/earendil-works/pi-mono)。

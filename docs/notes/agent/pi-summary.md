@@ -1,3 +1,13 @@
+---
+title: "Pi 项目架构总结"
+date: 2026-09-26
+description: pi-mono 仓库整体架构梳理:pi-ai/pi-agent-core/pi-coding-agent/pi-tui 分层设计与关键决策
+tags:
+  - Agent
+  - pi
+  - 架构
+---
+
 # Pi 项目架构总结
 
 > 对 [earendil-works/pi-mono](https://github.com/earendil-works/pi-mono)(版本 0.80.10)的整体架构梳理。

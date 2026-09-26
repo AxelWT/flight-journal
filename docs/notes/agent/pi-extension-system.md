@@ -1,3 +1,13 @@
+---
+title: "Pi 扩展（Extension）系统总结"
+date: 2026-09-26
+description: pi 扩展系统机制:TypeScript 模块工厂、事件订阅、工具/命令/键位注册与加载流程
+tags:
+  - Agent
+  - pi
+  - 扩展系统
+---
+
 # Pi 扩展（Extension）系统总结
 
 > 基于源码 `packages/coding-agent/src/core/extensions/`（loader.ts / runner.ts / types.ts）与官方文档 `packages/coding-agent/docs/extensions.md` 整理。

@@ -1,3 +1,13 @@
+---
+title: "终端机制与常用命令速查"
+date: 2026-09-26
+description: 由 pi 源码引出的终端核心机制:三条标准流、takeOverStdout 与常用命令速查
+tags:
+  - Agent
+  - 终端
+  - 工具
+---
+
 # 终端机制与常用命令速查
 
 > 由 pi 源码学习引出：`takeOverStdout()`（output-guard.ts）利用 stdout/stderr 分离保护协议输出，本文以此展开整理终端核心机制。
