@@ -146,7 +146,7 @@ export default defineConfig({
                         {text: 'pi | pi-tree', link: '/notes/agent/pi-tree'},
                         {text: 'pi | pi-extension-system', link: '/notes/agent/pi-extension-system'},
                         {text: 'pi | pi-terminal-mechanisms', link: '/notes/agent/pi-terminal-mechanisms'},
-                        {text: 'pi | pi-summary', link: '/notes/agent/pi-sammary'},
+                        {text: 'pi | pi-summary', link: '/notes/agent/pi-summary'},
                     ],
                 },
                 {
