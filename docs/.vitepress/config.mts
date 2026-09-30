@@ -276,6 +276,7 @@ export default defineConfig({
                         {text: '《道德经》', link: '/read/dialogue/《道德经》'},
                         {text: '《人的正确思想是从哪里来的》', link: '/read/dialogue/《人的正确思想是从哪里来的》'},
                         {text: '《圆圈正义》', link: '/read/dialogue/《圆圈正义》'},
+                        {text: '《有限与无限的游戏》', link: '/read/dialogue/《有限与无限的游戏》'},
                         {text: '不要陷入对方的节奏', link: '/read/dialogue/不要陷入对方的节奏'},
                         {text: '不要总想在对话中争输赢', link: '/read/dialogue/不要总想在对话中争输赢'},
                         {text: '不要害怕别人会超过我', link: '/read/dialogue/不要害怕别人会超过我'},
