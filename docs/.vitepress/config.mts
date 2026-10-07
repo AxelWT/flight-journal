@@ -260,6 +260,7 @@ export default defineConfig({
                         {text: '《交易心理分析》', link: '/read/invest/《交易心理分析》'},
                         {text: '《这世界既残酷也温柔》', link: '/read/invest/《这世界既残酷也温柔》'},
                         {text: '《周期、估值与人性》', link: '/read/invest/周期、估值与人性'},
+                        {text: '指数学习笔记', link: '/read/invest/指数学习笔记'},
                         {text: '基金知识笔记', link: '/read/invest/基金知识笔记'},
                         {text: '如何读懂经济和金融指标', link: '/read/invest/如何读懂经济和金融指标'},
                         {text: '利率和汇率变动的影响', link: '/read/invest/利率和汇率变动的影响'},
