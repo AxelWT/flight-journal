@@ -291,6 +291,7 @@ export default defineConfig({
                         {text: '《活出生命的意义》', link: '/read/dialogue/《活出生命的意义》'},
                         {text: '《How to Win Friends and Influence People》', link: '/read/dialogue/《How to Win Friends and Influence People》'},
                         {text: '《好好说话》', link: '/read/dialogue/《好好说话》'},
+                        {text: '清醒者书单', link: '/read/dialogue/清醒者书单'},
                     ],
                 },
                 {
