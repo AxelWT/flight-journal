@@ -217,6 +217,12 @@ export default defineConfig({
                     ],
                 },
                 {
+                    text: 'C++',
+                    items: [
+                        {text: 'C++ 学习笔记', link: '/notes/cpp/C++学习笔记'},
+                    ],
+                },
+                {
                     text: 'Tool',
                     items: [
                         {text: 'Git Worktree 指南', link: '/notes/tool/git-worktree-guide'},
