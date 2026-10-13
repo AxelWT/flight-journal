@@ -637,7 +637,7 @@ GPT 基于 Transformer 的解码器结构，但与标准 Transformer 解码器�
    - **Text Prediction（文本预测）**：用于下一个词的生成，输出词表大小的概率分布（预训练阶段使用）
    - **Task Classifier（任务分类器）**：用于模型微调阶段，提取特定位置的表示对整个输入文本进行分类（如情感分析）
 
-![gpt架构](/images/llm-development/gpt架构.jpg)
+<img src="/images/llm-development/gpt架构.jpg" alt="gpt架构" style="width: 500px; max-width: 100%;" />
 
 ## 8. 预训练
 
