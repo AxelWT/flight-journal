@@ -301,8 +301,9 @@ export default defineConfig({
                     ],
                 },
                 {
-                    text: '摄影',
+                    text: '艺术',
                     items: [
+                        {text: '音乐基础知识', link: '/read/art/音乐基础知识'},
                         {text: '《美国纽约摄影学院摄影教材》', link: '/read/art/《美国纽约摄影学院摄影教材》'},
                     ],
                 },
