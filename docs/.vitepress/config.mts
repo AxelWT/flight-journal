@@ -36,6 +36,7 @@ export default defineConfig({
                 },
                 {
                     text: '技术',
+                    collapsed: true,
                     items: [
                         {text: 'DeepSeek Harness 与 Cordis 技术解读', link: '/explore/tech/DeepSeek-Harness与Cordis技术解读'},
                         {text: '一致性哈希：一个环 + 顺时针找主人', link: '/explore/tech/一致性哈希-一个环加顺时针找主人'},
@@ -67,6 +68,7 @@ export default defineConfig({
                 },
                 {
                     text: '大佬',
+                    collapsed: true,
                     items: [
                         {text: '拯救Intel的男人：66岁陈立武的14个月生死时速', link: '/explore/tycoon/陈立武-Lip-Bu-Tan-拯救Intel的男人'},
                         {text: '沃伦·巴菲特：奥马哈先知的价值投资传奇', link: '/explore/tycoon/沃伦-巴菲特-Warren-Buffett'},
@@ -91,6 +93,7 @@ export default defineConfig({
                 },
                 {
                     text: '书籍',
+                    collapsed: true,
                     items: [
                         {text: '《芯片战争》', link: '/explore/book/《芯片战争》'},
                         {text: '《技术的本质》', link: '/explore/book/《技术的本质》'},
@@ -114,6 +117,7 @@ export default defineConfig({
                 },
                 {
                     text: '研报',
+                    collapsed: true,
                     items: [
                         {text: '从通缩螺旋到产业升级', link: '/explore/research/从通缩螺旋到产业升级'},
                         {text: 'AI 浪潮下的中国经济与资产配置', link: '/explore/research/AI 浪潮下的中国经济与资产配置'},
@@ -134,6 +138,7 @@ export default defineConfig({
                 },
                 {
                     text: 'Agent',
+                    collapsed: true,
                     items: [
                         {text: 'Learn Claude Code 项目总结', link: '/notes/agent/learn-claude-code项目总结'},
                         {text: 'Play Agents App', link: '/notes/agent/play-agents-app'},
@@ -150,6 +155,7 @@ export default defineConfig({
                 },
                 {
                     text: 'LLM',
+                    collapsed: true,
                     items: [
                         {text: '微调课程 Part 1：微调基础', link: '/notes/llm/llm-course-part-1-fine-tuning'},
                         {text: '微调课程 Part 2：数据处理', link: '/notes/llm/llm-course-part-2-data-processing'},
@@ -162,6 +168,7 @@ export default defineConfig({
                 },
                 {
                     text: 'Architecture',
+                    collapsed: true,
                     items: [
                         {text: '互联网软件行业发展史', link: '/notes/arch/互联网软件行业发展史'},
                         {text: '分布式系统与微服务技术全景', link: '/notes/arch/分布式系统与微服务技术全景'},
@@ -176,6 +183,7 @@ export default defineConfig({
                 },
                 {
                     text: 'Python',
+                    collapsed: true,
                     items: [
                         {text: 'Asyncio 事件循环指南', link: '/notes/python/asyncio-event-loop-guide'},
                         {text: '环境变量作用域与存储', link: '/notes/python/environment-variables-scope-storage'},
@@ -191,6 +199,7 @@ export default defineConfig({
                 },
                 {
                     text: 'Java',
+                    collapsed: true,
                     items: [
                         {text: '网站搭建流程', link: '/notes/java/网站搭建流程'},
                         {text: '加解密服务', link: '/notes/java/加解密服务'},
@@ -209,6 +218,7 @@ export default defineConfig({
                 },
                 {
                     text: 'JavaScript',
+                    collapsed: true,
                     items: [
                         {text: 'JavaScript 核心语法', link: '/notes/javascript/js'},
                         {text: 'ES6+ 与 ESM 模块', link: '/notes/javascript/esm6'},
@@ -218,12 +228,14 @@ export default defineConfig({
                 },
                 {
                     text: 'C++',
+                    collapsed: true,
                     items: [
                         {text: 'C++ 学习笔记', link: '/notes/cpp/C++学习笔记'},
                     ],
                 },
                 {
                     text: 'Tool',
+                    collapsed: true,
                     items: [
                         {text: 'Git Worktree 指南', link: '/notes/tool/git-worktree-guide'},
                         {text: 'Tmux 指南', link: '/notes/tool/tmux-guide'},
@@ -232,6 +244,7 @@ export default defineConfig({
                 },
                 {
                     text: 'Projects',
+                    collapsed: true,
                     items: [
                         {text: 'resume-gpt项目介绍', link: '/notes/projects/resume-gpt-overview'},
                         {text: 'frp快速部署', link: '/notes/projects/frp-deploy'},
@@ -252,6 +265,7 @@ export default defineConfig({
                 },
                 {
                     text: '投资',
+                    collapsed: true,
                     items: [
                         {text: '《经济学原理》', link: '/read/invest/《经济学原理》'},
                         {text: '《经济学的思维方式》', link: '/read/invest/《经济学的思维方式》'},
@@ -279,6 +293,7 @@ export default defineConfig({
                 },
                 {
                     text: '沟通',
+                    collapsed: true,
                     items: [
                         {text: '《道德经》', link: '/read/dialogue/《道德经》'},
                         {text: '《人的正确思想是从哪里来的》', link: '/read/dialogue/《人的正确思想是从哪里来的》'},
@@ -302,6 +317,7 @@ export default defineConfig({
                 },
                 {
                     text: '艺术',
+                    collapsed: true,
                     items: [
                         {text: '音乐基础知识', link: '/read/art/音乐基础知识'},
                         {text: '《美国纽约摄影学院摄影教材》', link: '/read/art/《美国纽约摄影学院摄影教材》'},
@@ -311,6 +327,7 @@ export default defineConfig({
             '/guide/': [
                 {
                     text: '指南',
+                    collapsed: true,
                     items: [
                         {text: '快速开始', link: '/guide/getting-started'},
                         {text: 'VitePress 使用指南', link: '/guide/vitepress-guide'},
