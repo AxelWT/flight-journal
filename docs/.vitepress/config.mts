@@ -141,7 +141,7 @@ export default defineConfig({
                     text: 'Agent',
                     collapsed: true,
                     items: [
-                        {text: '深入理解AI Agent', link: '/notes/agent/深入理解AI Agent'},
+                        {text: 'AI Agents In Depth', link: '/notes/agent/ai-agents-in-depth'},
                         {text: 'Learn Claude Code 项目总结', link: '/notes/agent/learn-claude-code项目总结'},
                         {text: 'Play Agents App', link: '/notes/agent/play-agents-app'},
                         {text: 'Claude Code 切换模型供应商', link: '/notes/agent/claude-provider-switch'},

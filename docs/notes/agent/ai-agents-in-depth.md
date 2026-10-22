@@ -1,7 +1,7 @@
 ---
 title: "《深入理解 AI Agent：设计原理与工程实践》阅读划线笔记"
-date: 2026-10-16
-description: 摘录自 PDF 阅读时标黄的重点内容，涵盖 Agent 基础、上下文工程、记忆系统、工具设计等主题
+date: 2026-10-22
+description: 涵盖 Agent 基础、上下文工程、记忆系统、工具设计等主题
 tags:
   - Agent
   - 读书笔记
