@@ -126,6 +126,7 @@ export default defineConfig({
                         {text: '固态电池全景调研报告：技术路线·全产业链·行业格局', link: '/explore/research/固态电池全景调研报告-技术路线-全产业链-行业格局'},
                         {text: '专业机构投资者行业研究：数据源全景调研', link: '/explore/research/专业机构投资者行业研究-数据源全景调研'},
                         {text: 'AI全产业链全景调研', link: '/explore/research/AI全产业链全景调研'},
+                        {text: '估值推动与业绩推动', link: '/explore/research/估值推动与业绩推动'},
                     ],
                 },
             ],
