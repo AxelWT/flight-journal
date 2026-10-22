@@ -11,7 +11,7 @@ tags:
   <img src="/images/felix.jpg" alt="felix自画像" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
 
   <div>
-    <h1 style="margin: 0; border: none; padding: 0;">王腾飞 | Felix</h1>
+    <h1 style="margin: 0; border: none; padding: 0;">Felix</h1>
     <p style="margin: 4px 0 0; color: var(--vp-c-text-2); font-size: 15px;">后端开发工程师 / 全栈开发工程师</p>
   </div>
 
