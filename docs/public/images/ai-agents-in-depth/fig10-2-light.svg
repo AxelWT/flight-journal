@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 1010" width="1320" height="1010" role="img" aria-labelledby="virtual-filesystem-title" style="background:#ffffff"><style>svg{background:#f7f9fc!important;--figure-ink:#203047;--figure-inverse:#ffffff} body{background:#f7f9fc!important} line,path,polyline{stroke-linecap:round;stroke-linejoin:round}</style>
+  <title id="virtual-filesystem-title">虚拟文件系统 /</title>
+  <defs>
+  <marker id="collaboration-context-arrow" markerWidth="11" markerHeight="9" refX="10" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 11 4.5, 0 9" fill="#203047"/></marker>
+</defs>
+
+  <g data-actor="agents" data-labels="0 1">
+    <rect data-actor-card="agent-a" x="20" y="40" width="230" height="60" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-source-label="0" x="42" y="50" width="186" height="40">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:19px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Agent A</div></div>
+  </foreignObject>
+    <rect data-actor-card="agent-b" x="20" y="130" width="230" height="60" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-source-label="1" x="42" y="140" width="186" height="40">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:19px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Agent B</div></div>
+  </foreignObject>
+  </g>
+  <g data-node="virtual-filesystem" data-labels="2 3">
+    <rect data-root-card="true" x="460" y="40" width="400" height="175" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-source-label="2" x="486" y="52" width="348" height="76">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:22px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">虚拟文件系统 /</div></div>
+  </foreignObject>
+    <line x1="490" y1="136" x2="830" y2="136" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-source-label="3" x="486" y="146" width="348" height="54">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:16px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">统一接口：read_file · write_file · list_dir</div></div>
+  </foreignObject>
+  </g>
+  <g data-actor="user" data-labels="4 5">
+    <rect data-actor-card="user" x="1060" y="40" width="240" height="150" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-source-label="4" x="1084" y="58" width="192" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">用户</div></div>
+  </foreignObject>
+    <foreignObject data-source-label="5" x="1084" y="118" width="192" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">上传 / 下载</div></div>
+  </foreignObject>
+  </g>
+
+  <path data-edge="agent-a-to-root" data-from="agent-a" data-to="virtual-filesystem" data-route="gutter" d="M 250 70 H 460" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+  <path data-edge="agent-b-to-root" data-from="agent-b" data-to="virtual-filesystem" data-route="gutter" d="M 250 160 H 360 V 140 H 460" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+  <path data-edge="root-to-private" data-from="virtual-filesystem" data-to="private" data-route="gutter" d="M 660 215 V 290 H 170 V 370" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+  <path data-edge="root-to-shared" data-from="virtual-filesystem" data-to="shared" data-route="gutter" d="M 660 215 V 290 H 490 V 370" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+  <path data-edge="root-to-external" data-from="virtual-filesystem" data-to="external" data-route="gutter" d="M 660 215 V 290 H 810 V 370" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+  <path data-edge="root-to-system" data-from="virtual-filesystem" data-to="system" data-route="gutter" d="M 660 215 V 290 H 1130 V 370" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+  <path data-edge="user-to-shared" data-from="user" data-to="shared" data-route="gutter" d="M 1180 190 H 1290 V 830 H 490 V 780" fill="none" stroke="#7386a0" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#collaboration-context-arrow)"/>
+  <foreignObject data-source-label="6" data-edge-label="user-to-shared" x="1080" y="220" width="180" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">上传 / 下载</div></div>
+  </foreignObject>
+  <foreignObject data-source-label="7" data-edge-label="mount-fanout" x="520" y="296" width="280" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">挂载 mount</div></div>
+  </foreignObject>
+
+  <g data-region="private" data-labels="8-14">
+      <rect data-region-card="private" x="20" y="370" width="300" height="410" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-source-label="8" x="42" y="388" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Agent 专属工作区</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="9" x="42" y="464" width="256" height="46">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">/scratch/&lt;id&gt;</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="10" x="42" y="514" width="256" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Scratchpad</div></div>
+  </foreignObject>
+      <line x1="44" y1="562" x2="296" y2="562" stroke="#7386a0" stroke-width="1.5"/>
+      <foreignObject data-source-label="11" x="42" y="572" width="256" height="49">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">私有 · 仅该 Agent</div></div>
+  </foreignObject><foreignObject data-source-label="12" x="42" y="625" width="256" height="49">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">随实例销毁</div></div>
+  </foreignObject><foreignObject data-source-label="13" x="42" y="678" width="256" height="49">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">读写 · 无需并发控制</div></div>
+  </foreignObject><foreignObject data-source-label="14" x="42" y="731" width="256" height="49">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:700;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">每个 Agent 各一份</div></div>
+  </foreignObject>
+    </g><g data-region="shared" data-labels="15-20">
+      <rect data-region-card="shared" x="340" y="370" width="300" height="410" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-source-label="15" x="362" y="388" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">多 Agent 共享空间</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="16" x="362" y="464" width="256" height="46">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">/workspace/shared</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="17" x="362" y="514" width="256" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Shared Workspace</div></div>
+  </foreignObject>
+      <line x1="364" y1="562" x2="616" y2="562" stroke="#7386a0" stroke-width="1.5"/>
+      <foreignObject data-source-label="18" x="362" y="572" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">用户可见 · 持久化</div></div>
+  </foreignObject><foreignObject data-source-label="19" x="362" y="642" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">读写 · 需并发控制</div></div>
+  </foreignObject><foreignObject data-source-label="20" x="362" y="712" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:700;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">乐观锁 · worktree</div></div>
+  </foreignObject>
+    </g><g data-region="external" data-labels="21-26">
+      <rect data-region-card="external" x="660" y="370" width="300" height="410" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-source-label="21" x="682" y="388" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">外部挂载资源</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="22" x="682" y="464" width="256" height="46">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">/mnt/gdrive · /mnt/notion</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="23" x="682" y="514" width="256" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">经适配器 adapter</div></div>
+  </foreignObject>
+      <line x1="684" y1="562" x2="936" y2="562" stroke="#7386a0" stroke-width="1.5"/>
+      <foreignObject data-source-label="24" x="682" y="572" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">受外部授权约束</div></div>
+  </foreignObject><foreignObject data-source-label="25" x="682" y="642" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">多为只读 · 写需谨慎</div></div>
+  </foreignObject><foreignObject data-source-label="26" x="682" y="712" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:700;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">延迟高 · 一致性弱</div></div>
+  </foreignObject>
+    </g><g data-region="system" data-labels="27-32">
+      <rect data-region-card="system" x="980" y="370" width="300" height="410" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-source-label="27" x="1002" y="388" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">系统内置资源</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="28" x="1002" y="464" width="256" height="46">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:'SFMono-Regular',Consolas,'Liberation Mono',monospace;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">/skills</div></div>
+  </foreignObject>
+      <foreignObject data-source-label="29" x="1002" y="514" width="256" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Skills · 模板 · 手册</div></div>
+  </foreignObject>
+      <line x1="1004" y1="562" x2="1256" y2="562" stroke="#7386a0" stroke-width="1.5"/>
+      <foreignObject data-source-label="30" x="1002" y="572" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">全局共享 · 只读</div></div>
+  </foreignObject><foreignObject data-source-label="31" x="1002" y="642" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">跨会话稳定</div></div>
+  </foreignObject><foreignObject data-source-label="32" x="1002" y="712" width="256" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:16px;font-weight:700;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">渐进式披露</div></div>
+  </foreignObject>
+    </g>
+
+  <g data-external-source="true" data-labels="33 34">
+    <rect data-external-source-card="true" x="660" y="855" width="300" height="130" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2" stroke-dasharray="7 5"/>
+    <foreignObject data-source-label="33" x="682" y="870" width="256" height="42">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">外部数据源</div></div>
+  </foreignObject>
+    <foreignObject data-source-label="34" x="682" y="920" width="256" height="46">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Google Drive · Notion</div></div>
+  </foreignObject>
+  </g>
+  <path data-edge="external-source-to-external" data-from="external-source" data-to="external" data-route="gutter" d="M 810 855 V 780" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-context-arrow)"/>
+</svg>

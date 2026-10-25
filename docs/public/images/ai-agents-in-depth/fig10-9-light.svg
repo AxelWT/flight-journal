@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 2080" width="1480" height="2080" role="img" aria-labelledby="metagpt-collaboration-title" style="background:#ffffff"><style>svg{background:#f7f9fc!important;--figure-ink:#203047;--figure-inverse:#ffffff} body{background:#f7f9fc!important} line,path,polyline{stroke-linecap:round;stroke-linejoin:round}</style>
+  <title id="metagpt-collaboration-title">MetaGPT 核心设计</title>
+  <defs>
+  <marker id="collaboration-society-arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 10 4, 0 8" fill="#203047"/></marker>
+</defs>
+
+  <g data-role="product-manager" data-flow-position="1" data-labels="0 1 2 3 4 5 6">
+    <rect data-role-card="product-manager" x="120" y="30" width="1120" height="230" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-label="0" x="150" y="42" width="1060" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:23px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Product Manager</div></div>
+  </foreignObject>
+    <line x1="158" y1="96" x2="1202" y2="96" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-label="1" x="158" y="102" width="1044" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">输入: 用户需求描述</div></div>
+  </foreignObject>
+    <foreignObject data-label="2" x="158" y="152" width="150" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">产出:</div></div>
+  </foreignObject>
+    <foreignObject data-label="3" x="326" y="142" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">功能列表 + 优先级</div></div>
+  </foreignObject><foreignObject data-label="4" x="326" y="178" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">用户故事 (5 条)</div></div>
+  </foreignObject><foreignObject data-label="5" x="326" y="214" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">验收标准</div></div>
+  </foreignObject>
+    <g data-artifact-for="product-manager">
+      <rect x="1004" y="160" width="198" height="62" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="6" x="1018" y="166" width="170" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">docs/PRD.md</div></div>
+  </foreignObject>
+    </g>
+  </g><g data-role="architect" data-flow-position="2" data-labels="7 8 9 10 11 12 13">
+    <rect data-role-card="architect" x="120" y="310" width="1120" height="230" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-label="7" x="150" y="322" width="1060" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:23px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Architect</div></div>
+  </foreignObject>
+    <line x1="158" y1="376" x2="1202" y2="376" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-label="8" x="158" y="382" width="1044" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">输入: PRD.md</div></div>
+  </foreignObject>
+    <foreignObject data-label="9" x="158" y="432" width="150" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">产出:</div></div>
+  </foreignObject>
+    <foreignObject data-label="10" x="326" y="422" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">技术栈: FastAPI+React</div></div>
+  </foreignObject><foreignObject data-label="11" x="326" y="458" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">API 规范 (OpenAPI)</div></div>
+  </foreignObject><foreignObject data-label="12" x="326" y="494" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">数据库 Schema</div></div>
+  </foreignObject>
+    <g data-artifact-for="architect">
+      <rect x="1004" y="440" width="198" height="62" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="13" x="1018" y="446" width="170" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">docs/design.md</div></div>
+  </foreignObject>
+    </g>
+  </g><g data-role="project-manager" data-flow-position="3" data-labels="14 15 16 17 18 19 20">
+    <rect data-role-card="project-manager" x="120" y="590" width="1120" height="230" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-label="14" x="150" y="602" width="1060" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:23px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Project Manager</div></div>
+  </foreignObject>
+    <line x1="158" y1="656" x2="1202" y2="656" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-label="15" x="158" y="662" width="1044" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">输入: design.md</div></div>
+  </foreignObject>
+    <foreignObject data-label="16" x="158" y="712" width="150" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">产出:</div></div>
+  </foreignObject>
+    <foreignObject data-label="17" x="326" y="702" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">任务清单 + 分工</div></div>
+  </foreignObject><foreignObject data-label="18" x="326" y="738" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">文件级分配</div></div>
+  </foreignObject><foreignObject data-label="19" x="326" y="774" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">模块依赖顺序</div></div>
+  </foreignObject>
+    <g data-artifact-for="project-manager">
+      <rect x="1004" y="720" width="198" height="62" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="20" x="1018" y="726" width="170" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">docs/tasks.md</div></div>
+  </foreignObject>
+    </g>
+  </g><g data-role="engineer" data-flow-position="4" data-labels="21 22 23 24 25 26 27">
+    <rect data-role-card="engineer" x="120" y="870" width="1120" height="230" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-label="21" x="150" y="882" width="1060" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:23px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Engineer ×3</div></div>
+  </foreignObject>
+    <line x1="158" y1="936" x2="1202" y2="936" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-label="22" x="158" y="942" width="1044" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">输入: tasks.md + design.md</div></div>
+  </foreignObject>
+    <foreignObject data-label="23" x="158" y="992" width="150" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">产出:</div></div>
+  </foreignObject>
+    <foreignObject data-label="24" x="326" y="982" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">模块 A: 用户服务</div></div>
+  </foreignObject><foreignObject data-label="25" x="326" y="1018" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">模块 B: 订单服务</div></div>
+  </foreignObject><foreignObject data-label="26" x="326" y="1054" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">模块 C: 支付服务</div></div>
+  </foreignObject>
+    <g data-artifact-for="engineer">
+      <rect x="1004" y="1000" width="198" height="62" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="27" x="1018" y="1006" width="170" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">src/*.py</div></div>
+  </foreignObject>
+    </g>
+  </g><g data-role="qa" data-flow-position="5" data-labels="28 29 30 31 32 33 34">
+    <rect data-role-card="qa" x="120" y="1150" width="1120" height="230" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-label="28" x="150" y="1162" width="1060" height="48">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:23px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">QA Engineer</div></div>
+  </foreignObject>
+    <line x1="158" y1="1216" x2="1202" y2="1216" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-label="29" x="158" y="1222" width="1044" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">输入: src/ + PRD.md</div></div>
+  </foreignObject>
+    <foreignObject data-label="30" x="158" y="1272" width="150" height="38">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:18px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">产出:</div></div>
+  </foreignObject>
+    <foreignObject data-label="31" x="326" y="1262" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">单元测试 (pytest)</div></div>
+  </foreignObject><foreignObject data-label="32" x="326" y="1298" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">集成测试 (API)</div></div>
+  </foreignObject><foreignObject data-label="33" x="326" y="1334" width="660" height="34">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Bug 报告 → Engineer</div></div>
+  </foreignObject>
+    <g data-artifact-for="qa">
+      <rect x="1004" y="1280" width="198" height="62" rx="8" fill="#ffffff" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="34" x="1018" y="1286" width="170" height="50">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">docs/test_report.md</div></div>
+  </foreignObject>
+    </g>
+  </g>
+
+  <path data-edge="product-to-architect" d="M 680 260 V 308" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-society-arrow)"/><path data-edge="architect-to-project" d="M 680 540 V 588" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-society-arrow)"/><path data-edge="project-to-engineer" d="M 680 820 V 868" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-society-arrow)"/><path data-edge="engineer-to-qa" d="M 680 1100 V 1148" fill="none" stroke="#7386a0" stroke-width="2.5" marker-end="url(#collaboration-society-arrow)"/>
+  <path data-edge="qa-to-engineer" d="M 1240 1265 H 1460 V 985 H 1242" fill="none" stroke="#7386a0" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#collaboration-society-arrow)"/>
+  <foreignObject data-label="35" x="1262" y="1032" width="190" height="90">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:700;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">Bug 修复</div></div>
+  </foreignObject>
+
+  <g data-shared-directory="true" data-labels="36 37">
+    <rect data-shared-directory-card="true" x="120" y="1430" width="1120" height="150" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+    <foreignObject data-label="36" x="154" y="1444" width="1052" height="42">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:22px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">共享项目目录</div></div>
+  </foreignObject>
+    <line x1="164" y1="1494" x2="1196" y2="1494" stroke="#7386a0" stroke-width="1.5"/>
+    <foreignObject data-label="37" x="154" y="1504" width="1052" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">docs/PRD.md docs/design.md docs/tasks.md src/*.py docs/test_report.md</div></div>
+  </foreignObject>
+  </g>
+
+  <g data-design-principles="true" data-labels="38 39 40 41 42 43 44 45 46">
+    <foreignObject data-label="38" x="80" y="1610" width="1280" height="58">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:center;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:25px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:center"><div dir="auto" style="width:100%;unicode-bidi:plaintext">MetaGPT 核心设计</div></div>
+  </foreignObject>
+    <g data-design-principle="documents" data-labels="39 40">
+      <rect data-principle-card="documents" x="70" y="1700" width="610" height="154" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="39" x="94" y="1714" width="562" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">▸ 标准化文档</div></div>
+  </foreignObject>
+      <line x1="98" y1="1764" x2="652" y2="1764" stroke="#7386a0" stroke-width="1"/>
+      <foreignObject data-label="40" x="94" y="1772" width="562" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">每个角色输出明确格式 — 下游只需理解格式，不需理解上游思考过程</div></div>
+  </foreignObject>
+    </g><g data-design-principle="decoupling" data-labels="41 42">
+      <rect data-principle-card="decoupling" x="750" y="1700" width="610" height="154" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="41" x="774" y="1714" width="562" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">▸ 接口解耦</div></div>
+  </foreignObject>
+      <line x1="778" y1="1764" x2="1332" y2="1764" stroke="#7386a0" stroke-width="1"/>
+      <foreignObject data-label="42" x="774" y="1772" width="562" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">改进 Product Mgr（换更强模型）只要输出符合 PRD 格式，下游零修改</div></div>
+  </foreignObject>
+    </g><g data-design-principle="control-flow" data-labels="43 44">
+      <rect data-principle-card="control-flow" x="70" y="1880" width="610" height="154" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="43" x="94" y="1894" width="562" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">▸ 无 Manager</div></div>
+  </foreignObject>
+      <line x1="98" y1="1944" x2="652" y2="1944" stroke="#7386a0" stroke-width="1"/>
+      <foreignObject data-label="44" x="94" y="1952" width="562" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">控制权沿 DAG 自然流动：Product Mgr→Architect→Project Mgr→Engineer→QA</div></div>
+  </foreignObject>
+    </g><g data-design-principle="exception-channel" data-labels="45 46">
+      <rect data-principle-card="exception-channel" x="750" y="1880" width="610" height="154" rx="8" fill="#edf2f8" stroke="#7386a0" stroke-width="2"/>
+      <foreignObject data-label="45" x="774" y="1894" width="562" height="44">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:20px;font-weight:700;line-height:1.3;color:#203047;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">▸ 异常通道</div></div>
+  </foreignObject>
+      <line x1="778" y1="1944" x2="1332" y2="1944" stroke="#7386a0" stroke-width="1"/>
+      <foreignObject data-label="46" x="774" y="1952" width="562" height="66">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="height:100%;display:flex;align-items:center;justify-content:flex-start;box-sizing:border-box;font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;font-size:17px;font-weight:400;line-height:1.3;color:#52627a;overflow-wrap:anywhere;word-break:normal;text-align:start"><div dir="auto" style="width:100%;unicode-bidi:plaintext">QA 测试失败 → Bug 报告按模块路由回 Engineer → 迭代修复</div></div>
+  </foreignObject>
+    </g>
+  </g>
+</svg>
