@@ -2033,5 +2033,41 @@ Agent 产品需要从第一天就设计特性开关（Feature Flag）基础设�
 
 ## 第 10 章 多 Agent 协作
 
+### 10.1 多 Agent 协作的分类框架
+
+---
+
+### 10.2 多 Agent 何时真正优于单 Agent
+
+> 什么时候真正需要多个 Agent，什么时候一个 Agent 就够了？
+> 核心判断只有一条，协作过程中是否引入了单个 Agent 在生成时无法获得的新信息。
+
+---
+
+### 10.3 共享上下文的多 Agent 协作
+
+---
+
+### 10.4 不共享上下文的多 Agent 协作
+
+---
+
+### 10.5 多 Agent 协作的失败模式
+
+---
+
+### 10.6 Agent 社会
+
+---
+
+### 思考题
+
+---
+
+## 参考资料
+
+> https://bojieli.github.io/ai-agent-book/astro/
+> https://github.com/bojieli/ai-agent-book/tree/main/chapter1
+
 ---
 
