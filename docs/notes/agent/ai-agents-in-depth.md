@@ -1,5 +1,5 @@
 ---
-title: "《深入理解 AI Agent：设计原理与工程实践》"
+title: "《深入理解 AI Agent》"
 date: 2026-10-22
 description: 涵盖 Agent 基础、上下文工程、记忆系统、工具设计等主题
 tags:
@@ -7,7 +7,7 @@ tags:
   - 读书笔记
 ---
 
-# 《深入理解 AI Agent：设计原理与工程实践》上篇
+# 《深入理解 AI Agent》上篇
 
 > 来源：李博杰《深入理解 AI Agent：设计原理与工程实践》：<https://bojieli.github.io/ai-agent-book/astro/>
 
