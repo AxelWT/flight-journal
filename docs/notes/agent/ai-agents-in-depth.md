@@ -195,7 +195,8 @@ Agent 模式：当工作流的固定路径无法满足需求时，我们就需�
 
 - 上下文窗口
 
-![fig2-1-light.svg](../../public/images/ai-agents-in-depth/fig2-1-light.svg)
+![fig2-1](/images/ai-agents-in-depth/fig2-1-light.svg#light)
+![fig2-1](/images/ai-agents-in-depth/fig2-1-dark.svg#dark)
 
 ---
 
@@ -416,7 +417,8 @@ claude code 的实现：采用渐进式目录与调用时追加正文的方式�
 /还有就是 skill 目录数量特别多可能搞个小模型或者工具根据输入去检索是否有匹配的 skill 可以使用
 ```
 
-![fig2-12-light.svg](../../public/images/ai-agents-in-depth/fig2-12-light.svg)
+![fig2-12](/images/ai-agents-in-depth/fig2-12-light.svg#light)
+![fig2-12](/images/ai-agents-in-depth/fig2-12-dark.svg#dark)
 
 ---
 
@@ -459,7 +461,8 @@ Agent 框架把这些动态信息整理成结构化摘要并注入上下文，�
 状态栏维护有两点要注意：一是状态栏尽量用代码维护，实在要用 LLM 也要逐条抽取再由代码汇总，绝不要让LLM 一次性批量统计；二是要谨慎删除原始上下文。
 ```
 
-![fig2-14-light.svg](../../public/images/ai-agents-in-depth/fig2-14-light.svg)
+![fig2-14](/images/ai-agents-in-depth/fig2-14-light.svg#light)
+![fig2-14](/images/ai-agents-in-depth/fig2-14-dark.svg#dark)
 
 ---
 
@@ -518,7 +521,8 @@ System Prompt 和 Tool Definitions 永远不动——这是上下文最前面的
 在生产环境中 Agent 系统通常不会只采用单一策略，而是将多种策略组合为分层的压缩机制。
 ```
 
-![fig2-17-light.svg](../../public/images/ai-agents-in-depth/fig2-17-light.svg)
+![fig2-17](/images/ai-agents-in-depth/fig2-17-light.svg#light)
+![fig2-17](/images/ai-agents-in-depth/fig2-17-dark.svg#dark)
 
 - 隔离优于压缩：子 Agent 上下文隔离
 
@@ -708,7 +712,8 @@ Word2Vec -》GloVe -》BERT -》Sentence-BERT -》BGE-M3
 当知识库有上百万条文档时，逐一计算相似度太慢，ANN 通过巧妙的索引结构实现近似但极快的查找；具体现实类似跳表 O（log N）的时间复杂度。
 ```
 
-![fig3-6-light.svg](../../public/images/ai-agents-in-depth/fig3-6-light.svg)
+![fig3-6](/images/ai-agents-in-depth/fig3-6-light.svg#light)
+![fig3-6](/images/ai-agents-in-depth/fig3-6-dark.svg#dark)
 
 - 稀疏嵌入：精确的关键词匹配检索/问题是不理解语义
 
@@ -731,7 +736,8 @@ TF-IDF（Term Frequency–Inverse Document Frequency，词频–逆文档频率�
 并行检索 -》结果融合 -》神经重排序
 ```
 
-![fig3-9-light.svg](../../public/images/ai-agents-in-depth/fig3-9-light.svg)
+![fig3-9](/images/ai-agents-in-depth/fig3-9-light.svg#light)
+![fig3-9](/images/ai-agents-in-depth/fig3-9-dark.svg#dark)
 
 - 检索质量核心指标
 
@@ -813,11 +819,13 @@ GraphRAG作为用户记忆的通用存储方案，知识图谱面临固有局限
 
 树状层次索引
 
-![fig3-10-light.svg](../../public/images/ai-agents-in-depth/fig3-10-light.svg)
+![fig3-10](/images/ai-agents-in-depth/fig3-10-light.svg#light)
+![fig3-10](/images/ai-agents-in-depth/fig3-10-dark.svg#dark)
 
 实体关系图索引
 
-![fig3-11-light.svg](../../public/images/ai-agents-in-depth/fig3-11-light.svg)
+![fig3-11](/images/ai-agents-in-depth/fig3-11-light.svg#light)
+![fig3-11](/images/ai-agents-in-depth/fig3-11-dark.svg#dark)
 
 - 两种思路对比：RAPTOR VS GraphRAG
 
@@ -881,7 +889,8 @@ RAG 的安全边界。 要注意知识库投毒。
 
 智能体化 RAG 系统架构图
 
-![fig3-13-light.svg](../../public/images/ai-agents-in-depth/fig3-13-light.svg)
+![fig3-13](/images/ai-agents-in-depth/fig3-13-light.svg#light)
+![fig3-13](/images/ai-agents-in-depth/fig3-13-dark.svg#dark)
 
 - RAG 技巧：上下文感知检索
 
@@ -896,7 +905,8 @@ Anthropic 提出了“上下文感知检索（Contextual Retrieval）”。
 
 原理图
 
-![fig3-14-light.svg](../../public/images/ai-agents-in-depth/fig3-14-light.svg)
+![fig3-14](/images/ai-agents-in-depth/fig3-14-light.svg#light)
+![fig3-14](/images/ai-agents-in-depth/fig3-14-dark.svg#dark)
 
 - 主动服务
 
@@ -1057,7 +1067,8 @@ Skill 不需要协议，一个 skill 就是一个装着 SKILL.md 的文件夹，
 
 层次化工具匹配（服务器级→工具级两层语义搜索）
 
-![fig4-2-light.svg](../../public/images/ai-agents-in-depth/fig4-2-light.svg)
+![fig4-2](/images/ai-agents-in-depth/fig4-2-light.svg#light)
+![fig4-2](/images/ai-agents-in-depth/fig4-2-dark.svg#dark)
 
 - 模型原生的主动工具发现
 
@@ -1074,11 +1085,13 @@ schema 此后固定在轨迹的原位置，作为普通历史消息继续命中�
 
 工具动态加载的 KV Cache 优化
 
-![fig4-3-light.svg](../../public/images/ai-agents-in-depth/fig4-3-light.svg)
+![fig4-3](/images/ai-agents-in-depth/fig4-3-light.svg#light)
+![fig4-3](/images/ai-agents-in-depth/fig4-3-dark.svg#dark)
 
 动态发现后的上下文结构：工具 schema 散落在轨迹各处
 
-![fig4-4-light.svg](../../public/images/ai-agents-in-depth/fig4-4-light.svg)
+![fig4-4](/images/ai-agents-in-depth/fig4-4-light.svg#light)
+![fig4-4](/images/ai-agents-in-depth/fig4-4-dark.svg#dark)
 
 ---
 
@@ -1247,7 +1260,8 @@ Bash Shell（命令行终端）：在终端中执行命令，如运行测试用�
 
 OpenClaw 架构中的 Coding Agent 核心
 
-![fig5-1-light.svg](../../public/images/ai-agents-in-depth/fig5-1-light.svg)
+![fig5-1](/images/ai-agents-in-depth/fig5-1-light.svg#light)
+![fig5-1](/images/ai-agents-in-depth/fig5-1-dark.svg#dark)
 
 - Coding Agent 的整体流程
 
@@ -1265,7 +1279,8 @@ OpenClaw 架构中的 Coding Agent 核心
 
 Coding Agent 工作流程
 
-![fig5-2-light.svg](../../public/images/ai-agents-in-depth/fig5-2-light.svg)
+![fig5-2](/images/ai-agents-in-depth/fig5-2-light.svg#light)
+![fig5-2](/images/ai-agents-in-depth/fig5-2-dark.svg#dark)
 
 - Coding Agent 设计原则
 
@@ -1483,7 +1498,8 @@ Agent 为谁效忠：多方委托下的忠诚度。
 
 事件驱动的异步 Agent 架构图
 
-![fig6-1-light.svg](../../public/images/ai-agents-in-depth/fig6-1-light.svg)
+![fig6-1](/images/ai-agents-in-depth/fig6-1-light.svg#light)
+![fig6-1](/images/ai-agents-in-depth/fig6-1-dark.svg#dark)
 
 - OpenClaw 的事件驱动机制实现
 
@@ -1587,11 +1603,13 @@ VAD 判断用户何时说完，ASR 把音频转成文字，LLM 理解并生成�
 
 语音 Agent 串行流水线
 
-![fig6-6-light.svg](../../public/images/ai-agents-in-depth/fig6-6-light.svg)
+![fig6-6](/images/ai-agents-in-depth/fig6-6-light.svg#light)
+![fig6-6](/images/ai-agents-in-depth/fig6-6-dark.svg#dark)
 
 串行累积总响应时间
 
-![fig6-7-light.svg](../../public/images/ai-agents-in-depth/fig6-7-light.svg)
+![fig6-7](/images/ai-agents-in-depth/fig6-7-light.svg#light)
+![fig6-7](/images/ai-agents-in-depth/fig6-7-dark.svg#dark)
 
 从串行到流式感知
 
@@ -1788,11 +1806,13 @@ VLA 主要回答“现在应该做什么”，还需要另一类模型帮助判�
 
 Agent 评估体系的四个环节图
 
-![fig7-1-light.svg](../../public/images/ai-agents-in-depth/fig7-1-light.svg)
+![fig7-1](/images/ai-agents-in-depth/fig7-1-light.svg#light)
+![fig7-1](/images/ai-agents-in-depth/fig7-1-dark.svg#dark)
 
 LLM 做用户模拟器评估 Agent 工作质量的任务图【case：用户无法上网 让 Agent 帮忙解决】
 
-![fig7-3-light.svg](../../public/images/ai-agents-in-depth/fig7-3-light.svg)
+![fig7-3](/images/ai-agents-in-depth/fig7-3-light.svg#light)
+![fig7-3](/images/ai-agents-in-depth/fig7-3-dark.svg#dark)
 
 ---
 
@@ -1822,7 +1842,8 @@ Pass^k（可以读作 Pass consecutive k）：同一任务连续运行 k 次，�
 
 工具调用型与人机交互型评估环境【有些评估环境需要人（可以用 LLM 模拟）；有些评估环境不需要人跟工具交互最后代码验证】
 
-![fig7-2-light.svg](../../public/images/ai-agents-in-depth/fig7-2-light.svg)
+![fig7-2](/images/ai-agents-in-depth/fig7-2-light.svg#light)
+![fig7-2](/images/ai-agents-in-depth/fig7-2-dark.svg#dark)
 
 ---
 
@@ -2031,7 +2052,8 @@ Mid-training 语料有没有补齐底座，示范数据有没有建立起行为�
 
 持续进化的四种更新方式图
 
-![fig9-3-light.svg](../../public/images/ai-agents-in-depth/fig9-3-light.svg)
+![fig9-3](/images/ai-agents-in-depth/fig9-3-light.svg#light)
+![fig9-3](/images/ai-agents-in-depth/fig9-3-dark.svg#dark)
 
 四种持续进化方式的使用边界
 
@@ -2054,7 +2076,8 @@ Mid-training 语料有没有补齐底座，示范数据有没有建立起行为�
 
 在线执行与离线进化的双循环
 
-![fig9-5-light.svg](../../public/images/ai-agents-in-depth/fig9-5-light.svg)
+![fig9-5](/images/ai-agents-in-depth/fig9-5-light.svg#light)
+![fig9-5](/images/ai-agents-in-depth/fig9-5-dark.svg#dark)
 
 ---
 
@@ -2178,7 +2201,8 @@ Agent 需要一种显式的预算感知机制，根据剩余资源动态调整�
 
 Agent 虚拟文件系统的四类区域挂载结构
 
-![fig10-2-light.svg](../../public/images/ai-agents-in-depth/fig10-2-light.svg)
+![fig10-2](/images/ai-agents-in-depth/fig10-2-light.svg#light)
+![fig10-2](/images/ai-agents-in-depth/fig10-2-dark.svg#dark)
 
 - Agent 间的通信与控制
 
@@ -2231,15 +2255,18 @@ Manager Agent 的职责就像一个项目经理：先理解整体任务，再拆
 
 Manager顺序协调
 
-![fig10-4-light.svg](../../public/images/ai-agents-in-depth/fig10-4-light.svg)
+![fig10-4](/images/ai-agents-in-depth/fig10-4-light.svg#light)
+![fig10-4](/images/ai-agents-in-depth/fig10-4-dark.svg#dark)
 
 Manger 并行协调
 
-![fig10-6-light.svg](../../public/images/ai-agents-in-depth/fig10-6-light.svg)
+![fig10-6](/images/ai-agents-in-depth/fig10-6-light.svg#light)
+![fig10-6](/images/ai-agents-in-depth/fig10-6-dark.svg#dark)
 
 书籍翻译 Agent 架构 - 很好的示例
 
-![fig10-5-light.svg](../../public/images/ai-agents-in-depth/fig10-5-light.svg)
+![fig10-5](/images/ai-agents-in-depth/fig10-5-light.svg#light)
+![fig10-5](/images/ai-agents-in-depth/fig10-5-dark.svg#dark)
 
 - 去中心化模式
 
@@ -2264,7 +2291,8 @@ MetaGPT 真正对去中心化通信的贡献，在于它的信息传递机制：
 
 MetaGPT 多 Agent 协作网络
 
-![fig10-9-light.svg](../../public/images/ai-agents-in-depth/fig10-9-light.svg)
+![fig10-9](/images/ai-agents-in-depth/fig10-9-light.svg#light)
+![fig10-9](/images/ai-agents-in-depth/fig10-9-dark.svg#dark)
 
 - 跨组织协作：A2A 协议
 

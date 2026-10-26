@@ -575,6 +575,18 @@ body {
     box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.15);
 }
 
+/* theme-aware image pairs, e.g.
+   ![fig](/images/x-light.svg#light) + ![fig](/images/x-dark.svg#dark) */
+img[src$="#dark"] {
+    display: none;
+}
+html.dark img[src$="#light"] {
+    display: none;
+}
+html.dark img[src$="#dark"] {
+    display: inline-block;
+}
+
 /* ============================================================
    Doc Footer (prev/next)
    ============================================================ */
