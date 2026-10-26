@@ -587,6 +587,12 @@ html.dark img[src$="#dark"] {
     display: inline-block;
 }
 
+/* opt-in auto-invert in dark mode:
+   ![fig](/images/x.jpg#invert) */
+html.dark img[src$="#invert"] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
 /* ============================================================
    Doc Footer (prev/next)
    ============================================================ */

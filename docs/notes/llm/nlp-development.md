@@ -82,7 +82,7 @@ updated: 2025-05-01
 
 但是当数据呈现非线性关系时（比如曲线分布），简单的线性函数就没办法解决这个问题了。我们需要引入**激活函数**来为模型注入非线性表达能力，比如 ReLU、Sigmoid、Tanh 等。通过在每次线性变换后套入激活函数，多层叠加后神经网络就可以逼近任意复杂的连续函数。
 
-![激活函数](/images/llm-development/激活函数.jpg)
+![激活函数](/images/llm-development/激活函数.jpg#invert)
 
 这还不够，正常情况下我们不会只有一个输入，并且只有一个激活函数可能不会达到理想的结果，所以开始嵌套！
 
@@ -90,23 +90,23 @@ updated: 2025-05-01
 
 为了清晰表达这种结构，我们引入**神经元**的概念：每个圆圈代表一个神经元，线性变换 + 激活函数构成其计算过程，多个神经元互相连接形成的网状结构就叫做**神经网络**。随着函数式子的嵌套，神经网络也在拓展，原本的输出层成为了**隐藏层**：位于输入层和输出层之间的中间层，负责对输入数据进行复杂的特征提取和变换。
 
-![神经元](/images/llm-development/神经元.jpg)
+![神经元](/images/llm-development/神经元.jpg#invert)
 
 从结构上看，数据就像是一个信号从左向右逐层传播，这个过程就叫做神经网络的**前向传播**。神经网络的层数和每一层的神经元数量都可以叠加，构成一个非常复杂的非线性函数。但核心目标始终不变：找到近似解，也就是根据已知的 x、y 学习出所有权重 w 和偏置 b。
 
-![前向传播](/images/llm-development/前向传播.jpg)
+![前向传播](/images/llm-development/前向传播.jpg#invert)
 
 ### 如何计算神经网络的参数
 
 那么如何计算 w 和 b 呢？首先明确我们需要的 w 和 b 能够让函数的结果更接近真实数据。
 
-![拟合](/images/llm-development/拟合.jpg)
+![拟合](/images/llm-development/拟合.jpg#invert)
 
 用预测值减去真实值，再套上绝对值，就可以表示一个点的预测数据和真实值的误差。为了评估整体的拟合效果，我们将所有样本的误差累加起来，这样就得到了预测数据与真实数据的总的差异。这个函数就叫做**损失函数**：表示预测数据与真实数据误差的函数。去掉绝对值改为平方，再根据样本数量进行平均化，就得到了**均方误差**（MSE，Mean Squared Error）。把损失函数记为 L，从参数的视角看，L 就是一个关于 w、b 的函数。
 
 损失函数表示的是预测值与真实值的误差，而我们的目标就是让误差最小，也就是可以让损失函数 L 最小的 w 和 b。
 
-![损失函数](/images/llm-development/损失函数.jpg)
+![损失函数](/images/llm-development/损失函数.jpg#invert)
 
 我们要让模型预测值 `y_pred` 尽量贴近真实值 `y_true`，用损失函数（Loss）衡量差距：
 
@@ -258,13 +258,13 @@ print(f"x=4 预测值 = {model(x_test).item():.4f}")
 
 下图是全连接神经网络（MLP），可以发现每一个节点都和前一层的所有节点相连接，这个并非神经网络所必需的，而这种连接方式叫做**全连接**。全连接层有一个显而易见的缺点：输入 900 个像素（如 30×30 图像），在一个全连接层之后就需要约 90 万个参数，并且这还只是把图像平铺开，不包含每个像素之间的位置关系。如果图片稍微平移或发生局部变化，所有神经元的输出都会改变，模型无法很好的理解图像的局部模式。
 
-![cnn介绍示例](/images/llm-development/cnn介绍示例.jpg)
+![cnn介绍示例](/images/llm-development/cnn介绍示例.jpg#invert)
 
 #### CNN 的核心概念
 
 - **Channel** = 特征的"种类"。在图像里：通道 = 颜色维度（R、G、B）；在 CNN 里：通道 = 提取到的特征种类（边缘、纹理、角点、轮廓……）。可以理解成一张图有多少"层信息"。
 
-![cnn原理](/images/llm-development/cnn原理.jpg)
+![cnn原理](/images/llm-development/cnn原理.jpg#invert)
 
 CNN 做图像任务（比如手写数字识别），本质上就是两大步：
 
@@ -280,11 +280,11 @@ CNN 做图像任务（比如手写数字识别），本质上就是两大步：
 - 用一个小的卷积核（filter，比如 5×5）在图片上滑动，做加权求和，再加上偏置，得到新的特征图（Feature Map）
 - 一个卷积层可以有多个卷积核，每个核负责抓一种特征（比如有的抓边缘，有的抓纹理），所以输出的通道数会变多
 
-![cnn卷积](/images/llm-development/cnn卷积.jpg)
+![cnn卷积](/images/llm-development/cnn卷积.jpg#invert)
 
 例：输入是 1×28×28 的手写数字（1 个通道，28×28 像素），经过第一个 5×5 卷积层，输出 4×24×24：4 个通道，说明有 4 个卷积核，特征图尺寸因为卷积核滑动变小了。
 
-![cnn卷积多通道](/images/llm-development/cnn卷积多通道.jpg)
+![cnn卷积多通道](/images/llm-development/cnn卷积多通道.jpg#invert)
 
 **2. 池化层（Pooling Layer / Subsampling）**
 
@@ -296,7 +296,7 @@ CNN 做图像任务（比如手写数字识别），本质上就是两大步：
 
 例：4×24×24 的特征图，经过 2×2 池化，变成 4×12×12，宽高直接减半，通道数不变。
 
-![cnn卷积和池化](/images/llm-development/cnn卷积和池化.jpg)
+![cnn卷积和池化](/images/llm-development/cnn卷积和池化.jpg#invert)
 
 **3. 卷积 + 池化的叠加流程**
 
@@ -348,21 +348,21 @@ RNN（循环神经网络）的核心结构是一个具有循环连接的隐藏�
 
 在每个时间步，RNN 接收当前 token 的向量和上一个时间步的隐藏状态（即隐藏层的输出），计算并生成新的隐藏状态，并将其传递到下一时间步。
 
-![rnn结构](/images/llm-development/rnn结构.jpg)
+![rnn结构](/images/llm-development/rnn结构.jpg#invert)
 
 1. 第 1 步（x1）：输入第一个词，得到隐藏状态 h1（第一步的"记忆"）
 
-![rnn步骤1](/images/llm-development/rnn步骤1.jpg)
+![rnn步骤1](/images/llm-development/rnn步骤1.jpg#invert)
 
 2. 第 2 步（x2）：输入第二个词，同时接收上一步的记忆 h1，计算出新的隐藏状态 h2（此时 h2 已包含 x1 和 x2 的信息）
 
-![rnn步骤2](/images/llm-development/rnn步骤2.jpg)
+![rnn步骤2](/images/llm-development/rnn步骤2.jpg#invert)
 
 3. 第 3 步（x3）：用 x3 和 h2 得到 h3，记忆继续向后传递
 
 4. 第 4 步（x4）：用 x4 和 h3 得到 h4，最后由 h4 输出最终结果
 
-![rnn步骤3计算细节](/images/llm-development/rnn步骤3计算细节.jpg)
+![rnn步骤3计算细节](/images/llm-development/rnn步骤3计算细节.jpg#invert)
 
 **核心公式**（每个时间步 t）：
 ```
@@ -377,7 +377,7 @@ h_t = tanh(W·[h_{t-1}, x_t] + b)
 
 多层 RNN 结构中，每一层的输出序列会作为下一层的输入序列，最底层 RNN 接收原始输入序列，顶层 RNN 的输出作为最终结果。
 
-![rnn结构多层](/images/llm-development/rnn结构多层.jpg)
+![rnn结构多层](/images/llm-development/rnn结构多层.jpg#invert)
 
 ### RNN 存在的问题
 
@@ -385,7 +385,7 @@ h_t = tanh(W·[h_{t-1}, x_t] + b)
 
 根本原因在于训练过程中存在的**梯度消失或梯度爆炸**问题。在训练 RNN 时，采用的是时间反向传播（Backpropagation Through Time, BPTT），梯度需要在每个时间步上不断链式传递，导致早期时间步的梯度在传递过程中逐渐消失（梯度消失）或指数增长（梯度爆炸）。
 
-![rnn训练流程](/images/llm-development/rnn训练流程.jpg)
+![rnn训练流程](/images/llm-development/rnn训练流程.jpg#invert)
 
 ### LSTM / GRU
 
@@ -455,7 +455,7 @@ Seq2Seq 模型由一个**编码器**（Encoder）和一个**解码器**（Decode
 
 编码器主要由一个循环神经网络（RNN/LSTM/GRU）构成，任务是将输入序列的语义信息提取并压缩为一个上下文向量。循环神经网络会依次接收每个 token 的输入，并在每个时间步更新隐藏状态。随着序列推进，信息不断累积，最终在最后一个时间步形成一个包含整句信息的隐藏状态，即上下文向量，传递给解码器。
 
-![编码器](/images/llm-development/编码器.jpg)
+![编码器](/images/llm-development/编码器.jpg#invert)
 
 **解码器**
 
@@ -466,7 +466,7 @@ Seq2Seq 模型由一个**编码器**（Encoder）和一个**解码器**（Decode
 - 这种"将前一步的输出作为下一步输入"的方式称为**自回归生成**（Autoregressive Generation）
 - 生成持续到模型生成结束标记 `<eos>`（end of sentence）
 
-![解码器](/images/llm-development/解码器.jpg)
+![解码器](/images/llm-development/解码器.jpg#invert)
 
 #### 模型训练和推理
 
@@ -480,10 +480,10 @@ Seq2Seq 模型由一个**编码器**（Encoder）和一个**解码器**（Decode
 2. **前向传播**：编码器将源语言序列编码为上下文向量；解码器基于该向量逐步生成目标序列
 3. **Teacher Forcing**：训练时，解码器每一步的输入是目标序列中真实的前一个 token（而非自己的预测），这样训练更快、误差不会累积、梯度传播更稳定
 
-![解码器teacher-forcing](/images/llm-development/解码器teacher-forcing.jpg)
+![解码器teacher-forcing](/images/llm-development/解码器teacher-forcing.jpg#invert)
 4. **计算损失**：解码器每一步输出 token 的概率分布，通过交叉熵损失衡量预测质量
 
-![解码器计算损失](/images/llm-development/解码器计算损失.jpg)
+![解码器计算损失](/images/llm-development/解码器计算损失.jpg#invert)
 5. **反向传播**：调用 `loss.backward()` 自动完成梯度反向传播
 
 **模型推理**
@@ -504,7 +504,7 @@ Seq2Seq 模型由一个**编码器**（Encoder）和一个**解码器**（Decode
 
 解码器在生成目标序列的每一步时，不再依赖于一个静态的上下文向量，而是根据当前的解码状态，动态地从编码器各时间步的隐藏状态中选取最相关的信息。这种机制赋予模型**对齐**能力，使其能够自动判断源句中哪些位置对当前的目标词更为重要，从而有效缓解信息瓶颈问题。
 
-![attention原理](/images/llm-development/attention原理.jpg)
+![attention原理](/images/llm-development/attention原理.jpg#invert)
 
 #### 工作原理
 
@@ -512,19 +512,19 @@ Seq2Seq 模型由一个**编码器**（Encoder）和一个**解码器**（Decode
 
 1. **相关性计算**：解码器计算当前时间步的隐藏状态与编码器各时间步输出之间的相关性（注意力评分）。
 
-![attention相关性计算](/images/llm-development/attention相关性计算.jpg)
+![attention相关性计算](/images/llm-development/attention相关性计算.jpg#invert)
 
 2. **注意力权重计算**：使用 Softmax 将评分归一化为概率分布，得分越高的位置对应权重越大。
 
-![attention权重计算](/images/llm-development/attention权重计算.jpg)
+![attention权重计算](/images/llm-development/attention权重计算.jpg#invert)
 
 3. **上下文向量计算**：将编码器输出按注意力权重加权求和，得到当前步所需的上下文向量。
 
-![attention上下文向量计算](/images/llm-development/attention上下文向量计算.jpg)
+![attention上下文向量计算](/images/llm-development/attention上下文向量计算.jpg#invert)
 
 4. **解码信息融合**：将上下文向量与当前时间步的隐藏状态拼接，通过线性变换和 Softmax 生成目标词的概率分布。
 
-![解码器信息融合](/images/llm-development/解码器信息融合.jpg)
+![解码器信息融合](/images/llm-development/解码器信息融合.jpg#invert)
 
 #### 存在的问题
 
@@ -541,7 +541,7 @@ Seq2Seq 模型由一个**编码器**（Encoder）和一个**解码器**（Decode
 
 为了解决这些问题，Google 在 2017 年发表论文《Attention Is All You Need》，提出了**Transformer**。该模型完全摒弃了 RNN 结构，转而使用注意力机制直接建模序列中各位置之间的关系，显著提升了训练效率，并增强了对长距离依赖的建模能力。
 
-![transformer架构](/images/llm-development/transformer架构.jpg)
+![transformer架构](/images/llm-development/transformer架构.jpg#invert)
 
 ### 核心思想
 
@@ -555,7 +555,7 @@ Transformer 也采用**编码器-解码器**（Encoder-Decoder）架构：
 
 编码器和解码器分别由多个结构相同的层堆叠而成（标准 Transformer 为 6 层编码器 + 6 层解码器）。
 
-![transformer整体结构](/images/llm-development/transformer整体结构.jpg)
+![transformer整体结构](/images/llm-development/transformer整体结构.jpg#invert)
 
 ### 编码器
 
@@ -564,7 +564,7 @@ Transformer 也采用**编码器-解码器**（Encoder-Decoder）架构：
 1. **自注意力子层（Self-Attention）**：捕捉序列中各位置之间的依赖关系
 2. **前馈神经网络子层（Feed-Forward）**：对每个位置的表示进行非线性变换，提升表达能力
 
-![transformer编码器](/images/llm-development/transformer编码器.jpg)
+![transformer编码器](/images/llm-development/transformer编码器.jpg#invert)
 
 #### 自注意力层
 
@@ -572,19 +572,19 @@ Transformer 也采用**编码器-解码器**（Encoder-Decoder）架构：
 
 (1) 生成 Query、Key、Value 向量：将输入序列中的每个位置映射为三个不同的向量。
 
-![transformer-qkv向量](/images/llm-development/transformer-qkv向量.jpg)
+![transformer-qkv向量](/images/llm-development/transformer-qkv向量.jpg#invert)
 
 (2) 计算位置间相关性：每个位置的 Query 与所有位置的 Key 进行相关性评分。
 
-![transformer-位置相关性](/images/llm-development/transformer-位置相关性.jpg)
+![transformer-位置相关性](/images/llm-development/transformer-位置相关性.jpg#invert)
 
 (3) 计算注意力权重：使用 Softmax 归一化为概率分布。
 
-![transformer-注意力权重](/images/llm-development/transformer-注意力权重.jpg)
+![transformer-注意力权重](/images/llm-development/transformer-注意力权重.jpg#invert)
 
 (4) 加权汇总生成输出：按注意力权重对所有位置的 Value 进行加权求和，得到融合全局信息的新表示。
 
-![transformer-加权汇总生成输出](/images/llm-development/transformer-加权汇总生成输出.jpg)
+![transformer-加权汇总生成输出](/images/llm-development/transformer-加权汇总生成输出.jpg#invert)
 
 **2. 多头自注意力（Multi-Head Attention）**
 
@@ -601,7 +601,7 @@ Transformer 也采用**编码器-解码器**（Encoder-Decoder）架构：
 1. **残差连接**：`y = x + SubLayer(x)`，缓解梯度消失
 2. **层归一化（LayerNorm）**：将每个 token 的向量调整为均值为 0、方差为 1 的规范分布，提升训练稳定性
 
-![transformer-残差连接和层归一化](/images/llm-development/transformer-残差连接和层归一化.jpg)
+![transformer-残差连接和层归一化](/images/llm-development/transformer-残差连接和层归一化.jpg#invert)
 
 #### 位置编码
 
@@ -609,23 +609,23 @@ Transformer 没有时序顺序感知能力，因此通过位置编码（Position
 
 ### 解码器
 
-![transformer-解码器](/images/llm-development/transformer-解码器.jpg)
+![transformer-解码器](/images/llm-development/transformer-解码器.jpg#invert)
 
 每个解码器层（Decoder Layer）包含三个子层：
 
-![transformer-解码器拆解](/images/llm-development/transformer-解码器拆解.jpg)
+![transformer-解码器拆解](/images/llm-development/transformer-解码器拆解.jpg#invert)
 
 1. **掩码自注意力子层（Masked Self-Attention）**：建模当前位置与前文词之间的依赖关系。使用遮盖机制（Mask），限制每个位置只能关注它前面的词，模拟逐词生成过程。
 
 2. **编码器-解码器注意力子层（Encoder-Decoder Attention）**：建模当前解码位置与源序列各位置之间的依赖关系。Query 来自解码器，Key 和 Value 来自编码器输出。
 
-![transformer-解码器-注意力子层](/images/llm-development/transformer-解码器-注意力子层.jpg)
+![transformer-解码器-注意力子层](/images/llm-development/transformer-解码器-注意力子层.jpg#invert)
 
 3. **前馈神经网络子层**：与编码器中结构一致，增强表达能力。
 
 每个子层后也配有残差连接与层归一化。解码器在输入端同样需要位置编码。在输出端，隐藏向量送入线性变换层映射为词表大小的向量，通过 Softmax 生成概率分布。
 
-![transformer-解码器-残差连接层归一化](/images/llm-development/transformer-解码器-残差连接层归一化.jpg)
+![transformer-解码器-残差连接层归一化](/images/llm-development/transformer-解码器-残差连接层归一化.jpg#invert)
 
 ### GPT 架构
 
@@ -637,7 +637,7 @@ GPT 基于 Transformer 的解码器结构，但与标准 Transformer 解码器�
    - **Text Prediction（文本预测）**：用于下一个词的生成，输出词表大小的概率分布（预训练阶段使用）
    - **Task Classifier（任务分类器）**：用于模型微调阶段，提取特定位置的表示对整个输入文本进行分类（如情感分析）
 
-<img src="/images/llm-development/gpt架构.jpg" alt="gpt架构" style="width: 360px; max-width: 100%;" />
+<img src="/images/llm-development/gpt架构.jpg#invert" alt="gpt架构" style="width: 360px; max-width: 100%;" />
 
 ## 8. 预训练
 

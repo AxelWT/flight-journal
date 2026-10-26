@@ -102,7 +102,7 @@ Transformer
 
 **标准 RAG 流程：**
 
-![rag原理](/images/llm-engineering-development/rag原理.jpg)
+![rag原理](/images/llm-engineering-development/rag原理.jpg#invert)
 
 ```
 用户问题 → 向量检索（知识库） → 检索结果 + 问题 → LLM → 回答
@@ -122,7 +122,7 @@ Transformer
 
 1. 用 JSON Schema 定义工具/函数（名称、描述、参数）
 
-![function-calling](/images/llm-engineering-development/function-calling.jpg)
+![function-calling](/images/llm-engineering-development/function-calling.jpg#invert)
 2. 模型分析用户问题，判断是否要调用、调用哪个、参数是什么
 3. 应用执行函数（查数据库、调 API、发邮件等）
 4. 把执行结果回传给模型
@@ -166,7 +166,7 @@ MCP 通过标准化协议层，实现了 AI 应用与外部工具/数据源的�
 
 ### MCP 架构
 
-![mcp协议](/images/llm-engineering-development/mcp协议.jpg)
+![mcp协议](/images/llm-engineering-development/mcp协议.jpg#invert)
 
 ```
 AI 应用 → MCP 客户端 → MCP 协议 → MCP 服务器 → 外部工具/数据源
@@ -222,7 +222,7 @@ Agent = LLM + 记忆 + 规划 + 工具
 
 Agent = 给 LLM 配上手脚和大脑，让他自己干活。ReAct 模式基于文本推理的链式思考（Reasoning + Acting），具备反思和自我纠错能力。
 
-![agent架构](/images/llm-engineering-development/agent架构.jpg)
+![agent架构](/images/llm-engineering-development/agent架构.jpg#invert)
 
 - **推理（Reasoning）**：分析当前状态，决定下一步行动
 - **行动（Acting）**：调用工具并返回结果
@@ -384,7 +384,7 @@ Agent Skills = 把"复杂任务能力"打包成可复用的模块，让 Agent �
 
 Harness Engineering 是一套面向 LLM 应用的全链路工程体系与运行时控制系统工程，核心目标是将原型级 Demo 转化为稳定、可监控、可迭代的生产级产品。
 
-![harness-engineering](/images/llm-engineering-development/harness-engineering.jpg)
+![harness-engineering](/images/llm-engineering-development/harness-engineering.jpg#invert)
 
 ### 为什么需要？
 
