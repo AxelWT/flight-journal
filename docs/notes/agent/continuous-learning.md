@@ -1,5 +1,5 @@
 ---
-title: "AI 持续学习与 LoRA 技术总结"
+title: "AI 持续学习"
 date: 2026-07-28
 description: 核心主题：AI 持续学习的技术路线、多用户场景挑战、LoRA 原理与论文
 tags:
@@ -7,7 +7,7 @@ tags:
   - AI
 ---
 
-# AI 持续学习与 LoRA 技术总结
+# AI 持续学习
 
 ## 一、AI 发展的技术突破节点
 

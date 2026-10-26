@@ -8,7 +8,7 @@ tags:
   - Cordis
 ---
 
-# DeepSeek Harness 背后的"心脏"：Cordis 到底是什么
+# DeepSeek Harness Cordis 是什么
 
 > 一句话概括：DeepSeek Harness 的"一切皆插件"背后，跑的是一个叫 **Cordis** 的框架——原本服务于第三方 QQ 机器人，如今被 DeepSeek 用作整个 Agent 运行时的地基。
 >
