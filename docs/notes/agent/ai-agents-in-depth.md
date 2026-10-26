@@ -1224,48 +1224,58 @@ cancel_subagent 在任务失去意义时（如用户改变了主意、另一个�
 
 ## 参考资料
 
-### 原始出处
-
 - 李博杰《深入理解 AI Agent：设计原理与工程实践》在线书：<https://bojieli.github.io/ai-agent-book/astro/>
-- 配套实验：<https://github.com/bojieli/ai-agent-book/tree/main/chapter1>
-
-### 论文与研究
-
-- ReAct（Reasoning + Acting，Agent 核心循环）
-- RAPTOR（Recursive Abstractive Processing for Tree-Organized Retrieval，递归抽象树状检索索引）
-- GraphRAG（微软，实体关系图谱索引）
-- Contextual Retrieval（Anthropic，上下文感知检索）
-- LoCoMo（Long-term Conversational Memory，长期对话记忆基准）
-
-### 框架与开源项目
-
-- OpenClaw（事件驱动 Agent 架构示例，书中多次引用）
+- 书籍配套源码与实验仓库：<https://github.com/bojieli/ai-agent-book>
+- ReAct（Reasoning + Acting，Agent 核心循环）：<https://arxiv.org/abs/2210.03629>
+- RAPTOR（递归抽象树状检索索引）：<https://arxiv.org/abs/2401.18059>
+- GraphRAG（微软，实体关系图谱索引）：<https://arxiv.org/abs/2404.16130>
+- Contextual Retrieval（Anthropic，上下文感知检索）：<https://www.anthropic.com/news/contextual-retrieval>
+- LoCoMo（Long-term Conversational Memory，长期对话记忆基准）：<https://arxiv.org/abs/2402.17753>
+- Generative Agents（斯坦福 AI 小镇）：<https://arxiv.org/abs/2304.03442>
+- Budget-Aware Tool-Use Enables Effective Agent Scaling（Google, 2025）
+- BAVT（Budget-Aware Value Tree Search, 2026）
+- Plan-and-Act（2025，Planner-Executor 实证分析）
+- Moshi（Kyutai, 2024，全双工语音模型）：<https://github.com/kyutai-labs/moshi>
+- MetaGPT（SOP 编码进多 Agent 系统）：<https://github.com/FoundationAgents/MetaGPT>
+- Word2Vec：<https://arxiv.org/abs/1301.3781>
+- GloVe：<https://nlp.stanford.edu/projects/glove/>
+- BERT：<https://arxiv.org/abs/1810.04805>
+- Sentence-BERT：<https://arxiv.org/abs/1908.10084>
+- BGE-M3（BAAI 通用嵌入模型）：<https://github.com/FlagOpen/FlagEmbedding>
+- BM25 / TF-IDF（稀疏检索）：<https://en.wikipedia.org/wiki/Okapi_BM25>
+- Set-of-Mark（SoM，视觉标注定位）：<https://arxiv.org/abs/2310.11441>
+- Bradley-Terry 模型（配对比较排名）：<https://en.wikipedia.org/wiki/Bradley%E2%80%93Terry_model>
+- τ-bench / τ²-bench（客服场景人机交互与工具调用）：<https://github.com/sierra-research/tau-bench> / <https://github.com/sierra-research/tau2-bench>
+- SWE-bench Verified（软件开发）：<https://www.swebench.com/>
+- AndroidWorld（Android GUI 操作）：<https://github.com/google-research/android_world>
+- OSWorld（Linux 桌面 GUI 操作）：<https://github.com/xlang-ai/OSWorld>
+- Terminal-Bench（Linux 终端操作）：<https://github.com/laude-institute/terminal-bench>
+- GAIA（通用 AI 助手信息搜集）：<https://arxiv.org/abs/2311.12983>
+- OpenClaw（书中多次引用的事件驱动 Agent 架构）
 - OpenViking（字节跳动火山引擎，文件系统范式上下文）
-- Mem0 / Memobase（用户记忆框架）
-- n8n（工作流自动化）
-- Claude Code / Codex（Coding Agent 实例）
-
-### 协议与标准
-
-- MCP（Model Context Protocol）
-- A2A（Agent2Agent，Google 2025 发布，后捐赠 Linux 基金会）
-- OpenTelemetry（分布式追踪标准）
-
-### 平台与工具
-
-- LangSmith / Langfuse / Arize Phoenix（可观测性平台）
-- Firecracker（microVM 沙盒隔离）
-
-### 观点与文章
-
-- Simon Willison「致命三要素」（lethal trifecta）
-- Rich Sutton「苦涩的教训」（The Bitter Lesson）
-- Scale AI 评估四准则
-
-### 其他提及
-
+- Mem0（用户记忆框架）：<https://github.com/mem0ai/mem0>
+- Memobase（用户记忆框架）：<https://github.com/memodb-io/memobase>
+- n8n（工作流自动化）：<https://n8n.io/>
+- Claude Code：<https://www.anthropic.com/claude-code>
+- Codex（OpenAI）：<https://developers.openai.com/codex/>
+- MCP（Model Context Protocol）：<https://modelcontextprotocol.io/>
+- A2A（Agent2Agent 协议，Google 2025 发布，后捐赠 Linux 基金会）：<https://a2a-protocol.org/>
+- OpenTelemetry（分布式追踪标准）：<https://opentelemetry.io/>
+- LangSmith（可观测性平台）：<https://www.langchain.com/langsmith>
+- Langfuse（可观测性平台）：<https://langfuse.com/>
+- Arize Phoenix（可观测性平台）：<https://github.com/Arize-ai/phoenix>
+- Firecracker（microVM 沙盒隔离）：<https://firecracker-microvm.io/>
+- PPO（近端策略优化）：<https://arxiv.org/abs/1707.06347>
+- GRPO（DeepSeekMath）：<https://arxiv.org/abs/2402.03300>
+- DPO（直接偏好优化）：<https://arxiv.org/abs/2305.18290>
+- Qwen3（Chat Template 思考保留机制）：<https://github.com/QwenLM/Qwen3>
+- DeepSeek R1：<https://arxiv.org/abs/2501.12948>
+- DeepSeek V4（强制回传 reasoning_content，思考内容保留策略对比）
 - GPT-6 Astra（异步工具调用、Mid-turn steering）
-- Qwen3 Chat Template / DeepSeek R1 & V4（思考内容保留策略对比）
+- Simon Willison「致命三要素」（lethal trifecta）：<https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/>
+- Rich Sutton「苦涩的教训」（The Bitter Lesson）：<http://www.incompleteideas.net/IncIdeas/BitterLesson.html>
+- Scale AI 评估四准则（基于专家指导、全面覆盖、按重要性加权、评价标准自包含）
+- Agentopia / Moltbook / Vending-Bench Arena / Pinchwork / RentAHuman（Agent 社会与经济模拟）
 
 ---
 
