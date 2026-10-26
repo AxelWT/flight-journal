@@ -1,4 +1,14 @@
-# PipeGate 大白话总览
+---
+title: "pipegate 内网穿透"
+date: 2026-07-16
+description: pipegate 内网穿透项目
+tags:
+  - pipegate
+  - 内网穿透
+  - websocket
+---
+
+# PipeGate 项目
 
 > 自托管 HTTP 隧道,穷人版 ngrok,~400 行 Python。
 > 一条 WebSocket 把你本地的 `localhost:3000` 暴露到公网 VPS 上。

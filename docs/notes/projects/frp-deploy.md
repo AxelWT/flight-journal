@@ -1,15 +1,25 @@
-# frp-deploy 项目 Review
+---
+title: "frp 部署内网穿透"
+date: 2026-08-16
+description: frp 部署内网穿透
+tags:
+  - frp
+  - 内网穿透
+---
+
+# frp 部署内网穿透
 
 ## 一、关于 frp
 
-**frp (fast reverse proxy)** 是一款开源的内网穿透工具,由 fatedier 用 Go 编写,仓库地址 `github.com/fatedier/frp`。它的核心用途是把"位于内网、没有公网 IP"的服务暴露到公网访问。
+**frp (fast reverse proxy)** 是一款开源的内网穿透工具,由 fatedier 用 Go 编写,仓库地址 `github.com/fatedier/frp`
+。它的核心用途是把"位于内网、没有公网 IP"的服务暴露到公网访问。
 
 ### 核心组件
 
-| 组件 | 部署位置 | 作用 |
-|---|---|---|
+| 组件                | 部署位置  | 作用                                                  |
+|-------------------|-------|-----------------------------------------------------|
 | **frps** (server) | 公网服务器 | 监听端口(默认 7000),接受 frpc 的隧道连接,对外提供 HTTP/TCP/UDP 等访问入口 |
-| **frpc** (client) | 内网机器 | 主动连接 frps,把本地服务通过隧道暴露出去 |
+| **frpc** (client) | 内网机器  | 主动连接 frps,把本地服务通过隧道暴露出去                             |
 
 ### 典型流量路径
 
@@ -31,7 +41,8 @@
 
 ### 为什么需要"部署项目"
 
-frp 本身只提供二进制 + 配置文件,但实际生产中需要处理:systemd/docker 托管、密钥管理、版本升级、域名反代、多端同步、P2P fallback 等。本项目就是把这些工程化环节封装好。
+frp 本身只提供二进制 + 配置文件,但实际生产中需要处理:systemd/docker 托管、密钥管理、版本升级、域名反代、多端同步、P2P
+fallback 等。本项目就是把这些工程化环节封装好。
 
 ---
 
@@ -43,14 +54,14 @@ frp 本身只提供二进制 + 配置文件,但实际生产中需要处理:syste
 
 ### 解决的痛点
 
-| 手搓 frp 痛点 | 本项目方案 |
-|---|---|
-| 命令行长选项难记 | `frps.sh` / `frpc.sh` 封装 start/stop/restart/status/logs/reload/update/clean |
-| systemd 单元手写繁琐 | docker-compose `restart: unless-stopped` 托管 |
-| 配置散落多处 | 整目录 `rsync` 同步,配置即代码 |
-| 密钥容易误提交 | `*.toml.tpl` 模板 + GitHub Secrets + `envsubst` 渲染 |
-| 升级版本要手改 compose | `./frps.sh update v0.71.0` 一行搞定 |
-| 改服务端配置要 SSH | push 到 main 自动触发 GitHub Actions 部署 |
+| 手搓 frp 痛点       | 本项目方案                                                                       |
+|-----------------|-----------------------------------------------------------------------------|
+| 命令行长选项难记        | `frps.sh` / `frpc.sh` 封装 start/stop/restart/status/logs/reload/update/clean |
+| systemd 单元手写繁琐  | docker-compose `restart: unless-stopped` 托管                                 |
+| 配置散落多处          | 整目录 `rsync` 同步,配置即代码                                                        |
+| 密钥容易误提交         | `*.toml.tpl` 模板 + GitHub Secrets + `envsubst` 渲染                            |
+| 升级版本要手改 compose | `./frps.sh update v0.71.0` 一行搞定                                             |
+| 改服务端配置要 SSH     | push 到 main 自动触发 GitHub Actions 部署                                          |
 
 ### 三端架构
 
@@ -125,6 +136,7 @@ frp-deploy/
    └────────────────────────────────────────────────────────────┘
 ```
 
-**主路径流量**:用户访问 `app.your-domain.com` → NPM 443 → NPM 转发到 `frps:8080` → frps 通过 frp 隧道转发到本地 frpc → frpc 通过 `host.docker.internal` 访问 Mac 上的本地服务。
+**主路径流量**:用户访问 `app.your-domain.com` → NPM 443 → NPM 转发到 `frps:8080` → frps 通过 frp 隧道转发到本地 frpc →
+frpc 通过 `host.docker.internal` 访问 Mac 上的本地服务。
 
 **P2P 直连(可选)**:固定少数人桌面端可通过 `frpc-visitor` 直连 Mac,xtcp 优先 + stcp 兜底,业务流量不经云服务器。

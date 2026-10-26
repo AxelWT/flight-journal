@@ -1,3 +1,12 @@
+---
+title: "resume-gpt 简历分析项目"
+date: 2026-06-16
+description: 简历分析项目
+tags:
+  - 简历分析项目
+  - python
+---
+
 # resume-gpt
 
 AI 驱动的面试辅助分析工具。收到面试邀请后，通过爬取网上的面经并结合 AI 分析，生成个性化的面试分析报告。
