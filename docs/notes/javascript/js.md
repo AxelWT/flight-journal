@@ -9,7 +9,7 @@ tags:
   - 笔记
 ---
 
-# JavaScript 核心语法与历史
+# JavaScript 语法笔记
 
 ## 一、技术历史
 

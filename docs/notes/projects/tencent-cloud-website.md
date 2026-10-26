@@ -1,5 +1,5 @@
 ---
-title: "从裸服务器到全站 HTTPS：云服务器 · 域名解析 · SSL 证书 · NPM 反代"
+title: "全站 HTTPS：云服务器 · 域名解析 · SSL 证书 · NPM 反代"
 date: 2026-09-16
 description: 个人自建站点完整实践：云服务器选型、DNS 解析、Let's Encrypt 证书申请（HTTP-01/DNS-01）、NPM 反向代理与安全加固
 tags:
@@ -9,7 +9,7 @@ tags:
   - 网站
 ---
 
-# 从裸服务器到全站 HTTPS：云服务器 · 域名解析 · SSL 证书 · NPM 反代
+# 全站 HTTPS：云服务器 · 域名解析 · SSL 证书 · NPM 反代
 
 > 面向个人自建站点的完整实践记录。
 > 覆盖链路：买服务器 → 买域名 → DNS 解析 → 申请证书 → HTTPS 加密 → 反代分发到各应用。
