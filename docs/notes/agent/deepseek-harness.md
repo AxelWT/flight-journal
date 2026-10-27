@@ -12,8 +12,6 @@ tags:
 
 > 仓库地址：https://github.com/deepseek-ai/deepseek-harness
 
-## 0. 先破题：它到底是个什么东西
-
 DeepSeek Harness 开源后，很多人第一反应是"一个带聊天界面的模型调用工具"。但从源码看，官方对它的定位要底层得多：
 
 **它的核心不是某个聊天组件，而是由 `Cordis Context + Service + Event + Plugin Fiber` 组成的 Agent Harness。**
@@ -34,12 +32,12 @@ DeepSeek Harness 开源后，很多人第一反应是"一个带聊天界面的�
 
 ```json
 "workspaces": [
-  "vendor/*",
-  "packages/*/*",
-  "native/landlock-run",
-  "native/landlock-run/packages/*",
-  "apps/*",
-  "website"
+"vendor/*",
+"packages/*/*",
+"native/landlock-run",
+"native/landlock-run/packages/*",
+"apps/*",
+"website"
 ]
 ```
 
@@ -47,19 +45,19 @@ DeepSeek Harness 开源后，很多人第一反应是"一个带聊天界面的�
 
 ### 1.1 顶层目录
 
-| 目录 | 职责 |
-| --- | --- |
+| 目录         | 职责                                                                                                 |
+|------------|----------------------------------------------------------------------------------------------------|
 | `apps/cli` | 命令行入口。`apps/cli/src/bin.ts` 解析 `dsh web`、`profile`、`plugin`、`dump-config` 等命令，并调用 boot 层加载 profile |
-| `apps/web` | Web 前端壳。`apps/web/src/main.ts` 很薄，只负责把 `@deepseek-ai/dsh-client-web` 挂载到 `#root` |
-| `packages` | Harness 主体功能区，按能力域拆分：`core`、`llm`、`client`、`host`、`fs`、`shell`、`sandbox`、`subagent` 等 |
-| `vendor` | 内置改造过的 Cordis 相关包：`cordis`、`loader`、`include`、`group`、`hmr`、`timer`、`schemastery`。**插件化底座在这里** |
-| `native` | Native 辅助能力，目前重点是 `landlock-run`，服务 Linux sandbox 场景 |
-| `python` | Python SDK / runtime，方便外部用 Python 侧驱动或集成 Harness |
-| `docs` | 架构、Cordis primer、cookbook、子系统文档、工具流水线、扩展指南。**源码分析时非常关键** |
-| `examples` | 独立示例：ACP、headless、JSON-RPC、MCP memory、web schedule 等 |
-| `website` | 文档站点 |
-| `scripts` | 构建、发布、类型生成、快照等脚本 |
-| `patches` | 依赖 patch |
+| `apps/web` | Web 前端壳。`apps/web/src/main.ts` 很薄，只负责把 `@deepseek-ai/dsh-client-web` 挂载到 `#root`                   |
+| `packages` | Harness 主体功能区，按能力域拆分：`core`、`llm`、`client`、`host`、`fs`、`shell`、`sandbox`、`subagent` 等              |
+| `vendor`   | 内置改造过的 Cordis 相关包：`cordis`、`loader`、`include`、`group`、`hmr`、`timer`、`schemastery`。**插件化底座在这里**     |
+| `native`   | Native 辅助能力，目前重点是 `landlock-run`，服务 Linux sandbox 场景                                               |
+| `python`   | Python SDK / runtime，方便外部用 Python 侧驱动或集成 Harness                                                   |
+| `docs`     | 架构、Cordis primer、cookbook、子系统文档、工具流水线、扩展指南。**源码分析时非常关键**                                           |
+| `examples` | 独立示例：ACP、headless、JSON-RPC、MCP memory、web schedule 等                                               |
+| `website`  | 文档站点                                                                                               |
+| `scripts`  | 构建、发布、类型生成、快照等脚本                                                                                   |
+| `patches`  | 依赖 patch                                                                                           |
 
 一句话概括顶层分工：
 
@@ -67,34 +65,32 @@ DeepSeek Harness 开源后，很多人第一反应是"一个带聊天界面的�
 
 ### 1.2 packages 能力域地图
 
-| 能力域 | 代表子包 | 职责 |
-| --- | --- | --- |
-| **boot** | `app-boot`、`cmdline` | profile 初始化、分层配置读取、Cordis Loader 启动。`profile.ts` 定义 web / headless 等 profile 模板 |
-| **bundle** | `base`、`web-app`、`headless` | 预置插件组合。`cordis.patch.yml` 声明插件行，决定启动时挂载哪些能力 |
-| **core** | `agent`、`agent-loop`、`session`、`tools`、`system-prompt`、`scope` | Agent 核心：主循环、Agent 框架、工具调用与执行、系统提示词模板 |
-| **llm** | `llm`、`llm-deepseek`、`llm-pi-ai`、`llm-retry`、`token-meter` | 模型抽象与适配层。`llm` 定义接口，`llm-deepseek` 适配 DeepSeek 官方 provider |
-| **client** | `runtime`、`connection`、`web`、`ui-components`、`ui-layout`、`ui-settings`、`ui-tool`、`ui-model-selection` | 运行容器与前端 UI 组件：会话连接、设置页、工具卡片、模型选择 |
-| **host** | `webserver`、`apiproxy`、`frontend-static`、`plugin-inventory`、`directory-picker` | Node Host 服务端：HTTP/WebSocket、RPC API、前端静态资源、插件清单、目录选择 |
-| **api** | `gateway`、`remotes` | 前后端 RPC 及跨实例调用网关，提供 `session.prompt`、权限设置等 Host API |
-| **session** | `session-persistence-*`、`session-projection-*`、`session-retrieval-*` | 会话持久化、投影更新、长度统计、检索、Session log 导出 |
-| **settings / credentials / storage** | `settings-file`、`credentials-local`、`storage-sqlite` | 配置、凭证、存储；解析基础服务凭证，提供产品级隐私文件加密 |
-| **fs** | `fs`、`fs-local`、`fs-sandbox`、`fs-ssh`、`tool-fs-search`、`tool-fs-replace-editor` | 文件系统能力分层 |
-| **interaction** | `commands`、`user-approval`、`user-questions`、`tool-call-views` | 与用户的交互层：提问、权限询问、Slash command |
-| **shell / sandbox** | `tool-bash`、`host-local`、`bash-sandbox`、`subprocess-killer`、`sandbox-policy` | Shell 执行与沙箱隔离 |
-| **guard** | `network-policy`、`network-deny-*` | 网络安全策略 |
-| **compaction** | `compaction`、`compaction-basic`、`command-compact`、`compaction-tool-result-pruner` | 上下文压缩与裁剪，节省 token |
-| **context** | `agent-instructions`、`file-reference`、`session-reference`、`time-context`、`tmux-context` | 动态上下文注入：工作区说明、文件引用、时间上下文等 |
-| **skill** | `skill`、`skill-filesystem`、`skill-badge`、`tool-skill` | Skill 注册表、本地 skill provider、skill 工具 |
-| **subagent** | `subagent`、`subagent-spawn-in-process` | 子 Agent 能力与并发 provider，支持层级拆解协同 |
-| **mcp** | `mcp-client` | MCP Server 接入，外部工具挂到 `ctx.tools` |
-| **workflow** | `workflow`、`workflow-worker-thread`、`toolkit-io` | Workflow 引擎与流程工具链 |
-| **goal / plan / jobs / schedule / todo** | `tool-goal`、`plan-mode`、`todo-*`、`schedule` | 目标分解、计划模式、后台任务、调度、TODO 工具 |
-| **sdk / acp** | `sdk-client`、`sdk-server`、`sdk-protocol`、`acp` | 扩展体系：工具、UI 与运行时扩展机制 |
-| **test-support** | `agent-loop-tests`、`llm-replay`、`client-runtime` | 测试工具链与 mock / replay 能力 |
+| 能力域                                      | 代表子包                                                                                                  | 职责                                                                              |
+|------------------------------------------|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|
+| **boot**                                 | `app-boot`、`cmdline`                                                                                  | profile 初始化、分层配置读取、Cordis Loader 启动。`profile.ts` 定义 web / headless 等 profile 模板 |
+| **bundle**                               | `base`、`web-app`、`headless`                                                                           | 预置插件组合。`cordis.patch.yml` 声明插件行，决定启动时挂载哪些能力                                     |
+| **core**                                 | `agent`、`agent-loop`、`session`、`tools`、`system-prompt`、`scope`                                        | Agent 核心：主循环、Agent 框架、工具调用与执行、系统提示词模板                                           |
+| **llm**                                  | `llm`、`llm-deepseek`、`llm-pi-ai`、`llm-retry`、`token-meter`                                            | 模型抽象与适配层。`llm` 定义接口，`llm-deepseek` 适配 DeepSeek 官方 provider                      |
+| **client**                               | `runtime`、`connection`、`web`、`ui-components`、`ui-layout`、`ui-settings`、`ui-tool`、`ui-model-selection` | 运行容器与前端 UI 组件：会话连接、设置页、工具卡片、模型选择                                                |
+| **host**                                 | `webserver`、`apiproxy`、`frontend-static`、`plugin-inventory`、`directory-picker`                        | Node Host 服务端：HTTP/WebSocket、RPC API、前端静态资源、插件清单、目录选择                           |
+| **api**                                  | `gateway`、`remotes`                                                                                   | 前后端 RPC 及跨实例调用网关，提供 `session.prompt`、权限设置等 Host API                             |
+| **session**                              | `session-persistence-*`、`session-projection-*`、`session-retrieval-*`                                  | 会话持久化、投影更新、长度统计、检索、Session log 导出                                               |
+| **settings / credentials / storage**     | `settings-file`、`credentials-local`、`storage-sqlite`                                                  | 配置、凭证、存储；解析基础服务凭证，提供产品级隐私文件加密                                                   |
+| **fs**                                   | `fs`、`fs-local`、`fs-sandbox`、`fs-ssh`、`tool-fs-search`、`tool-fs-replace-editor`                       | 文件系统能力分层                                                                        |
+| **interaction**                          | `commands`、`user-approval`、`user-questions`、`tool-call-views`                                         | 与用户的交互层：提问、权限询问、Slash command                                                   |
+| **shell / sandbox**                      | `tool-bash`、`host-local`、`bash-sandbox`、`subprocess-killer`、`sandbox-policy`                          | Shell 执行与沙箱隔离                                                                   |
+| **guard**                                | `network-policy`、`network-deny-*`                                                                     | 网络安全策略                                                                          |
+| **compaction**                           | `compaction`、`compaction-basic`、`command-compact`、`compaction-tool-result-pruner`                     | 上下文压缩与裁剪，节省 token                                                               |
+| **context**                              | `agent-instructions`、`file-reference`、`session-reference`、`time-context`、`tmux-context`               | 动态上下文注入：工作区说明、文件引用、时间上下文等                                                       |
+| **skill**                                | `skill`、`skill-filesystem`、`skill-badge`、`tool-skill`                                                 | Skill 注册表、本地 skill provider、skill 工具                                            |
+| **subagent**                             | `subagent`、`subagent-spawn-in-process`                                                                | 子 Agent 能力与并发 provider，支持层级拆解协同                                                 |
+| **mcp**                                  | `mcp-client`                                                                                          | MCP Server 接入，外部工具挂到 `ctx.tools`                                                |
+| **workflow**                             | `workflow`、`workflow-worker-thread`、`toolkit-io`                                                      | Workflow 引擎与流程工具链                                                               |
+| **goal / plan / jobs / schedule / todo** | `tool-goal`、`plan-mode`、`todo-*`、`schedule`                                                           | 目标分解、计划模式、后台任务、调度、TODO 工具                                                       |
+| **sdk / acp**                            | `sdk-client`、`sdk-server`、`sdk-protocol`、`acp`                                                        | 扩展体系：工具、UI 与运行时扩展机制                                                             |
+| **test-support**                         | `agent-loop-tests`、`llm-replay`、`client-runtime`                                                      | 测试工具链与 mock / replay 能力                                                         |
 
-理解方式：
-
-> **boot / bundle 负责启动装配；core + llm + client + host + api + session 构成主干；其余分层提供基础设施、执行环境与扩展生态能力。**
+> **理解方式**：boot / bundle 负责启动装配；core + llm + client + host + api + session 构成主干；其余分层提供基础设施、执行环境与扩展生态能力。
 
 ### 1.3 一个值得注意的拆法
 
@@ -136,8 +132,8 @@ packages/bundle/web-app/cordis.patch.yml   Web 插件组合
 
 ```ts
 export const PROFILE_TEMPLATES: Record<string, readonly string[]> = {
-  web:      ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app'],
-  headless: ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-headless'],
+    web: ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-web-app'],
+    headless: ['@deepseek-ai/dsh-base', '@deepseek-ai/dsh-headless'],
 }
 ```
 
@@ -161,16 +157,16 @@ const ctx = new Context()
 
 `packages/bundle/base/cordis.patch.yml` 声明了基础 Agent 能力集合：
 
-| 分组 | 内容 |
-| --- | --- |
-| Cordis 基础 | `timer`、`hmr` |
+| 分组          | 内容                                                                              |
+|-------------|---------------------------------------------------------------------------------|
+| Cordis 基础   | `timer`、`hmr`                                                                   |
 | LLM Runtime | `@deepseek-ai/dsh-llm`，默认 provider `deepseek-official`，默认模型 `deepseek-v4-flash` |
-| 会话与配置 | `session`、`settings`、`credentials`、`session persistence` |
-| 核心主干 | `agent`、`agent-loop`、`system-prompt`、`tools`、API gateway |
-| 执行与安全 | `subprocess`、`sandbox`、`approval` |
-| 工具能力 | `bash`、`fs`、`skill` |
-| 高级能力 | `web`、`subagent`、`workflow` |
-| 模型适配器 | `@deepseek-ai/dsh-llm-deepseek` |
+| 会话与配置       | `session`、`settings`、`credentials`、`session persistence`                        |
+| 核心主干        | `agent`、`agent-loop`、`system-prompt`、`tools`、API gateway                        |
+| 执行与安全       | `subprocess`、`sandbox`、`approval`                                               |
+| 工具能力        | `bash`、`fs`、`skill`                                                             |
+| 高级能力        | `web`、`subagent`、`workflow`                                                     |
+| 模型适配器       | `@deepseek-ai/dsh-llm-deepseek`                                                 |
 
 结论：**base bundle 本身已经是一套可运行的 Agent spine**，不依赖任何 UI。
 
@@ -178,13 +174,13 @@ const ctx = new Context()
 
 `packages/bundle/web-app/cordis.patch.yml` 在 base 之上挂载 Web 相关插件：
 
-| 分组 | 内容 |
-| --- | --- |
-| Web 环境 | Web persona、工作目录等面向 Web 场景的运行环境补充 |
-| Host 侧 | `webserver`、`frontend-static`、`apiproxy`、`directory-picker`、`plugin-inventory` |
-| Client Runtime | `runtime`、`connection`、`api-remotes` |
-| UI 插件 | `conversation`、`layout`、`settings`、`tool card`、`model selection` |
-| 高级 Agent UI | `skill`、`subagent`、`plan`、`goal`、`jobs`、`trajectory`、`agent presets` |
+| 分组             | 内容                                                                             |
+|----------------|--------------------------------------------------------------------------------|
+| Web 环境         | Web persona、工作目录等面向 Web 场景的运行环境补充                                              |
+| Host 侧         | `webserver`、`frontend-static`、`apiproxy`、`directory-picker`、`plugin-inventory` |
+| Client Runtime | `runtime`、`connection`、`api-remotes`                                           |
+| UI 插件          | `conversation`、`layout`、`settings`、`tool card`、`model selection`               |
+| 高级 Agent UI    | `skill`、`subagent`、`plan`、`goal`、`jobs`、`trajectory`、`agent presets`           |
 
 **这里有一个关键设计需要特别注意**：
 
@@ -209,7 +205,7 @@ Web bundle 里有大量 `disabled` 的 base 工具行配置。注释说明得很
 
 ### 3.1 InputBar：前端输入框
 
-```ts
+```
 packages/client/ui-conversation/src/client/skeleton/InputBar.tsx
 ```
 
@@ -223,7 +219,7 @@ packages/client/ui-conversation/src/client/skeleton/InputBar.tsx
 
 ### 3.2 InputMachine：输入状态机
 
-```ts
+```
 packages/client/ui-conversation/src/client/input/machine.ts
 packages/client/ui-conversation/src/client/input/facade.ts
 ```
@@ -246,7 +242,7 @@ deps.defaultSink(draft.trim(), imageIds, mode, signal)
 
 ### 3.3 InputHub：把输入接到 conversation
 
-```ts
+```
 packages/client/ui-conversation/src/client/input/hub.ts
 ```
 
@@ -260,26 +256,26 @@ conversation().sendSession(session, text, imageIds, mode, signal)
 
 ### 3.4 ConversationController：构造 Prompt 内容
 
-```ts
+```
 packages/client/ui-conversation/src/client/service.ts
 ```
 
 `ConversationController` 是前端的 conversation 服务，挂在 `ctx.conversation` 上。`sendSession()` 把文本和图片整理成 content blocks：
 
 ```ts
-const content = [{ type: 'text', text }, ...images]
+const content = [{type: 'text', text}, ...images]
 session.prompt(content, mode, signal)
 ```
 
 普通文本就是：
 
 ```ts
-[{ type: 'text', text: '帮我分析一下这个项目' }]
+[{type: 'text', text: '帮我分析一下这个项目'}]
 ```
 
 ### 3.5 Session.prompt：前端 RPC
 
-```ts
+```
 packages/client/runtime/src/client/sessions/session.ts
 ```
 
@@ -287,7 +283,7 @@ packages/client/runtime/src/client/sessions/session.ts
 
 ```ts
 this.api.sessions.prompt({
-  sessionId, mode, content, clientTimeZone,
+    sessionId, mode, content, clientTimeZone,
 })
 ```
 
@@ -323,15 +319,15 @@ packages/host/apiproxy/src/api-proxy.ts
 4. 处理图片 admission 和持久化内容
 5. 创建 `UserMessage`
 6. 根据 mode 分流：
-   - `queue` / 普通消息 → `agent.followup(message)`
-   - `steer` / 运行中插入下一步 → `agent.steer(message)`
+    - `queue` / 普通消息 → `agent.followup(message)`
+    - `steer` / 运行中插入下一步 → `agent.steer(message)`
 7. 返回 `{ accepted: true }`
 
 > **关键**：返回 `accepted` 不代表模型已经回答完，只代表"消息已经被 Agent 接收"。后续结果通过 session event 流回前端。
 
 ### 3.7 Agent Loop：turn / step 循环
 
-```ts
+```
 packages/core/agent-loop/src/agent.ts
 ```
 
@@ -366,7 +362,7 @@ turn/end
 
 ### 3.8 Prompt 组装：systemPrompt + tools
 
-```ts
+```
 packages/core/system-prompt/src/index.ts
 packages/core/tools/src/index.ts
 packages/core/agent-loop/src/agent.ts
@@ -385,7 +381,7 @@ packages/core/agent-loop/src/agent.ts
 
 ### 3.9 LLM 请求：`ctx.llm` → DeepSeekAdapter
 
-```ts
+```
 packages/llm/llm/src/index.ts
 packages/llm/llm-deepseek/src/index.ts
 packages/llm/llm-deepseek/src/adapter.ts
@@ -414,7 +410,7 @@ ${baseURL}/chat/completions
 
 ### 3.10 工具调用流水线
 
-```ts
+```
 packages/core/agent-loop/src/tool-calls.ts
 packages/core/tools/src/index.ts
 docs/tool-execution-pipeline.zh.md
@@ -550,11 +546,11 @@ Consumer             把能力暴露给模型、UI 或其他插件
 
 以文件系统为例：
 
-| 角色 | 包 |
-| --- | --- |
-| Definition | `fs` → 定义 `ctx.fs` |
-| Provider | `fs-local`（本地）、`fs-sandbox`（沙箱封装） |
-| Consumer | `tool-fs`（模型工具）、`tool-fs-search`、`tool-fs-replace-editor` |
+| 角色         | 包                                                         |
+|------------|-----------------------------------------------------------|
+| Definition | `fs` → 定义 `ctx.fs`                                        |
+| Provider   | `fs-local`（本地）、`fs-sandbox`（沙箱封装）                         |
+| Consumer   | `tool-fs`（模型工具）、`tool-fs-search`、`tool-fs-replace-editor` |
 
 好处是：**替换实现不影响消费者，新增消费者不影响实现。** 沙箱化只是换一个 provider。
 
@@ -577,7 +573,7 @@ export const name = 'my-plugin'
 export const inject = ['tools', 'llm']
 
 export function apply(ctx, config) {
-  // 注册工具、监听事件、扩展服务
+    // 注册工具、监听事件、扩展服务
 }
 ```
 
@@ -622,27 +618,27 @@ ctx.conversation // 前端会话服务
 
 ## 6. 源码清单速查
 
-| 环节 | 路径 |
-| --- | --- |
-| CLI 入口 | `apps/cli/src/bin.ts` |
-| Web 入口 | `apps/web/src/main.ts` |
-| Profile 初始化 | `packages/boot/app-boot/src/profile.ts` |
-| Boot 主流程 | `packages/boot/app-boot/src/index.ts` |
-| Base 插件组合 | `packages/bundle/base/cordis.patch.yml` |
-| Web 插件组合 | `packages/bundle/web-app/cordis.patch.yml` |
-| Cordis 插件定义 | `vendor/cordis/src/registry.ts` |
-| 对话输入框 | `packages/client/ui-conversation/src/client/skeleton/InputBar.tsx` |
-| 输入状态机 | `packages/client/ui-conversation/src/client/input/machine.ts` |
-| 前端会话服务 | `packages/client/ui-conversation/src/client/service.ts` |
-| Session RPC | `packages/client/runtime/src/client/sessions/session.ts` |
-| Host API 代理 | `packages/host/apiproxy/src/api-proxy.ts` |
-| Agent Loop | `packages/core/agent-loop/src/agent.ts` |
-| 工具调用流水线 | `packages/core/agent-loop/src/tool-calls.ts` |
-| 系统提示词 | `packages/core/system-prompt/src/index.ts` |
-| 工具注册表 | `packages/core/tools/src/index.ts` |
-| LLM Runtime | `packages/llm/llm/src/index.ts` |
-| DeepSeek Adapter | `packages/llm/llm-deepseek/src/adapter.ts` |
-| 工具流水线文档 | `docs/tool-execution-pipeline.zh.md` |
+| 环节               | 路径                                                                 |
+|------------------|--------------------------------------------------------------------|
+| CLI 入口           | `apps/cli/src/bin.ts`                                              |
+| Web 入口           | `apps/web/src/main.ts`                                             |
+| Profile 初始化      | `packages/boot/app-boot/src/profile.ts`                            |
+| Boot 主流程         | `packages/boot/app-boot/src/index.ts`                              |
+| Base 插件组合        | `packages/bundle/base/cordis.patch.yml`                            |
+| Web 插件组合         | `packages/bundle/web-app/cordis.patch.yml`                         |
+| Cordis 插件定义      | `vendor/cordis/src/registry.ts`                                    |
+| 对话输入框            | `packages/client/ui-conversation/src/client/skeleton/InputBar.tsx` |
+| 输入状态机            | `packages/client/ui-conversation/src/client/input/machine.ts`      |
+| 前端会话服务           | `packages/client/ui-conversation/src/client/service.ts`            |
+| Session RPC      | `packages/client/runtime/src/client/sessions/session.ts`           |
+| Host API 代理      | `packages/host/apiproxy/src/api-proxy.ts`                          |
+| Agent Loop       | `packages/core/agent-loop/src/agent.ts`                            |
+| 工具调用流水线          | `packages/core/agent-loop/src/tool-calls.ts`                       |
+| 系统提示词            | `packages/core/system-prompt/src/index.ts`                         |
+| 工具注册表            | `packages/core/tools/src/index.ts`                                 |
+| LLM Runtime      | `packages/llm/llm/src/index.ts`                                    |
+| DeepSeek Adapter | `packages/llm/llm-deepseek/src/adapter.ts`                         |
+| 工具流水线文档          | `docs/tool-execution-pipeline.zh.md`                               |
 
 ---
 
@@ -668,10 +664,13 @@ UI 输入 → Session Prompt → Agent Loop → LLM Stream
 2. **Waterfall 中间件** —— 策略以插件方式挂在流水线上，而不是写进每个工具
 3. **Capability Seam** —— 定义 / 提供者 / 消费者三层分离，替换实现与新增消费互不干扰
 
-## 8. 参考文章
+---
 
-> 本文基于以下资料整理与扩展，并结合源码进行二次分析。
+## 参考资料
 
-| # | 标题 | 来源 | 链接 |
-| --- | --- | --- | --- |
-| 1 | DeepSeek Harness 源码解读 | 微信公众号 | [mp.weixin.qq.com](https://mp.weixin.qq.com/s/bWxT9dMtyrLsu2oV8Y5aug) |
+- DeepSeek Harness 源码仓库：<https://github.com/deepseek-ai/deepseek-harness>
+- DeepSeek Harness 源码解读（微信公众号）：<https://mp.weixin.qq.com/s/bWxT9dMtyrLsu2oV8Y5aug>
+- Cordis 插件化框架（Harness 的底座，源自 Koishi 生态）：<https://github.com/cordisjs/cordis>
+- Koishi 聊天机器人框架（Cordis 的来源项目）：<https://koishi.chat/>
+- MCP（Model Context Protocol，对应 mcp-client 包）：<https://modelcontextprotocol.io/>
+- Landlock（Linux 内核沙箱机制，对应 native/landlock-run）：<https://landlock.io/>

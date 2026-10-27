@@ -22,76 +22,16 @@ tags:
 
 假设你写了一个聊天机器人，最初逻辑都在一个文件里。功能变多后你开始拆模块——但**模块化只解决"代码怎么组织"**，解决不了另外四件事：
 
-| 问题 | 具体含义 |
-| --- | --- |
-| **安装** | 新功能怎么被"接"进系统？ |
-| **配置** | 同一功能在不同部署环境用不同配置，写在哪里？ |
-| **卸载** | 功能下线时，它的定时器、监听器、连接由谁来清理？清理不干净就是泄漏。 |
+| 问题     | 具体含义                                             |
+|--------|--------------------------------------------------|
+| **安装** | 新功能怎么被"接"进系统？                                    |
+| **配置** | 同一功能在不同部署环境用不同配置，写在哪里？                           |
+| **卸载** | 功能下线时，它的定时器、监听器、连接由谁来清理？清理不干净就是泄漏。               |
 | **协作** | 功能 A 依赖功能 B 的能力，但 B 可能还没启动、之后可能被替换成别的实现，A 该如何应对？ |
 
 插件系统就是对这四个问题的回答。
 
 而 Cordis 的特点是：它把**"卸载"和"协作"**这两件事，从"插件作者的自觉"上升为**"框架级保证"**。
-
-### 1.2 作者：Shigma
-
-先认识一下写出它的人——**Shigma**。
-
-Shigma 在第三方 QQ 机器人圈子里是相当出名的存在，群友们亲切地称呼他为**梦梦**。他的 GitHub 账号下有 130 多个公开仓库。如果你把 npm 上几个包的主页打开，会看到一长串 maintainer 都是同一个人：
-
-| 包 | 一句话描述 |
-| --- | --- |
-| `koishi` | 跨平台聊天机器人框架（npm 官方描述："Made with Love"） |
-| `cordis` | 插件化应用框架，本文的主角 |
-| `@satorijs/core` | 跨平台聊天协议适配层（Koishi 支持 QQ、Discord、Telegram 的地基） |
-| `schemastery` | 类型驱动的 schema 校验器 |
-| `minato` | 类型驱动的数据库框架（Koishi 的数据层） |
-| `cosmokit` | 通用工具集 |
-
-这是一套**一个人撑起来的技术栈**：
-
-- **Cordis** 是骨架（生命周期与依赖）
-- **Schemastery** 管配置校验
-- **Minato** 管数据存取
-- **Satorijs** 管平台协议
-- **Koishi** 是集大成者
-
-整个体系共同运行在 Cordis 之上。这篇文章里讲到的每一个概念（fiber、effect、Schema、Service），都出自他一人之手。
-
-> Shigma 在 2023 年底接受过腾讯媒体研究院《20 多岁做什么时间更有价值》系列的专访（BV1AQ4y157S8），那时他是研二学生，做 QQ 机器人开发五年了。被问到 AI 会不会取代人类时，他说：旧的岗位被取代，一定会创造出新的岗位，人类反而更有机会生活在更好的世界里。他做 QQ 机器人的初衷之一，就是帮自己提升工作效率。
->
-> 那时 Cordis 还在 Koishi 的小圈子里，没人想到它两年后会成为 DeepSeek Harness 的心脏。
-
-### 1.3 出身与名字
-
-- **2020 年 1 月**：Cordis 诞生于 **Koishi**——Shigma 创立的跨平台聊天机器人框架，发布首个正式版本
-- **2022 年 4 月**：Koishi 的插件体系成熟后，核心层被独立出来成为通用框架，`cordis` 包登上 npm
-- **2023 年底**：进入 3.x
-- **2024 年 11 月**：开始迭代 **Cordis 4**（首个 4.0 预发布），一次彻底重构，引入了基于 **fiber** 的生命周期体系
-
-**名字的由来**：Cordis 是拉丁语"心"（cor）的所有格，意为"心脏"。它是 Koishi 的心脏，如今也成了 DeepSeek Harness 的心脏。
-
-### 1.4 定位：元框架
-
-Cordis **不是**机器人框架（Koishi 才是，Cordis 只是它的底层），也**不是** DI 容器。
-
-| | 回答的问题 |
-| --- | --- |
-| 传统 DI | "谁创建谁" |
-| **Cordis** | **"谁在什么时候活着"** |
-
-论文给它的定位是 **meta-framework（元框架）**：它规定"副作用如何组合、依赖如何解析"，但不预设任何业务领域——QQ 机器人可以用它，Agent 运行时也可以。
-
-### 1.5 一篇论文
-
-Cordis 的配套论文《**A Programming Paradigm for Spatiotemporal Composability**》以预印本发布：
-
-- 署名单位：**北京大学** 与 **DeepSeek-AI**
-- 第一作者：**Yifan Shi**
-- 合著者：**Wei Zhang、Tianyi Cui**
-- 篇幅：88 页
-
-论文把 Cordis 的机制**形式化**，给出了定义、定理与证明。这一点在第 5 章还会回来。
 
 ---
 
@@ -103,20 +43,18 @@ Cordis 的全部语义可以浓缩为五个概念：
 插件 · 上下文 · 注入 · 事件 · 可逆副作用
 ```
 
-下面由浅入深逐一拆开。
-
 ### 2.1 第一个插件
 
 写 Cordis 插件最爽的一点：**完全不需要框架启动代码**。
 
 ```ts
 // hello.ts
-import type { Context } from '@deepseek-ai/cordis'
+import type {Context} from '@deepseek-ai/cordis'
 
 export const name = 'hello'
 
 export function apply(ctx: Context) {
-  console.log('hello from my first plugin')
+    console.log('hello from my first plugin')
 }
 ```
 
@@ -136,22 +74,24 @@ export function apply(ctx: Context) {
 插件有三种形态：
 
 ```ts
-import { Service, type Context } from '@deepseek-ai/cordis'
+import {Service, type Context} from '@deepseek-ai/cordis'
 
 // 1. 函数形态（最常见）
-export function apply(ctx: Context) {}
+export function apply(ctx: Context) {
+}
 
 // 2. 对象形态
 export const objectPlugin = {
-  name: 'object-plugin',
-  apply(ctx: Context) {},
+    name: 'object-plugin',
+    apply(ctx: Context) {
+    },
 }
 
 // 3. 类形态（要对外提供服务时用）
 export class MyService extends Service {
-  constructor(ctx: Context) {
-    super(ctx, 'myService')
-  }
+    constructor(ctx: Context) {
+        super(ctx, 'myService')
+    }
 }
 ```
 
@@ -163,11 +103,11 @@ export class MyService extends Service {
 
 ```ts
 export function apply(ctx: Context) {
-  ctx.on('some/event', (payload) => { /* ... */ })  // 监听事件（卸载时自动移除）
-  ctx.effect(() => { /* ... */ })                   // 注册副作用（卸载时自动回滚）
-  ctx.plugin(SomePlugin)                            // 挂载子插件（随父插件卸载）
-  ctx.get('someService')                            // 读取服务（没有则 undefined）
-  ctx.provide('someValue', 42)                      // 提供服务
+    ctx.on('some/event', (payload) => { /* ... */ })  // 监听事件（卸载时自动移除）
+    ctx.effect(() => { /* ... */ })                   // 注册副作用（卸载时自动回滚）
+    ctx.plugin(SomePlugin)                            // 挂载子插件（随父插件卸载）
+    ctx.get('someService')                            // 读取服务（没有则 undefined）
+    ctx.provide('someValue', 42)                      // 提供服务
 }
 ```
 
@@ -198,14 +138,14 @@ PENDING → LOADING → ACTIVE → UNLOADING → DISPOSED
               ↘ FAILED ↗
 ```
 
-| 状态 | 含义 |
-| --- | --- |
-| **PENDING** | 已声明，但 `inject` 的服务尚未就绪，等待中 |
-| **LOADING** | `apply` 正在执行 |
-| **ACTIVE** | `apply` 已完成 |
-| **FAILED** | `apply` 抛异常或配置校验失败 |
-| **UNLOADING** | 清理中 |
-| **DISPOSED** | 已拆除 |
+| 状态            | 含义                         |
+|---------------|----------------------------|
+| **PENDING**   | 已声明，但 `inject` 的服务尚未就绪，等待中 |
+| **LOADING**   | `apply` 正在执行               |
+| **ACTIVE**    | `apply` 已完成                |
+| **FAILED**    | `apply` 抛异常或配置校验失败         |
+| **UNLOADING** | 清理中                        |
+| **DISPOSED**  | 已拆除                        |
 
 一个 fiber 就是一个已加载插件实例的**生命周期句柄**：
 
@@ -219,8 +159,8 @@ PENDING → LOADING → ACTIVE → UNLOADING → DISPOSED
 
 ```ts
 ctx.effect(() => {
-  const conn = createConnection()
-  return () => conn.close()   // disposer：如何清理
+    const conn = createConnection()
+    return () => conn.close()   // disposer：如何清理
 })
 ```
 
@@ -243,7 +183,7 @@ ctx.effect(() => {
 
 插件作者只需要记住一条铁律：
 
-> ⚠️ **凡是自己创建、Cordis 不管的资源，都包进 `ctx.effect()`。**
+> **凡是自己创建、Cordis 不管的资源，都包进 `ctx.effect()`。**
 
 因为副作用可逆，插件就可以被安全地卸载与重装，由此获得：
 
@@ -260,16 +200,16 @@ ctx.effect(() => {
 把一项能力挂到 `ctx` 上，让别的插件按名字取用，这就是 **Service**：
 
 ```ts
-import { Service, type Context } from '@deepseek-ai/cordis'
+import {Service, type Context} from '@deepseek-ai/cordis'
 
 export class GreeterService extends Service {
-  constructor(ctx: Context) {
-    super(ctx, 'greeter')   // 注册：以后谁都能 ctx.greeter 拿到我
-  }
+    constructor(ctx: Context) {
+        super(ctx, 'greeter')   // 注册：以后谁都能 ctx.greeter 拿到我
+    }
 
-  greet(who: string) {
-    return `Hello, ${who}!`
-  }
+    greet(who: string) {
+        return `Hello, ${who}!`
+    }
 }
 ```
 
@@ -279,7 +219,7 @@ export class GreeterService extends Service {
 export const inject = ['greeter']   // 声明依赖
 
 export function apply(ctx: Context) {
-  console.log(ctx.greeter.greet('world'))   // 此时 greeter 必定就绪
+    console.log(ctx.greeter.greet('world'))   // 此时 greeter 必定就绪
 }
 ```
 
@@ -289,9 +229,9 @@ export function apply(ctx: Context) {
 
 #### 与传统 DI 的本质区别
 
-| | 假设 |
-| --- | --- |
-| 传统 DI | "一旦绑定，服务就一直在" |
+|            | 假设                     |
+|------------|------------------------|
+| 传统 DI      | "一旦绑定，服务就一直在"          |
 | **Cordis** | **"服务可以随时出现，也可以随时消失"** |
 
 在 Agent 场景里后者是常态：
@@ -308,9 +248,9 @@ Cordis 的处理是：
 
 #### 两个配套机制
 
-| 机制 | 作用 |
-| --- | --- |
-| `ctx.isolate(key, realm)` | **隔离**。让一个作用域内某项服务解析到独立实例，两个组各自用各自的实现，互不干扰 |
+| 机制                         | 作用                                             |
+|----------------------------|------------------------------------------------|
+| `ctx.isolate(key, realm)`  | **隔离**。让一个作用域内某项服务解析到独立实例，两个组各自用各自的实现，互不干扰     |
 | `ctx.intercept(key, meta)` | **拦截**。给依赖访问附加元数据，外层上下文可以约束组件如何使用某个依赖，而不修改组件本身 |
 
 > **在 DSH 里**：`ctx.tools`、`ctx.llm`、`ctx.shell`、`ctx.sessions`、`ctx.skills` 全都是这样的服务（第 4 章会列出完整的槽位表）。
@@ -323,9 +263,9 @@ Cordis 的事件系统是**类型化**的，事件名和监听器签名靠 TypeS
 
 ```ts
 declare module '@deepseek-ai/cordis' {
-  interface Events {
-    'stats/report'(name: string, count: number): void
-  }
+    interface Events {
+        'stats/report'(name: string, count: number): void
+    }
 }
 
 ctx.emit('stats/report', 'tool_call', 42)        // 发出
@@ -336,12 +276,12 @@ ctx.on('stats/report', (name, count) => { /* 监听，卸载时自动移除 */ }
 
 事件采用哪种分发模式，是它的**公开契约**，决定了监听器能否返回值、能否并发、能否短路：
 
-| 模式 | 语义 |
-| --- | --- |
-| `emit` | 同步广播；不等待、不收集返回值 |
-| `parallel` | 所有监听器并发执行并等待 |
-| `serial` | 按序执行；第一个非空返回值胜出，停止后续 |
-| `bail` | `serial` 的同步版本 |
+| 模式          | 语义                          |
+|-------------|-----------------------------|
+| `emit`      | 同步广播；不等待、不收集返回值             |
+| `parallel`  | 所有监听器并发执行并等待                |
+| `serial`    | 按序执行；第一个非空返回值胜出，停止后续        |
+| `bail`      | `serial` 的同步版本              |
 | `waterfall` | 环绕中间件（around-middleware），见下 |
 
 #### waterfall：DSH 用得最多的模式
@@ -350,8 +290,8 @@ ctx.on('stats/report', (name, count) => { /* 监听，卸载时自动移除 */ }
 
 ```ts
 ctx.on('some/decision', async (input, next) => {
-  if (!hasPermission(input)) return { denied: true }  // 不调 next() = 否决，短路
-  return next()                                        // 调 next() = 放行
+    if (!hasPermission(input)) return {denied: true}  // 不调 next() = 否决，短路
+    return next()                                        // 调 next() = 放行
 })
 ```
 
@@ -363,7 +303,7 @@ ctx.on('some/decision', async (input, next) => {
  放行        否决（短路）   放行
 ```
 
-> ⚠️ **一条 DSH 明文纪律**：只负责观察和记录的 waterfall 监听器**必须调用 `next()`**，否则会无声地吞掉下游所有默认行为。
+> **一条 DSH 明文纪律**：只负责观察和记录的 waterfall 监听器**必须调用 `next()`**，否则会无声地吞掉下游所有默认行为。
 
 > **在 DSH 里**：工具执行管道 `tools/pre-execute → tools/execute → tools/post-execute` 就是一条 waterfall 链；`approval/request`、`agent/request` 也是。
 
@@ -380,17 +320,17 @@ ctx.on('some/decision', async (input, next) => {
   disabled: true     # 保留条目但不挂载；改回后自动加载
 ```
 
-| 字段 | 作用 |
-| --- | --- |
-| **`id`** | 不带 `id` 的条目每次读取都会获得新 id，于是配置文件的任何编辑都会被当作"先删后加"。**带 `id` 才能精准增量更新。** |
-| **`group`** | 把一组插件打包成单元整体装卸；配合 `isolate` 可让组内使用独立的服务实例 |
+| 字段          | 作用                                                                  |
+|-------------|---------------------------------------------------------------------|
+| **`id`**    | 不带 `id` 的条目每次读取都会获得新 id，于是配置文件的任何编辑都会被当作"先删后加"。**带 `id` 才能精准增量更新。** |
+| **`group`** | 把一组插件打包成单元整体装卸；配合 `isolate` 可让组内使用独立的服务实例                           |
 
 **Schema 校验**：插件用 schema 声明配置结构（schemastery，就是 Shigma 写的那个），Cordis 在调用 `apply` **前**校验。配置非法则加载失败并给出精确错误——**插件绝不会在配置不完整时半启动**。
 
 ```ts
 export const Config: Schema<Config> = Schema.object({
-  greeting: Schema.string().default('Hello'),
-  targets: Schema.array(String).default(['world']),
+    greeting: Schema.string().default('Hello'),
+    targets: Schema.array(String).default(['world']),
 })
 ```
 
@@ -413,19 +353,19 @@ Cordis 的五个核心概念全部出场：插件、上下文、注入、事件�
 ### 3.1 启动：约二十行代码搭起整个应用
 
 ```ts
-import { Context } from '@deepseek-ai/cordis'
+import {Context} from '@deepseek-ai/cordis'
 import Loader from '@deepseek-ai/cordis-plugin-loader'
 
 async function boot(binName, configPath, patches, prepare, baseUrl) {
-  const ctx = new Context()
-  ctx.baseUrl = /* 相对路径基准 */
-  ctx.provide('dshHomePath', dshHomePath)          // 引导值
-  await ctx.plugin(Loader)                          // 挂载 Loader
-  await prepare?.(ctx)
-  await mountRootInclude(ctx, configPath, patches, baseUrl)  // Include 挂载配置树
-  await ctx.get('loader')?.await()                  // 等整棵树稳定
-  await assertEntriesActivated(ctx, binName)        // 审计：不允许条目半死不活
-  return ctx
+    const ctx = new Context()
+    ctx.baseUrl = /* 相对路径基准 */
+    ctx.provide('dshHomePath', dshHomePath)          // 引导值
+    await ctx.plugin(Loader)                          // 挂载 Loader
+    await prepare?.(ctx)
+    await mountRootInclude(ctx, configPath, patches, baseUrl)  // Include 挂载配置树
+    await ctx.get('loader')?.await()                  // 等整棵树稳定
+    await assertEntriesActivated(ctx, binName)        // 审计：不允许条目半死不活
+    return ctx
 }
 ```
 
@@ -450,27 +390,27 @@ profile 中声明的其他 bundle
 **Bundle（组合包）** 就是一个 npm 包，其 `package.json` 声明：
 
 ```json
-"dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+"dsh": {"bundle": {"patch": "./cordis.patch.yml"}}
 ```
 
 核心组合包 `@deepseek-ai/dsh-base` 的 patch，就是把几十个插件一次 insert 进空根：
 
 ```yaml
 - insert:
-  - id: timer
-    name: '@deepseek-ai/cordis-plugin-timer'
-  - id: hmr
-    name: '@deepseek-ai/cordis-plugin-hmr'
-    config:
-      root: ['.']
-  - id: llm
-    name: '@deepseek-ai/dsh-llm'
-  - id: session
-    name: '@deepseek-ai/dsh-session'
-  - id: agent
-    name: '@deepseek-ai/dsh-agent'
-  - id: jobs
-    name: '@deepseek-ai/dsh-jobs-local'
+    - id: timer
+      name: '@deepseek-ai/cordis-plugin-timer'
+    - id: hmr
+      name: '@deepseek-ai/cordis-plugin-hmr'
+      config:
+        root: [ '.' ]
+    - id: llm
+      name: '@deepseek-ai/dsh-llm'
+    - id: session
+      name: '@deepseek-ai/dsh-session'
+    - id: agent
+      name: '@deepseek-ai/dsh-agent'
+    - id: jobs
+      name: '@deepseek-ai/dsh-jobs-local'
   # ……以及更多
 ```
 
@@ -489,16 +429,16 @@ export const name = 'greet-tool'
 export const inject = ['tools']
 
 export function apply(ctx: Context) {
-  ctx.tools.register(defineTool({
-    name: 'greet',
-    description: 'Greet the named person.',
-    parameters: {
-      name: { type: 'string', required: true },
-    },
-    async execute(args) {
-      return `Hello, ${args.name}!`
-    },
-  }))
+    ctx.tools.register(defineTool({
+        name: 'greet',
+        description: 'Greet the named person.',
+        parameters: {
+            name: {type: 'string', required: true},
+        },
+        async execute(args) {
+            return `Hello, ${args.name}!`
+        },
+    }))
 }
 ```
 
@@ -514,13 +454,13 @@ export function apply(ctx: Context) {
 
 DSH 最值得注意的包是 `@deepseek-ai/dsh-tool-cordis`，官方称之为**"自指的 Cordis 工具集"**（self-referential Cordis toolset）。它给 Agent 提供五个工具：
 
-| 工具 | 作用 |
-| --- | --- |
-| `cordis_inspect` | 对当前进程**只读巡检**：哪些服务在运行、各 fiber 的状态、注册了哪些工具、每个 `ctx.<key>` 的完整契约 |
-| `cordis_define` | 现场定义一个小插件包（可带"宿主半 + 浏览器半"），只记录不执行 |
-| `cordis_run` | 把宿主半放入 `node:vm` 沙箱执行，把浏览器半推送到每个打开的网页 |
-| `cordis_stop` | 卸载动态包 |
-| `cordis_undefine` | 卸载动态包 |
+| 工具                | 作用                                                             |
+|-------------------|----------------------------------------------------------------|
+| `cordis_inspect`  | 对当前进程**只读巡检**：哪些服务在运行、各 fiber 的状态、注册了哪些工具、每个 `ctx.<key>` 的完整契约 |
+| `cordis_define`   | 现场定义一个小插件包（可带"宿主半 + 浏览器半"），只记录不执行                              |
+| `cordis_run`      | 把宿主半放入 `node:vm` 沙箱执行，把浏览器半推送到每个打开的网页                          |
+| `cordis_stop`     | 卸载动态包                                                          |
+| `cordis_undefine` | 卸载动态包                                                          |
 
 于是：
 
@@ -550,29 +490,29 @@ DSH 的信任立场很明确：**动态包与 bash 同权**，沙箱隔离全局
 
 DSH 的扩展点**不是一个"API 列表"，而是一张 Cordis 服务注册表**：任何插件都可以注册新服务，也可以替换已有服务的提供方（这正是 §2.5 响应式依赖的直接应用）。
 
-| 类别 | 槽位（`ctx.<key>`） | 用途 | 现有提供方（可替换） |
-| --- | --- | --- | --- |
-| **执行** | `shell` | Bash 执行 | `bash-local`、`bash-sandbox`、`pwsh-local`、E2B |
-| **执行** | `codeRuntime` | 代码执行 | `code-runtime-worker` |
-| **执行** | `subprocess`、`terminals` | 子进程、持久 PTY | `subprocess-local`、`terminal-bash` |
-| **执行** | `lsp` | 语言服务器导航 | `lsp-local` |
-| **模型** | `llm` | LLM 适配器注册表 | `llm-deepseek`、`llm-pi-ai`、`llm-replay` |
-| **智能** | `agents`、`agentLoop`、`agentDefaultModel` | Agent 注册表、循环驱动、默认模型 | `agent-loop`、`agent-default-model` |
-| **智能** | `agentPresets` | 会话级 Agent 组合 | `agent-presets` |
-| **智能** | `subagents` | 子 Agent 提供方 | `subagent-spawn/fork-in-process`、ACP、Codex、Claude Code |
-| **数据** | `sessions`、`sessionPersistence` | 会话日志、持久化 | `session-persistence-jsonl`、`-sqlite` |
-| **数据** | `sessionQuery` | 会话读取与检索 | `session-query-sqlite` |
-| **数据** | `storage`、`attachments`、`spillStore` | 通用存储、附件、溢出存储 | `storage-json`、`storage-sqlite`、`attachment-local`、`spill-local` |
-| **数据** | `sessionTitle`、`sessionProjections` | 会话标题、投影单元 | `session-title-first-prompt-llm` 等 |
-| **环境** | `fs` | 文件系统提供方 | `fs-local`、`fs-sandbox`、`fs-e2b` |
-| **环境** | `web` | Web 访问（抓取、搜索） | `web-fetch-http`、`web-search-deepseek/exa/perplexity` |
-| **环境** | `credentials`、`settings` | 凭据、用户设置 | `credentials-local`、`settings-file` |
-| **环境** | `webServer`、`directoryPicker` | HTTP 路由、目录选择 | `webserver`、`directory-picker-native/browse` |
-| **治理** | `tools` | 工具注册表与受保护执行管道 | 所有 `dsh-tool-*` |
-| **治理** | `approval`、`permissionPresets`、`sandboxPolicy` | 审批、权限、沙箱策略 | `approval`、`permission-presets`、`sandbox-policy` |
-| **编排** | `goals`、`jobs`、`workflowEngine`、`planMode` | 长期目标、后台任务、工作流、计划模式 | `dsh-goal`、`dsh-jobs-local`、`workflow-worker-thread` |
-| **自指** | `dynamicCordisRunner`、`cordisInspect` | 动态包宿主、运行时巡检 | `cordis-host-runner` |
-| **前端** | `slots`、`clientModules`、`theme`、`locale` | UI 槽位、客户端插件图、主题、语言 | `dsh-client-ui-*` 系列 |
+| 类别     | 槽位（`ctx.<key>`）                                | 用途                  | 现有提供方（可替换）                                                       |
+|--------|------------------------------------------------|---------------------|------------------------------------------------------------------|
+| **执行** | `shell`                                        | Bash 执行             | `bash-local`、`bash-sandbox`、`pwsh-local`、E2B                     |
+| **执行** | `codeRuntime`                                  | 代码执行                | `code-runtime-worker`                                            |
+| **执行** | `subprocess`、`terminals`                       | 子进程、持久 PTY          | `subprocess-local`、`terminal-bash`                               |
+| **执行** | `lsp`                                          | 语言服务器导航             | `lsp-local`                                                      |
+| **模型** | `llm`                                          | LLM 适配器注册表          | `llm-deepseek`、`llm-pi-ai`、`llm-replay`                          |
+| **智能** | `agents`、`agentLoop`、`agentDefaultModel`       | Agent 注册表、循环驱动、默认模型 | `agent-loop`、`agent-default-model`                               |
+| **智能** | `agentPresets`                                 | 会话级 Agent 组合        | `agent-presets`                                                  |
+| **智能** | `subagents`                                    | 子 Agent 提供方         | `subagent-spawn/fork-in-process`、ACP、Codex、Claude Code           |
+| **数据** | `sessions`、`sessionPersistence`                | 会话日志、持久化            | `session-persistence-jsonl`、`-sqlite`                            |
+| **数据** | `sessionQuery`                                 | 会话读取与检索             | `session-query-sqlite`                                           |
+| **数据** | `storage`、`attachments`、`spillStore`           | 通用存储、附件、溢出存储        | `storage-json`、`storage-sqlite`、`attachment-local`、`spill-local` |
+| **数据** | `sessionTitle`、`sessionProjections`            | 会话标题、投影单元           | `session-title-first-prompt-llm` 等                               |
+| **环境** | `fs`                                           | 文件系统提供方             | `fs-local`、`fs-sandbox`、`fs-e2b`                                 |
+| **环境** | `web`                                          | Web 访问（抓取、搜索）       | `web-fetch-http`、`web-search-deepseek/exa/perplexity`            |
+| **环境** | `credentials`、`settings`                       | 凭据、用户设置             | `credentials-local`、`settings-file`                              |
+| **环境** | `webServer`、`directoryPicker`                  | HTTP 路由、目录选择        | `webserver`、`directory-picker-native/browse`                     |
+| **治理** | `tools`                                        | 工具注册表与受保护执行管道       | 所有 `dsh-tool-*`                                                  |
+| **治理** | `approval`、`permissionPresets`、`sandboxPolicy` | 审批、权限、沙箱策略          | `approval`、`permission-presets`、`sandbox-policy`                 |
+| **编排** | `goals`、`jobs`、`workflowEngine`、`planMode`     | 长期目标、后台任务、工作流、计划模式  | `dsh-goal`、`dsh-jobs-local`、`workflow-worker-thread`             |
+| **自指** | `dynamicCordisRunner`、`cordisInspect`          | 动态包宿主、运行时巡检         | `cordis-host-runner`                                             |
+| **前端** | `slots`、`clientModules`、`theme`、`locale`       | UI 槽位、客户端插件图、主题、语言  | `dsh-client-ui-*` 系列                                             |
 
 ### 4.2 槽位背后的设计：三种角色
 
@@ -601,18 +541,18 @@ DSH 对"可替换能力"有一套固定模式——**Service Definition、Servic
 
 ### 4.3 开发入口：三种方式把插件装进去
 
-| 方式 | 适用场景 | 做法 |
-| --- | --- | --- |
-| **patch 覆盖层**（最快） | 临时试验 | 写一个 YAML，`dsh web --patch ./my-plugins.yml` 启动时插入条目 |
-| **profile 的 `cordis.patch.yml`** | 常驻生效 | 写在用户层，每次启动自动应用 |
-| **bundle 包** | 分发复用 | 把一组插件打包成 npm 包，声明 `dsh.bundle.patch`，成为可复用的"组合包" |
+| 方式                               | 适用场景 | 做法                                                  |
+|----------------------------------|------|-----------------------------------------------------|
+| **patch 覆盖层**（最快）                | 临时试验 | 写一个 YAML，`dsh web --patch ./my-plugins.yml` 启动时插入条目 |
+| **profile 的 `cordis.patch.yml`** | 常驻生效 | 写在用户层，每次启动自动应用                                      |
+| **bundle 包**                     | 分发复用 | 把一组插件打包成 npm 包，声明 `dsh.bundle.patch`，成为可复用的"组合包"    |
 
 patch 覆盖层示例：
 
 ```yaml
 - insert:
-  - id: my-plugin
-    name: '/abs/path/to/my-plugin.ts'
+    - id: my-plugin
+      name: '/abs/path/to/my-plugin.ts'
 ```
 
 插件代码本身依然是 Cordis 那套：函数、对象、类三种形态、`inject` 声明依赖、`ctx.effect` 管理资源、`Schema` 校验配置、`ctx.tools.register(defineTool(...))` 注册工具。
@@ -627,14 +567,14 @@ patch 覆盖层示例：
 
 **② 提供方类**
 
-| 类别 | 提供方 |
-| --- | --- |
-| 模型适配器 | DeepSeek、pi-ai 多提供方、replay |
-| shell 提供方 | 本地、沙箱、PowerShell |
-| fs 提供方 | 本地、沙箱、E2B |
-| web 搜索源 | DeepSeek、Exa、Perplexity |
-| 持久化后端 | JSONL、SQLite |
-| 其他 | 存储后端、技能提供方、会话标题生成器 |
+| 类别        | 提供方                        |
+|-----------|----------------------------|
+| 模型适配器     | DeepSeek、pi-ai 多提供方、replay |
+| shell 提供方 | 本地、沙箱、PowerShell           |
+| fs 提供方    | 本地、沙箱、E2B                  |
+| web 搜索源   | DeepSeek、Exa、Perplexity    |
+| 持久化后端     | JSONL、SQLite               |
+| 其他        | 存储后端、技能提供方、会话标题生成器         |
 
 **③ 系统类**
 
@@ -650,14 +590,14 @@ patch 覆盖层示例：
 
 几个有代表性的例子：
 
-| 方向 | 插件 | 作用 |
-| --- | --- | --- |
-| **改界面** | `dsh-visualize` | 让模型把交互式 HTML 卡片直接画进会话流 |
-| **改界面** | `dsh-TUI` | 像素鲸鱼顶栏的全屏终端 UI |
-| **改界面** | `dsh-deep-whale` | 一系列 Web 皮肤 |
-| **改界面** | `dsh-balance-meter` | 在输入框显示账户余额与花费 |
-| **改记忆** | `dsh-memento` | 有界、分层、带审批门、可审计的跨会话记忆 |
-| **改记忆** | `dsh-mneme` | 用 SQLite + 可编辑的 Markdown 镜像做跨会话记忆 |
+| 方向      | 插件                  | 作用                                |
+|---------|---------------------|-----------------------------------|
+| **改界面** | `dsh-visualize`     | 让模型把交互式 HTML 卡片直接画进会话流            |
+| **改界面** | `dsh-TUI`           | 像素鲸鱼顶栏的全屏终端 UI                    |
+| **改界面** | `dsh-deep-whale`    | 一系列 Web 皮肤                        |
+| **改界面** | `dsh-balance-meter` | 在输入框显示账户余额与花费                     |
+| **改记忆** | `dsh-memento`       | 有界、分层、带审批门、可审计的跨会话记忆              |
+| **改记忆** | `dsh-mneme`         | 用 SQLite + 可编辑的 Markdown 镜像做跨会话记忆 |
 
 ---
 
@@ -672,12 +612,12 @@ patch 覆盖层示例：
 
 前四章里那些"用起来很顺手"的特性，在论文里都有对应的定义、定理与证明：
 
-| 工程特性 | 对应的形式化保证 |
-| --- | --- |
-| 卸载自动清理 | 副作用的**可逆性**（所有上下文变更归结为 `ctx.effect` 一个原语） |
-| 依赖方自动重载 | 依赖的**响应式解析**（服务可随时出现或消失） |
-| 改配置不重启 | 配置的**声明式组合**与局部热替换 |
-| 决策链可短路 | waterfall continuation 的语义 |
+| 工程特性    | 对应的形式化保证                                  |
+|---------|-------------------------------------------|
+| 卸载自动清理  | 副作用的**可逆性**（所有上下文变更归结为 `ctx.effect` 一个原语） |
+| 依赖方自动重载 | 依赖的**响应式解析**（服务可随时出现或消失）                  |
+| 改配置不重启  | 配置的**声明式组合**与局部热替换                        |
+| 决策链可短路  | waterfall continuation 的语义                |
 
 ### 5.9 结论：点名自进化 Agent
 
@@ -714,28 +654,30 @@ patch 覆盖层示例：
 
 ## 附：概念速查表
 
-| 概念 | 一句话 |
-| --- | --- |
-| **插件（Plugin）** | 函数 / 对象 / 类三种形态，`apply(ctx)` 描述贡献 |
-| **上下文（Context）** | 一切操作的入口，派生出子上下文形成插件树 |
-| **fiber** | 插件实例的生命周期句柄：`PENDING → LOADING → ACTIVE → UNLOADING → DISPOSED` |
-| **effect** | 可逆副作用，返回 disposer，卸载时自动回滚 |
-| **Service** | 挂在 `ctx` 上的命名能力，可随时出现或消失 |
-| **inject** | 声明依赖，未就绪则保持 PENDING |
-| **isolate** | 让作用域内某项服务解析到独立实例 |
-| **intercept** | 给依赖访问附加元数据，约束使用方式 |
-| **事件模式** | `emit` / `parallel` / `serial` / `bail` / `waterfall` |
-| **waterfall** | 环绕中间件，不调 `next()` 即否决短路 |
-| **Schema** | 声明式配置校验，调用 `apply` 前完成 |
-| **Bundle** | npm 包形态的插件组合，声明 `dsh.bundle.patch` |
-| **Profile** | 可叠加的配置层：`$DSH_HOME/profiles/<名字>` |
-| **seam** | Definition / Provider / Consumer 三层分离的可替换能力接缝 |
+| 概念               | 一句话                                                             |
+|------------------|-----------------------------------------------------------------|
+| **插件（Plugin）**   | 函数 / 对象 / 类三种形态，`apply(ctx)` 描述贡献                               |
+| **上下文（Context）** | 一切操作的入口，派生出子上下文形成插件树                                            |
+| **fiber**        | 插件实例的生命周期句柄：`PENDING → LOADING → ACTIVE → UNLOADING → DISPOSED` |
+| **effect**       | 可逆副作用，返回 disposer，卸载时自动回滚                                       |
+| **Service**      | 挂在 `ctx` 上的命名能力，可随时出现或消失                                        |
+| **inject**       | 声明依赖，未就绪则保持 PENDING                                             |
+| **isolate**      | 让作用域内某项服务解析到独立实例                                                |
+| **intercept**    | 给依赖访问附加元数据，约束使用方式                                               |
+| **事件模式**         | `emit` / `parallel` / `serial` / `bail` / `waterfall`           |
+| **waterfall**    | 环绕中间件，不调 `next()` 即否决短路                                         |
+| **Schema**       | 声明式配置校验，调用 `apply` 前完成                                          |
+| **Bundle**       | npm 包形态的插件组合，声明 `dsh.bundle.patch`                              |
+| **Profile**      | 可叠加的配置层：`$DSH_HOME/profiles/<名字>`                               |
+| **seam**         | Definition / Provider / Consumer 三层分离的可替换能力接缝                   |
 
+---
 
-## 参考文章
+## 参考资料
 
-> 本文基于以下资料整理与扩展，并结合源码进行二次分析。
-
-| # | 标题 | 来源 | 链接 |
-| --- | --- | --- | --- |
-| 1 | DeepSeek Harness 背后的"心脏"：Cordis 到底是什么 | 微信公众号 | [mp.weixin.qq.com](https://mp.weixin.qq.com/s/3vtCkp6EbA5MhRERD6f17A) |
+- DeepSeek Harness 背后的"心脏"：Cordis 到底是什么（微信公众号）：<https://mp.weixin.qq.com/s/3vtCkp6EbA5MhRERD6f17A>
+- DeepSeek Harness 源码仓库：<https://github.com/deepseek-ai/deepseek-harness>
+- Cordis 插件化框架（Harness 的底座，源自 Koishi 生态）：<https://github.com/cordisjs/cordis>
+- Koishi 聊天机器人框架（Cordis 的来源项目）：<https://koishi.chat/>
+- 论文《A Programming Paradigm for Spatiotemporal Composability》（以 Cordis 为研究对象的形式化论文）
+- awesome-dsh-plugin（社区维护的 DSH 插件精选列表，可在 GitHub 搜 `dsh-plugin` 话题找到）
