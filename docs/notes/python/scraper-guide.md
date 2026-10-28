@@ -10,8 +10,6 @@ tags:
 
 # Python 网络爬虫完全指南
 
-> **最后更新**: 2026-05-11
-
 ---
 
 ## 一、爬虫基础
@@ -27,12 +25,12 @@ tags:
 
 ### 1.2 技术选型
 
-| 场景 | 推荐方案 | 理由 |
-|------|---------|------|
-| 静态页面 | requests + BeautifulSoup | 简单快速，资源消耗低 |
-| 动态渲染页面 | Playwright / Selenium | 需要 JS 执行环境 |
-| 大规模爬取 | Scrapy | 内置调度、去重、持久化 |
-| API 爬取 | httpx / aiohttp | 直接请求 JSON，效率最高 |
+| 场景     | 推荐方案                     | 理由             |
+|--------|--------------------------|----------------|
+| 静态页面   | requests + BeautifulSoup | 简单快速，资源消耗低     |
+| 动态渲染页面 | Playwright / Selenium    | 需要 JS 执行环境     |
+| 大规模爬取  | Scrapy                   | 内置调度、去重、持久化    |
+| API 爬取 | httpx / aiohttp          | 直接请求 JSON，效率最高 |
 
 ### 1.3 合规与伦理
 
@@ -63,25 +61,25 @@ import requests
 # GET 请求
 response = requests.get(
     "https://httpbin.org/get",
-    params={"key": "value"},       # 查询参数
+    params={"key": "value"},  # 查询参数
     headers={"User-Agent": "MyBot/1.0"},
-    timeout=10,                     # 超时秒数
+    timeout=10,  # 超时秒数
 )
 
 # 检查状态
 response.raise_for_status()  # 4xx/5xx 抛异常
 
 # 响应内容
-response.text          # 字符串
-response.json()        # 解析 JSON
-response.content       # 字节
-response.status_code   # 状态码
-response.headers       # 响应头
+response.text  # 字符串
+response.json()  # 解析 JSON
+response.content  # 字节
+response.status_code  # 状态码
+response.headers  # 响应头
 
 # POST 请求
 response = requests.post(
     "https://httpbin.org/post",
-    json={"key": "value"},         # JSON body
+    json={"key": "value"},  # JSON body
     # 或 data={"key": "value"},    # 表单数据
 )
 
@@ -102,11 +100,13 @@ import httpx
 # 同步使用（与 requests 几乎相同）
 response = httpx.get("https://httpbin.org/get")
 
+
 # 异步使用
 async def fetch_async():
     async with httpx.AsyncClient() as client:
         response = await client.get("https://httpbin.org/get")
         return response.json()
+
 
 # HTTP/2 支持
 async with httpx.AsyncClient(http2=True) as client:
@@ -119,6 +119,7 @@ async with httpx.AsyncClient(http2=True) as client:
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+
 
 def create_session(retries=3, backoff=1) -> requests.Session:
     """创建带重试策略的 Session"""
@@ -133,6 +134,7 @@ def create_session(retries=3, backoff=1) -> requests.Session:
     session.mount("https://", adapter)
     session.mount("http://", adapter)
     return session
+
 
 session = create_session()
 try:
@@ -175,22 +177,22 @@ html = """
 soup = BeautifulSoup(html, "html.parser")
 
 # 选择元素
-soup.title.string              # "Test Page"
-soup.find("h1")                # 第一个 h1
-soup.find("h1", id="title")    # 带 id 的 h1
+soup.title.string  # "Test Page"
+soup.find("h1")  # 第一个 h1
+soup.find("h1", id="title")  # 带 id 的 h1
 soup.find_all("li", class_="item")  # 所有匹配的 li 列表
-soup.select(".item.active")    # CSS 选择器
+soup.select(".item.active")  # CSS 选择器
 soup.select_one("div.content > h1")  # CSS 选择器（第一个）
 
 # 获取属性和文本
 item = soup.find("li")
-item.text.strip()              # "Item 1"
-item["class"]                  # ["item", "active"]
-item.get("class", [])          # 安全获取属性
+item.text.strip()  # "Item 1"
+item["class"]  # ["item", "active"]
+item.get("class", [])  # 安全获取属性
 
 a_tag = soup.find("a")
-a_tag["href"]                  # "/next"
-a_tag["data-type"]             # "link"
+a_tag["href"]  # "/next"
+a_tag["data-type"]  # "link"
 
 # 遍历
 for li in soup.select("li.item"):
@@ -199,11 +201,11 @@ for li in soup.select("li.item"):
 
 **解析器选择**：
 
-| 解析器 | 传入参数 | 优势 | 劣势 |
-|--------|---------|------|------|
-| Python 内置 | `"html.parser"` | 无需安装 | 容错性一般 |
-| lxml | `"lxml"` | 最快，容错强 | 需安装 C 扩展 |
-| html5lib | `"html5lib"` | 最容错 | 最慢 |
+| 解析器       | 传入参数            | 优势     | 劣势       |
+|-----------|-----------------|--------|----------|
+| Python 内置 | `"html.parser"` | 无需安装   | 容错性一般    |
+| lxml      | `"lxml"`        | 最快，容错强 | 需安装 C 扩展 |
+| html5lib  | `"html5lib"`    | 最容错    | 最慢       |
 
 > **推荐**：生产环境用 `"lxml"`，无依赖场景用 `"html.parser"`。
 
@@ -215,11 +217,11 @@ from lxml import html
 tree = html.fromstring(html_content)
 
 # XPath 语法
-tree.xpath("//h1/text()")                    # 所有 h1 的文本
-tree.xpath("//li[@class='item']/text()")     # 带 class 的 li 文本
-tree.xpath("//a/@href")                      # 所有 a 的 href 属性
-tree.xpath("//div[@class='content']//li[1]") # content 下第一个 li
-tree.xpath("count(//li)")                    # li 的数量
+tree.xpath("//h1/text()")  # 所有 h1 的文本
+tree.xpath("//li[@class='item']/text()")  # 带 class 的 li 文本
+tree.xpath("//a/@href")  # 所有 a 的 href 属性
+tree.xpath("//div[@class='content']//li[1]")  # content 下第一个 li
+tree.xpath("count(//li)")  # li 的数量
 ```
 
 ---
@@ -266,6 +268,7 @@ with sync_playwright() as p:
 import asyncio
 from playwright.async_api import async_playwright
 
+
 async def scrape():
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
@@ -310,14 +313,14 @@ with sync_playwright() as p:
 
 ### 5.1 常见反爬手段与应对
 
-| 反爬手段 | 检测方式 | 应对策略 |
-|---------|---------|---------|
-| User-Agent 检测 | 请求头无/异常 UA | 设置真实浏览器 UA |
-| IP 频率限制 | 同 IP 高频请求 | 请求间隔 + 代理池 |
-| Cookie/登录验证 | 需要登录态 | Session 保持 / Playwright 模拟登录 |
-| JS 加密参数 | 请求含动态签名 | 逆向 JS 或使用 Playwright |
-| 验证码 | 检测到异常弹出验证码 | OCR 识别 / 手动处理 / 降低频率 |
-| 字体反爬 | CSS 字体映射替换文字 | 解析字体文件还原映射 |
+| 反爬手段          | 检测方式         | 应对策略                         |
+|---------------|--------------|------------------------------|
+| User-Agent 检测 | 请求头无/异常 UA   | 设置真实浏览器 UA                   |
+| IP 频率限制       | 同 IP 高频请求    | 请求间隔 + 代理池                   |
+| Cookie/登录验证   | 需要登录态        | Session 保持 / Playwright 模拟登录 |
+| JS 加密参数       | 请求含动态签名      | 逆向 JS 或使用 Playwright         |
+| 验证码           | 检测到异常弹出验证码   | OCR 识别 / 手动处理 / 降低频率         |
+| 字体反爬          | CSS 字体映射替换文字 | 解析字体文件还原映射                   |
 
 ### 5.2 代理池
 
@@ -330,6 +333,7 @@ proxies = [
     "http://proxy2:8080",
     "http://proxy3:8080",
 ]
+
 
 def request_with_proxy(url, max_retries=3):
     for attempt in range(max_retries):
@@ -356,6 +360,7 @@ def request_with_proxy(url, max_retries=3):
 ```python
 import time
 import random
+
 
 def polite_request(url, min_delay=1.0, max_delay=3.0):
     """带随机延迟的请求，模拟人类行为"""
@@ -468,6 +473,7 @@ myproject/
 ```python
 import scrapy
 
+
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = ["https://quotes.toscrape.com/"]
@@ -540,6 +546,7 @@ import random
 
 BASE_URL = "https://quotes.toscrape.com"
 
+
 def scrape_all_quotes(max_pages=None):
     """爬取所有页面的名言"""
     all_quotes = []
@@ -580,11 +587,13 @@ def scrape_all_quotes(max_pages=None):
 
     return all_quotes
 
+
 def save_to_csv(quotes, filename="quotes.csv"):
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["text", "author", "tags"])
         writer.writeheader()
         writer.writerows(quotes)
+
 
 if __name__ == "__main__":
     quotes = scrape_all_quotes()
@@ -596,13 +605,13 @@ if __name__ == "__main__":
 
 ## 九、调试技巧
 
-| 问题 | 排查方法 |
-|------|---------|
-| 返回空数据 | 浏览器 F12 对比 Network 请求，检查是否需要 Cookie/Header |
-| 403 Forbidden | 检查 User-Agent、Referer、Cookie |
-| 数据加载慢 | 使用 Playwright `wait_for_selector` 而非固定 sleep |
-| 编码乱码 | 检查 `response.encoding`，可能需要设为 `response.apparent_encoding` |
-| SSL 错误 | `verify=False`（不推荐生产环境）或更新证书 |
+| 问题            | 排查方法                                                       |
+|---------------|------------------------------------------------------------|
+| 返回空数据         | 浏览器 F12 对比 Network 请求，检查是否需要 Cookie/Header                 |
+| 403 Forbidden | 检查 User-Agent、Referer、Cookie                               |
+| 数据加载慢         | 使用 Playwright `wait_for_selector` 而非固定 sleep               |
+| 编码乱码          | 检查 `response.encoding`，可能需要设为 `response.apparent_encoding` |
+| SSL 错误        | `verify=False`（不推荐生产环境）或更新证书                               |
 
 ```python
 # 编码处理
@@ -612,5 +621,3 @@ print(response.text)
 ```
 
 ---
-
-*最后更新: 2026-05-11*

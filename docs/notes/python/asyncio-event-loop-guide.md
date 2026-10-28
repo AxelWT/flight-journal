@@ -26,9 +26,9 @@ tags:
 ```python
 # 事件循环的简化模型
 while True:
-    ready_tasks = check_who_is_ready()   # 检查哪些协程/IO/定时器就绪
+    ready_tasks = check_who_is_ready()  # 检查哪些协程/IO/定时器就绪
     for task in ready_tasks:
-        task.run_until_yield()            # 运行到下一个 await
+        task.run_until_yield()  # 运行到下一个 await
 ```
 
 ---
@@ -40,8 +40,10 @@ while True:
 ```python
 import asyncio
 
+
 async def main():
     print("Hello, asyncio!")
+
 
 asyncio.run(main())  # 创建事件循环 → 运行协程 → 关闭循环
 ```
@@ -55,10 +57,10 @@ asyncio.run(main())  # 创建事件循环 → 运行协程 → 关闭循环
 ### 2.2 底层 API：手动管理循环
 
 ```python
-loop = asyncio.new_event_loop()   # 创建新循环
-asyncio.set_event_loop(loop)      # 设为当前线程的默认循环
-loop.run_until_complete(main())   # 运行直到协程完成
-loop.close()                      # 关闭循环
+loop = asyncio.new_event_loop()  # 创建新循环
+asyncio.set_event_loop(loop)  # 设为当前线程的默认循环
+loop.run_until_complete(main())  # 运行直到协程完成
+loop.close()  # 关闭循环
 ```
 
 **何时需要手动管理**：
@@ -81,7 +83,8 @@ except RuntimeError:
     loop = asyncio.new_event_loop()
 ```
 
-> **注意**：`get_event_loop()` 在 Python 3.12+ 的行为发生了变化——当没有当前事件循环时不再自动创建，而是抛出 `RuntimeError`。推荐使用 `get_running_loop()` 或 `new_event_loop()`。
+> **注意**：`get_event_loop()` 在 Python 3.12+ 的行为发生了变化——当没有当前事件循环时不再自动创建，而是抛出 `RuntimeError`
+> 。推荐使用 `get_running_loop()` 或 `new_event_loop()`。
 
 ---
 
@@ -95,6 +98,7 @@ Task 是对协程的包装，让协程可以被事件循环调度执行。
 async def fetch(url):
     await asyncio.sleep(1)
     return f"Data from {url}"
+
 
 async def main():
     # 方式一：自动调度（推荐）
@@ -110,12 +114,12 @@ async def main():
 
 **`create_task` vs `ensure_future`**：
 
-| 特性 | `create_task` | `ensure_future` |
-|------|--------------|-----------------|
-| 推荐度 | **推荐**（Python 3.7+） | 旧版 API |
-| 输入类型 | 仅接受协程 | 接受协程、Future、Task |
-| 返回类型 | 始终返回 Task | 可能返回原 Future |
-| 调试信息 | 更好的异常追踪 | 较弱 |
+| 特性   | `create_task`       | `ensure_future`  |
+|------|---------------------|------------------|
+| 推荐度  | **推荐**（Python 3.7+） | 旧版 API           |
+| 输入类型 | 仅接受协程               | 接受协程、Future、Task |
+| 返回类型 | 始终返回 Task           | 可能返回原 Future     |
+| 调试信息 | 更好的异常追踪             | 较弱               |
 
 ### 3.2 TaskGroup：结构化并发（Python 3.11+）
 
@@ -177,6 +181,7 @@ loop.call_later(5.0, callback, arg1, arg2)
 
 # 在指定时间点执行
 import time
+
 loop.call_at(loop.time() + 5.0, callback, arg1, arg2)
 ```
 
@@ -187,9 +192,11 @@ loop.call_at(loop.time() + 5.0, callback, arg1, arg2)
 ```python
 import threading
 
+
 def worker(loop):
     # 在子线程中安全地向事件循环提交回调
     asyncio.call_soon_threadsafe(callback, arg1, loop=loop)
+
 
 async def main():
     loop = asyncio.get_running_loop()
@@ -225,10 +232,10 @@ async def main():
 
 **选择线程池还是进程池**：
 
-| 类型 | 适用场景 | 原因 |
-|------|---------|------|
-| ThreadPoolExecutor | I/O 密集型阻塞调用 | GIL 不会成为瓶颈，线程切换开销小 |
-| ProcessPoolExecutor | CPU 密集型计算 | 绕过 GIL，利用多核并行 |
+| 类型                  | 适用场景        | 原因                 |
+|---------------------|-------------|--------------------|
+| ThreadPoolExecutor  | I/O 密集型阻塞调用 | GIL 不会成为瓶颈，线程切换开销小 |
+| ProcessPoolExecutor | CPU 密集型计算   | 绕过 GIL，利用多核并行      |
 
 ---
 
@@ -303,6 +310,7 @@ try:
 except asyncio.TimeoutError:
     print("Operation timed out")
 
+
 # 屏蔽取消（防止超时取消后的清理操作被中断）
 async def robust_operation():
     try:
@@ -351,6 +359,7 @@ async def producer(queue: asyncio.Queue):
         await queue.put(f"item-{i}")
     await queue.put(None)  # 哨兵值，通知消费者结束
 
+
 async def consumer(queue: asyncio.Queue):
     while True:
         item = await queue.get()
@@ -359,6 +368,7 @@ async def consumer(queue: asyncio.Queue):
             break
         await process(item)
         queue.task_done()
+
 
 async def main():
     queue = asyncio.Queue(maxsize=5)
@@ -403,6 +413,7 @@ if sys.platform == 'win32':
 ```python
 # pip install uvloop
 import uvloop
+
 uvloop.install()  # 在 asyncio.run() 之前调用
 
 # uvloop 用 Cython 实现了事件循环，性能比内置循环提升 2-4 倍
@@ -434,18 +445,19 @@ loop.set_debug(True)
 
 ### 8.2 常见错误排查
 
-| 错误 | 原因 | 解决方案 |
-|------|------|---------|
-| `RuntimeError: no running event loop` | 在协程外调用 `create_task` | 确保 `create_task` 在 `async` 函数内 |
-| `RuntimeError: coroutine was never awaited` | 创建了协程但未 await | 使用 `await` 或 `create_task` |
-| `RuntimeWarning: coroutine was never awaited` | 遗漏了 `await` | 检查函数是否是 `async def` |
-| 事件循环卡死 | 在协程中执行了阻塞调用 | 使用 `run_in_executor` |
-| `TimeoutError` | 操作超时 | 增加超时时间或优化操作 |
+| 错误                                            | 原因                   | 解决方案                           |
+|-----------------------------------------------|----------------------|--------------------------------|
+| `RuntimeError: no running event loop`         | 在协程外调用 `create_task` | 确保 `create_task` 在 `async` 函数内 |
+| `RuntimeError: coroutine was never awaited`   | 创建了协程但未 await        | 使用 `await` 或 `create_task`     |
+| `RuntimeWarning: coroutine was never awaited` | 遗漏了 `await`          | 检查函数是否是 `async def`            |
+| 事件循环卡死                                        | 在协程中执行了阻塞调用          | 使用 `run_in_executor`           |
+| `TimeoutError`                                | 操作超时                 | 增加超时时间或优化操作                    |
 
 ### 8.3 实用调试代码
 
 ```python
 import asyncio
+
 
 async def debug_tasks():
     """打印当前所有任务"""
@@ -453,6 +465,7 @@ async def debug_tasks():
     for task in tasks:
         print(f"  {task.get_name()}: {task.get_coro()} "
               f"done={task.done()} cancelled={task.cancelled()}")
+
 
 # 给 Task 命名，方便调试（Python 3.11+）
 task = asyncio.create_task(fetch(url), name="fetch-api-1")
@@ -466,6 +479,7 @@ task = asyncio.create_task(fetch(url), name="fetch-api-1")
 import asyncio
 import aiohttp  # pip install aiohttp
 from typing import Optional
+
 
 class AsyncHTTPClient:
     def __init__(self, max_concurrent: int = 10, timeout: float = 30.0):
@@ -492,6 +506,7 @@ class AsyncHTTPClient:
             tasks = [tg.create_task(self.get(url)) for url in urls]
         return [t.result() for t in tasks]
 
+
 async def main():
     urls = [
         "https://httpbin.org/get",
@@ -504,6 +519,7 @@ async def main():
         for url, result in zip(urls, results):
             print(f"{url}: {len(result)} bytes")
 
+
 asyncio.run(main())
 ```
 
@@ -511,17 +527,17 @@ asyncio.run(main())
 
 ## 十、速查表
 
-| 操作 | 代码 |
-|------|------|
-| 运行协程 | `asyncio.run(main())` |
-| 创建任务 | `asyncio.create_task(coro)` |
-| 并发等待 | `await asyncio.gather(*tasks)` |
-| 超时控制 | `async with asyncio.timeout(5.0):` |
-| 取消任务 | `task.cancel()` |
-| 睡眠 | `await asyncio.sleep(1.0)` |
+| 操作     | 代码                                       |
+|--------|------------------------------------------|
+| 运行协程   | `asyncio.run(main())`                    |
+| 创建任务   | `asyncio.create_task(coro)`              |
+| 并发等待   | `await asyncio.gather(*tasks)`           |
+| 超时控制   | `async with asyncio.timeout(5.0):`       |
+| 取消任务   | `task.cancel()`                          |
+| 睡眠     | `await asyncio.sleep(1.0)`               |
 | 执行阻塞调用 | `await loop.run_in_executor(None, func)` |
-| 信号量限流 | `asyncio.Semaphore(n)` |
-| 当前所有任务 | `asyncio.all_tasks()` |
-| 当前事件循环 | `asyncio.get_running_loop()` |
+| 信号量限流  | `asyncio.Semaphore(n)`                   |
+| 当前所有任务 | `asyncio.all_tasks()`                    |
+| 当前事件循环 | `asyncio.get_running_loop()`             |
 
 ---

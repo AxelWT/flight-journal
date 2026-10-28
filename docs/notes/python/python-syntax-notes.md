@@ -10,8 +10,6 @@ tags:
 
 # Python 语法要点笔记
 
-> **最后更新**: 2026-05-11
-
 ---
 
 ## 一、类型注解
@@ -25,6 +23,7 @@ age: int = 30
 scores: list[float] = [98.5, 87.0]
 mapping: dict[str, int] = {"a": 1, "b": 2}
 
+
 # 函数注解
 def greet(name: str, times: int = 1) -> str:
     return (f"Hello, {name}! " * times).strip()
@@ -35,13 +34,16 @@ def greet(name: str, times: int = 1) -> str:
 ```python
 from typing import Optional, Union, Literal, Callable, TypeVar, Generic
 
+
 # Optional[X] 等价于 X | None（Python 3.10+ 推荐用 X | None）
 def find_user(user_id: int) -> Optional[str]:  # 等价于 str | None
     ...
 
+
 # Union — 多种类型之一（Python 3.10+ 推荐用 X | Y | Z）
 def process(value: Union[str, int]) -> str:  # 等价于 str | int
     ...
+
 
 # Literal — 字面量类型
 Mode = Literal["r", "w", "a", "r+"]
@@ -52,6 +54,7 @@ Handler = Callable[[str, int], bool]  # 接受 (str, int)，返回 bool
 
 # 泛型
 T = TypeVar("T")
+
 
 class Stack(Generic[T]):
     def __init__(self) -> None:
@@ -77,8 +80,10 @@ def process(value: str | int | None) -> str:
         case None:
             return "empty"
 
+
 # TypeAlias（3.10+ 推荐）
 from typing import TypeAlias
+
 UserId: TypeAlias = int
 UserMap: TypeAlias = dict[UserId, str]
 ```
@@ -127,6 +132,7 @@ def handle_command(cmd):
         case _:
             return "Unknown command"
 
+
 # 类型匹配
 def describe(value):
     match value:
@@ -162,6 +168,7 @@ class Countdown:
         self.current -= 1
         return self.current + 1
 
+
 for i in Countdown(3):
     print(i)  # 3, 2, 1
 ```
@@ -174,6 +181,7 @@ def fibonacci(limit):
     while a < limit:
         yield a
         a, b = b, a + b
+
 
 list(fibonacci(10))  # [0, 1, 1, 2, 3, 5, 8]
 ```
@@ -188,13 +196,13 @@ list(fibonacci(10))  # [0, 1, 1, 2, 3, 5, 8]
 
 ```python
 # 列表推导（立即计算，占内存）
-squares_list = [x**2 for x in range(1000000)]
+squares_list = [x ** 2 for x in range(1000000)]
 
 # 生成器表达式（惰性计算，省内存）
-squares_gen = (x**2 for x in range(1000000))
+squares_gen = (x ** 2 for x in range(1000000))
 
 # 生成器表达式可以直接传给聚合函数
-total = sum(x**2 for x in range(100))
+total = sum(x ** 2 for x in range(100))
 ```
 
 ### 3.4 yield from 委托生成器
@@ -207,6 +215,7 @@ def flatten(nested):
             yield from flatten(item)  # 委托给子生成器
         else:
             yield item
+
 
 list(flatten([1, [2, 3], [4, [5, 6]]]))  # [1, 2, 3, 4, 5, 6]
 ```
@@ -221,6 +230,7 @@ list(flatten([1, [2, 3], [4, [5, 6]]]))  # [1, 2, 3, 4, 5, 6]
 import functools
 import time
 
+
 def timer(func):
     @functools.wraps(func)  # 保留原函数的 __name__, __doc__ 等
     def wrapper(*args, **kwargs):
@@ -229,7 +239,9 @@ def timer(func):
         elapsed = time.perf_counter() - start
         print(f"{func.__name__} took {elapsed:.3f}s")
         return result
+
     return wrapper
+
 
 @timer
 def slow_function():
@@ -243,6 +255,7 @@ def slow_function():
 ```python
 def retry(max_attempts=3, delay=1.0):
     """重试装饰器"""
+
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -253,8 +266,11 @@ def retry(max_attempts=3, delay=1.0):
                     if attempt == max_attempts:
                         raise
                     time.sleep(delay)
+
         return wrapper
+
     return decorator
+
 
 @retry(max_attempts=5, delay=2.0)
 def unstable_api_call():
@@ -271,6 +287,7 @@ def add_logging(cls):
             setattr(cls, name, log_calls(method))
     return cls
 
+
 @add_logging
 class MyService:
     def process(self, data):
@@ -279,13 +296,13 @@ class MyService:
 
 ### 4.4 常用内置装饰器
 
-| 装饰器 | 用途 |
-|--------|------|
-| `@staticmethod` | 静态方法，不接收 self/cls |
-| `@classmethod` | 类方法，接收 cls 而非 self |
-| `@property` | 将方法变为属性访问 |
-| `@functools.lru_cache` | 缓存函数结果 |
-| `@functools.wraps` | 保留被装饰函数元信息 |
+| 装饰器                      | 用途                           |
+|--------------------------|------------------------------|
+| `@staticmethod`          | 静态方法，不接收 self/cls            |
+| `@classmethod`           | 类方法，接收 cls 而非 self           |
+| `@property`              | 将方法变为属性访问                    |
+| `@functools.lru_cache`   | 缓存函数结果                       |
+| `@functools.wraps`       | 保留被装饰函数元信息                   |
 | `@dataclasses.dataclass` | 自动生成 `__init__`/`__repr__` 等 |
 
 ---
@@ -296,10 +313,10 @@ class MyService:
 
 ```python
 # 基本形式
-squares = [x**2 for x in range(10)]
+squares = [x ** 2 for x in range(10)]
 
 # 带条件过滤
-even_squares = [x**2 for x in range(10) if x % 2 == 0]
+even_squares = [x ** 2 for x in range(10) if x % 2 == 0]
 
 # 嵌套推导（注意可读性）
 matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -387,9 +404,9 @@ try:
 except ValueError:
     result = fallback()
 else:
-    log_success()        # 只在没有异常时执行
+    log_success()  # 只在没有异常时执行
 finally:
-    cleanup()            # 无论如何都执行
+    cleanup()  # 无论如何都执行
 ```
 
 ### 6.3 自定义异常
@@ -399,12 +416,15 @@ class AppError(Exception):
     """应用基础异常"""
     pass
 
+
 class ValidationError(AppError):
     """数据校验失败"""
+
     def __init__(self, field: str, message: str):
         self.field = field
         self.message = message
         super().__init__(f"{field}: {message}")
+
 
 class NotFoundError(AppError):
     """资源未找到"""
@@ -439,6 +459,7 @@ results = [
 
 # 4. 在正则匹配中
 import re
+
 if match := re.search(pattern, text):
     print(match.group(1))
 ```
@@ -455,17 +476,18 @@ def greet(name, /, greeting="Hello"):
     # name 只能位置传递，greeting 可以关键字传递
     return f"{greeting}, {name}!"
 
-greet("Alice")                    # OK
-greet("Alice", greeting="Hi")    # OK
-greet(name="Alice")              # TypeError
+
+greet("Alice")  # OK
+greet("Alice", greeting="Hi")  # OK
+greet(name="Alice")  # TypeError
 ```
 
 ### 8.2 f-string 调试（Python 3.8+）
 
 ```python
 x = 42
-print(f"{x = }")           # x = 42
-print(f"{x = :08b}")       # x = 00101010
+print(f"{x = }")  # x = 42
+print(f"{x = :08b}")  # x = 00101010
 ```
 
 ### 8.3 类型别名与 Protocol
@@ -473,21 +495,23 @@ print(f"{x = :08b}")       # x = 00101010
 ```python
 from typing import Protocol
 
+
 # Protocol — 结构化子类型（鸭子类型的类型检查版）
 class Closeable(Protocol):
     def close(self) -> None: ...
 
+
 def with_resource(resource: Closeable):
     resource.close()  # 任何有 close() 方法的对象都满足
+
 
 # 不需要显式继承 Closeable
 class MyFile:
     def close(self) -> None:
         ...
 
+
 with_resource(MyFile())  # OK，MyFile 满足 Closeable 协议
 ```
 
 ---
-
-*最后更新: 2026-05-11*

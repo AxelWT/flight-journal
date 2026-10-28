@@ -10,8 +10,6 @@ tags:
 
 # Python 环境变量：作用域与存储
 
-> **最后更新**: 2026-05-11
-
 ---
 
 ## 一、环境变量的本质
@@ -79,13 +77,13 @@ os.environ.pop("MY_VAR", None)
 系统级 < 用户级 < Shell 配置 < 终端会话 < 进程继承 < 代码中设置
 ```
 
-| 层级 | 位置 | 影响范围 | 持久性 |
-|------|------|---------|--------|
-| 系统级 | `/etc/environment`、`/etc/profile` | 所有用户 | 永久 |
-| 用户级 | `~/.bashrc`、`~/.zshrc`、`~/.profile` | 当前用户 | 永久 |
-| 会话级 | `export VAR=value` | 当前终端会话 | 临时 |
-| 进程级 | Python `os.environ["VAR"]` | 当前进程及子进程 | 临时 |
-| .env 文件 | 项目目录 | 加载到的进程 | 持久（文件） |
+| 层级      | 位置                                  | 影响范围     | 持久性    |
+|---------|-------------------------------------|----------|--------|
+| 系统级     | `/etc/environment`、`/etc/profile`   | 所有用户     | 永久     |
+| 用户级     | `~/.bashrc`、`~/.zshrc`、`~/.profile` | 当前用户     | 永久     |
+| 会话级     | `export VAR=value`                  | 当前终端会话   | 临时     |
+| 进程级     | Python `os.environ["VAR"]`          | 当前进程及子进程 | 临时     |
+| .env 文件 | 项目目录                                | 加载到的进程   | 持久（文件） |
 
 ### .env 文件加载
 
@@ -99,11 +97,13 @@ DEBUG=true
 ```python
 # 方式一：python-dotenv
 from dotenv import load_dotenv
+
 load_dotenv()  # 默认加载当前目录的 .env
 db_url = os.environ["DATABASE_URL"]
 
 # 方式二：指定路径
 from dotenv import load_dotenv
+
 load_dotenv("/path/to/.env")
 
 # 方式三：不覆盖已有变量（生产环境已有环境变量时）
@@ -132,10 +132,12 @@ allowed_hosts = os.environ.get("ALLOWED_HOSTS", "").split(",") if os.environ.get
 
 # JSON
 import json
+
 config = json.loads(os.environ.get("CONFIG", "{}"))
 
 # 路径
 from pathlib import Path
+
 data_dir = Path(os.environ.get("DATA_DIR", "/tmp/data"))
 ```
 
@@ -181,6 +183,7 @@ result = subprocess.run(
 # 推荐：Pydantic Settings 集中管理
 from pydantic_settings import BaseSettings
 
+
 class Settings(BaseSettings):
     database_url: str = "postgresql://localhost/dev"
     secret_key: str
@@ -190,9 +193,8 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
+
 settings = Settings()  # 自动从环境变量和 .env 加载并校验类型
 ```
 
 ---
-
-*最后更新: 2026-05-11*

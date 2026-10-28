@@ -12,7 +12,6 @@ tags:
 
 > **适用版本**: Pydantic V2（兼容 V1 迁移提示）
 > **安装**: `pip install pydantic`
-> **最后更新**: 2026-05-11
 
 ---
 
@@ -30,14 +29,16 @@ Pydantic 是 Python 最流行的数据校验库，使用 Python 类型注解来�
 ```python
 from pydantic import BaseModel
 
+
 class User(BaseModel):
     name: str
     age: int
     email: str
 
+
 # 自动类型转换
 user = User(name="Alice", age="25", email="alice@example.com")
-print(user.age)    # 25 (int，从字符串自动转换)
+print(user.age)  # 25 (int，从字符串自动转换)
 print(user.model_dump())  # {'name': 'Alice', 'age': 25, 'email': 'alice@example.com'}
 ```
 
@@ -50,11 +51,13 @@ print(user.model_dump())  # {'name': 'Alice', 'age': 25, 'email': 'alice@example
 ```python
 from pydantic import BaseModel
 
+
 class Item(BaseModel):
     name: str
-    description: str | None = None   # 可选字段，默认 None
+    description: str | None = None  # 可选字段，默认 None
     price: float
-    tax: float = 0.0                 # 带默认值的字段
+    tax: float = 0.0  # 带默认值的字段
+
 
 # 创建实例
 item = Item(name="Widget", price=19.99)
@@ -74,14 +77,14 @@ item2 = Item.model_validate_json('{"name": "Gadget", "price": 29.99}')
 
 ### 2.2 V1 与 V2 API 对照
 
-| V1 (旧) | V2 (新) | 说明 |
-|---------|--------|------|
-| `item.dict()` | `item.model_dump()` | 转字典 |
-| `item.json()` | `item.model_dump_json()` | 转 JSON 字符串 |
-| `Item.parse_obj(d)` | `Item.model_validate(d)` | 从字典创建 |
-| `Item.parse_raw(s)` | `Item.model_validate_json(s)` | 从 JSON 字符串创建 |
-| `Item.schema()` | `Item.model_json_schema()` | 生成 JSON Schema |
-| `class Config` | `model_config` | 模型配置 |
+| V1 (旧)              | V2 (新)                        | 说明             |
+|---------------------|-------------------------------|----------------|
+| `item.dict()`       | `item.model_dump()`           | 转字典            |
+| `item.json()`       | `item.model_dump_json()`      | 转 JSON 字符串     |
+| `Item.parse_obj(d)` | `Item.model_validate(d)`      | 从字典创建          |
+| `Item.parse_raw(s)` | `Item.model_validate_json(s)` | 从 JSON 字符串创建   |
+| `Item.schema()`     | `Item.model_json_schema()`    | 生成 JSON Schema |
+| `class Config`      | `model_config`                | 模型配置           |
 
 ---
 
@@ -95,6 +98,7 @@ from datetime import datetime
 from pathlib import Path
 from uuid import UUID
 
+
 class TypesDemo(BaseModel):
     # 基础类型
     name: str
@@ -103,12 +107,12 @@ class TypesDemo(BaseModel):
     active: bool
 
     # 集合类型
-    tags: list[str]            # 字符串列表
-    scores: dict[str, float]   # 字典
-    unique_ids: set[int]       # 集合
+    tags: list[str]  # 字符串列表
+    scores: dict[str, float]  # 字典
+    unique_ids: set[int]  # 集合
 
     # 可选类型
-    nickname: str | None = None   # Python 3.10+ 写法
+    nickname: str | None = None  # Python 3.10+ 写法
     bio: str | None = None
 
     # 标准库类型
@@ -127,43 +131,45 @@ class TypesDemo(BaseModel):
 ```python
 from pydantic import BaseModel, Field
 
+
 class Product(BaseModel):
     name: str = Field(
-        min_length=1,          # 最小长度
-        max_length=100,        # 最大长度
+        min_length=1,  # 最小长度
+        max_length=100,  # 最大长度
         description="Product name",  # 字段描述（用于生成 JSON Schema）
-        examples=["Widget"],   # 示例值
+        examples=["Widget"],  # 示例值
     )
 
     price: float = Field(
-        gt=0,                  # 大于 0
-        le=10000,              # 小于等于 10000
+        gt=0,  # 大于 0
+        le=10000,  # 小于等于 10000
         description="Price in USD",
     )
 
     quantity: int = Field(
-        default=0,             # 默认值
-        ge=0,                  # 大于等于 0
+        default=0,  # 默认值
+        ge=0,  # 大于等于 0
     )
 ```
 
 **Field 数值约束**：
 
-| 约束 | 含义 | 适用类型 |
-|------|------|---------|
-| `gt` | 大于 | int, float |
-| `ge` | 大于等于 | int, float |
-| `lt` | 小于 | int, float |
-| `le` | 小于等于 | int, float |
-| `multiple_of` | 是某数的倍数 | int, float |
-| `min_length` | 最小长度 | str, list, set |
-| `max_length` | 最大长度 | str, list, set |
-| `pattern` | 正则匹配 | str |
+| 约束            | 含义     | 适用类型           |
+|---------------|--------|----------------|
+| `gt`          | 大于     | int, float     |
+| `ge`          | 大于等于   | int, float     |
+| `lt`          | 小于     | int, float     |
+| `le`          | 小于等于   | int, float     |
+| `multiple_of` | 是某数的倍数 | int, float     |
+| `min_length`  | 最小长度   | str, list, set |
+| `max_length`  | 最大长度   | str, list, set |
+| `pattern`     | 正则匹配   | str            |
 
 ### 3.3 自定义校验器
 
 ```python
 from pydantic import BaseModel, field_validator, model_validator
+
 
 class User(BaseModel):
     name: str
@@ -196,11 +202,11 @@ class User(BaseModel):
 
 **校验器类型**：
 
-| 装饰器 | 触发时机 | 用途 |
-|--------|---------|------|
-| `@field_validator` | 单个字段赋值后 | 校验/转换单个字段 |
-| `@model_validator(mode="before")` | 所有字段赋值前 | 预处理原始输入 |
-| `@model_validator(mode="after")` | 所有字段赋值后 | 跨字段校验 |
+| 装饰器                               | 触发时机    | 用途        |
+|-----------------------------------|---------|-----------|
+| `@field_validator`                | 单个字段赋值后 | 校验/转换单个字段 |
+| `@model_validator(mode="before")` | 所有字段赋值前 | 预处理原始输入   |
+| `@model_validator(mode="after")`  | 所有字段赋值后 | 跨字段校验     |
 
 ### 3.4 Annotated 写法（推荐）
 
@@ -211,9 +217,10 @@ from typing import Annotated
 from pydantic import BaseModel, Field, UrlConstraints
 from pydantic import HttpUrl
 
+
 class Article(BaseModel):
     title: Annotated[str, Field(min_length=1, max_length=200)]
-    url: HttpUrl                          # 自动校验 URL 格式
+    url: HttpUrl  # 自动校验 URL 格式
     views: Annotated[int, Field(ge=0)] = 0
 ```
 
@@ -229,11 +236,13 @@ class Address(BaseModel):
     city: str
     country: str = "China"
 
+
 class Company(BaseModel):
     name: str
-    address: Address    # 嵌套模型
+    address: Address  # 嵌套模型
 
     employees: list[Address] = []  # 嵌套模型列表
+
 
 company = Company(
     name="Tech Corp",
@@ -250,6 +259,7 @@ class Comment(BaseModel):
     user: str
     content: str
     replies: list["Comment"] = []  # 前向引用
+
 
 # 更新模型前向引用（Pydantic V2 通常不需要，自动处理）
 Comment.model_rebuild()
@@ -272,14 +282,15 @@ comment = Comment(
 ```python
 from pydantic import BaseModel, ConfigDict
 
+
 class User(BaseModel):
     model_config = ConfigDict(
-        str_strip_whitespace=True,    # 自动去除字符串首尾空格
-        str_min_length=1,             # 字符串最小长度
-        frozen=True,                  # 不可变模型（类似 dataclass(frozen=True)）
-        extra="forbid",               # 禁止传入未定义的字段
-        populate_by_name=True,        # 允许通过字段名赋值（配合 alias）
-        from_attributes=True,         # 允许从 ORM 对象创建（原 orm_mode）
+        str_strip_whitespace=True,  # 自动去除字符串首尾空格
+        str_min_length=1,  # 字符串最小长度
+        frozen=True,  # 不可变模型（类似 dataclass(frozen=True)）
+        extra="forbid",  # 禁止传入未定义的字段
+        populate_by_name=True,  # 允许通过字段名赋值（配合 alias）
+        from_attributes=True,  # 允许从 ORM 对象创建（原 orm_mode）
     )
 
     name: str
@@ -288,22 +299,24 @@ class User(BaseModel):
 
 **extra 选项**：
 
-| 值 | 行为 |
-|----|------|
-| `"ignore"` | 忽略多余字段（默认） |
-| `"forbid"` | 抛出 ValidationError |
-| `"allow"` | 保留多余字段到 `__pydantic_extra__` |
+| 值          | 行为                           |
+|------------|------------------------------|
+| `"ignore"` | 忽略多余字段（默认）                   |
+| `"forbid"` | 抛出 ValidationError           |
+| `"allow"`  | 保留多余字段到 `__pydantic_extra__` |
 
 ### 5.2 字段别名
 
 ```python
 from pydantic import BaseModel, Field
 
+
 class APIResponse(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
-    user_name: str = Field(alias="userName")    # API 返回驼峰命名
+    user_name: str = Field(alias="userName")  # API 返回驼峰命名
     created_at: str = Field(alias="createdAt")
+
 
 # 使用别名创建（对应 API 响应）
 resp = APIResponse(userName="Alice", createdAt="2024-01-01")
@@ -332,6 +345,7 @@ class User(BaseModel):
         json_schema_extra={"example": {"name": "Alice", "email": "a@b.com"}}
     )
 
+
 user = User(name="Alice", email="a@b.com", password_hash="xyz", internal_id=1)
 
 # 排除字段
@@ -355,6 +369,7 @@ user.model_dump(exclude_defaults=True)
 from pydantic import BaseModel, field_serializer
 from datetime import datetime
 
+
 class Event(BaseModel):
     name: str
     timestamp: datetime
@@ -363,6 +378,7 @@ class Event(BaseModel):
     @classmethod
     def serialize_timestamp(cls, v: datetime) -> str:
         return v.isoformat()  # 自定义日期格式
+
 
 event = Event(name="Launch", timestamp=datetime.now())
 event.model_dump()  # {'name': 'Launch', 'timestamp': '2024-01-01T12:00:00'}
@@ -379,9 +395,11 @@ class BaseUser(BaseModel):
     name: str
     email: str
 
+
 class Admin(BaseUser):
     role: str = "admin"
     permissions: list[str] = []
+
 
 # Admin 继承了 BaseUser 的所有字段
 admin = Admin(name="Boss", email="boss@example.com", permissions=["read", "write", "delete"])
@@ -394,8 +412,8 @@ from pydantic import create_model
 
 DynamicUser = create_model(
     "DynamicUser",
-    name=(str, ...),          # (类型, 默认值)，... 表示必填
-    age=(int, 18),            # 带默认值
+    name=(str, ...),  # (类型, 默认值)，... 表示必填
+    age=(int, 18),  # 带默认值
 )
 
 user = DynamicUser(name="Alice")  # age 默认 18
@@ -408,14 +426,16 @@ user = DynamicUser(name="Alice")  # age 默认 18
 ```python
 from pydantic import BaseModel, ValidationError
 
+
 class Item(BaseModel):
     name: str
     price: float = Field(gt=0)
 
+
 try:
     Item(name="", price=-10)
 except ValidationError as e:
-    print(e.error_count())    # 错误数量
+    print(e.error_count())  # 错误数量
     for error in e.errors():
         print(f"  字段: {'.'.join(str(x) for x in error['loc'])}")
         print(f"  类型: {error['type']}")
@@ -445,12 +465,13 @@ pip install pydantic-settings
 ```python
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class AppSettings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
-        env_prefix="APP_",        # 环境变量前缀：APP_DATABASE_URL
-        case_sensitive=False,     # 环境变量名不区分大小写
+        env_prefix="APP_",  # 环境变量前缀：APP_DATABASE_URL
+        case_sensitive=False,  # 环境变量名不区分大小写
     )
 
     database_url: str = "postgresql://localhost/dev"
@@ -459,16 +480,17 @@ class AppSettings(BaseSettings):
     port: int = 8080
     allowed_hosts: list[str] = ["*"]
 
+
 # 自动从环境变量加载，类型校验和转换
 settings = AppSettings()
 ```
 
 **环境变量映射规则**：
 
-| 字段 | 环境变量（无前缀） | 环境变量（有前缀 APP_） |
-|------|-------------------|----------------------|
-| `database_url` | `DATABASE_URL` | `APP_DATABASE_URL` |
-| `secret_key` | `SECRET_KEY` | `APP_SECRET_KEY` |
+| 字段              | 环境变量（无前缀）       | 环境变量（有前缀 APP_）      |
+|-----------------|-----------------|---------------------|
+| `database_url`  | `DATABASE_URL`  | `APP_DATABASE_URL`  |
+| `secret_key`    | `SECRET_KEY`    | `APP_SECRET_KEY`    |
 | `allowed_hosts` | `ALLOWED_HOSTS` | `APP_ALLOWED_HOSTS` |
 
 列表类型的环境变量用逗号分隔：`APP_ALLOWED_HOSTS=localhost,127.0.0.1`
@@ -479,11 +501,11 @@ settings = AppSettings()
 
 Pydantic V2 的核心用 Rust 编写，性能比 V1 提升了 5-50 倍。
 
-| 操作 | V1 | V2 | 提升 |
-|------|----|----|------|
-| 校验 | 基准 | ~17x 快 | 核心操作用 Rust 实现 |
-| 序列化 | 基准 | ~5x 快 | Rust 实现 |
-| JSON Schema | 基准 | ~50x 快 | Rust 实现 |
+| 操作          | V1 | V2     | 提升            |
+|-------------|----|--------|---------------|
+| 校验          | 基准 | ~17x 快 | 核心操作用 Rust 实现 |
+| 序列化         | 基准 | ~5x 快  | Rust 实现       |
+| JSON Schema | 基准 | ~50x 快 | Rust 实现       |
 
 **优化建议**：
 
@@ -500,5 +522,3 @@ result = adapter.validate_python("[1, 2, 3]")  # [1, 2, 3]
 ```
 
 ---
-
-*适用版本: Pydantic V2 | 安装: pip install pydantic pydantic-settings | 最后更新: 2026-05-11*

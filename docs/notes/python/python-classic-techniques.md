@@ -9,8 +9,6 @@ tags:
 
 # Python 经典编程技巧
 
-> **最后更新**: 2026-05-11
-
 ---
 
 ## 一、上下文管理器
@@ -35,21 +33,23 @@ class DatabaseConnection:
         self.conn.close()
         return False  # 不吞异常
 
+
 with DatabaseConnection("postgresql://localhost/db") as conn:
     conn.execute("SELECT 1")
 ```
 
 **`__exit__` 返回值的含义**：
 
-| 返回值 | 行为 |
-|--------|------|
-| `False`（默认） | 异常正常传播 |
-| `True` | 吞掉异常，`with` 外部看不到异常 |
+| 返回值         | 行为                  |
+|-------------|---------------------|
+| `False`（默认） | 异常正常传播              |
+| `True`      | 吞掉异常，`with` 外部看不到异常 |
 
 ### 1.2 contextlib 实现
 
 ```python
 from contextlib import contextmanager
+
 
 @contextmanager
 def db_connection(url):
@@ -64,6 +64,7 @@ def db_connection(url):
     finally:
         conn.close()
 
+
 with db_connection("postgresql://localhost/db") as conn:
     conn.execute("SELECT 1")
 ```
@@ -74,6 +75,7 @@ with db_connection("postgresql://localhost/db") as conn:
 import time
 from contextlib import contextmanager
 
+
 @contextmanager
 def timer(label=""):
     """计时器"""
@@ -81,6 +83,7 @@ def timer(label=""):
     yield
     elapsed = time.perf_counter() - start
     print(f"[{label}] elapsed: {elapsed:.3f}s")
+
 
 @contextmanager
 def temp_directory():
@@ -91,6 +94,7 @@ def temp_directory():
         yield dirpath
     finally:
         shutil.rmtree(dirpath, ignore_errors=True)
+
 
 @contextmanager
 def change_dir(path):
@@ -125,6 +129,7 @@ class Descriptor:
     def __set__(self, obj, value):
         setattr(obj, self.name, value)
 
+
 class MyClass:
     attr = Descriptor()  # 使用描述符
 ```
@@ -153,13 +158,15 @@ class TypedField:
             )
         setattr(obj, self.name, value)
 
+
 class Person:
     name = TypedField(str)
     age = TypedField(int, default=0)
 
+
 p = Person()
-p.name = "Alice"   # OK
-p.name = 123       # TypeError: name expected str, got int
+p.name = "Alice"  # OK
+p.name = 123  # TypeError: name expected str, got int
 ```
 
 ### 2.3 实用描述符：懒加载
@@ -167,6 +174,7 @@ p.name = 123       # TypeError: name expected str, got int
 ```python
 class LazyProperty:
     """属性只计算一次，之后缓存结果"""
+
     def __init__(self, func):
         self.func = func
         self.name = func.__name__
@@ -178,18 +186,21 @@ class LazyProperty:
         setattr(obj, self.name, value)  # 替换为实例属性，下次直接访问
         return value
 
+
 class DataLoader:
     @LazyProperty
     def data(self):
         print("Loading data...")
         return expensive_computation()
 
+
 loader = DataLoader()
 print(loader.data)  # Loading data... (第一次计算)
 print(loader.data)  # 直接返回缓存，不再计算
 ```
 
-> **注意**：`LazyProperty` 本质上是 `functools.cached_property` 的简化版。生产环境建议直接用 `@functools.cached_property`（Python 3.8+）。
+> **注意**：`LazyProperty` 本质上是 `functools.cached_property` 的简化版。生产环境建议直接用 `@functools.cached_property`
+> （Python 3.8+）。
 
 ---
 
@@ -209,9 +220,11 @@ class SingletonMeta(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 
+
 class Database(metaclass=SingletonMeta):
     def __init__(self):
         print("Creating database connection")
+
 
 db1 = Database()  # Creating database connection
 db2 = Database()  # 不再创建，返回同一实例
@@ -231,18 +244,23 @@ class PluginRegistry(type):
             mcs.registry[name] = cls
         return cls
 
+
 class BasePlugin(metaclass=PluginRegistry):
     """所有插件的基类"""
+
     def process(self, data):
         raise NotImplementedError
+
 
 class ImagePlugin(BasePlugin):
     def process(self, data):
         return f"Processing image: {data}"
 
+
 class VideoPlugin(BasePlugin):
     def process(self, data):
         return f"Processing video: {data}"
+
 
 print(PluginRegistry.registry)  # {'ImagePlugin': <class ...>, 'VideoPlugin': <class ...>}
 ```
@@ -251,12 +269,12 @@ print(PluginRegistry.registry)  # {'ImagePlugin': <class ...>, 'VideoPlugin': <c
 
 "如果你不确定是否需要元类，那你不需要。"
 
-| 场景 | 推荐方案 |
-|------|---------|
-| 简单单例 | 模块级变量或装饰器 |
-| 类属性校验 | `__init_subclass__` |
-| 自动注册 | 装饰器 + 字典 |
-| 复杂的类创建控制 | 元类 |
+| 场景       | 推荐方案                |
+|----------|---------------------|
+| 简单单例     | 模块级变量或装饰器           |
+| 类属性校验    | `__init_subclass__` |
+| 自动注册     | 装饰器 + 字典            |
+| 复杂的类创建控制 | 元类                  |
 
 ---
 
@@ -267,6 +285,7 @@ Python 3.6+ 提供了更简洁的方式来定制子类创建，大多数场景�
 ```python
 class ValidatedModel:
     """自动校验子类的字段定义"""
+
     def __init_subclass__(cls, validate=True, **kwargs):
         super().__init_subclass__(**kwargs)
         if validate:
@@ -278,6 +297,7 @@ class ValidatedModel:
             if not name.startswith("_"):
                 assert hasattr(cls, name), f"{cls.__name__} missing field: {name}"
 
+
 # 不满足校验时抛出 AssertionError
 class User(ValidatedModel):
     name: str
@@ -286,12 +306,12 @@ class User(ValidatedModel):
 
 **与元类对比**：
 
-| 特性 | `__init_subclass__` | 元类 |
-|------|---------------------|------|
-| 学习曲线 | 低 | 高 |
-| 功能范围 | 定制子类创建 | 完全控制类创建 |
-| 多继承兼容性 | 好（协作式调用 `super()`） | 复杂（元类冲突） |
-| 推荐度 | 优先使用 | 复杂场景再用 |
+| 特性     | `__init_subclass__` | 元类       |
+|--------|---------------------|----------|
+| 学习曲线   | 低                   | 高        |
+| 功能范围   | 定制子类创建              | 完全控制类创建  |
+| 多继承兼容性 | 好（协作式调用 `super()`）  | 复杂（元类冲突） |
+| 推荐度    | 优先使用                | 复杂场景再用   |
 
 ---
 
@@ -299,20 +319,20 @@ class User(ValidatedModel):
 
 ### 5.1 对象创建与销毁
 
-| 方法 | 触发时机 |
-|------|---------|
-| `__new__(cls, ...)` | 创建实例（在 `__init__` 之前） |
-| `__init__(self, ...)` | 初始化实例 |
-| `__del__(self)` | 实例被垃圾回收前 |
+| 方法                    | 触发时机                  |
+|-----------------------|-----------------------|
+| `__new__(cls, ...)`   | 创建实例（在 `__init__` 之前） |
+| `__init__(self, ...)` | 初始化实例                 |
+| `__del__(self)`       | 实例被垃圾回收前              |
 
 ### 5.2 表示与格式化
 
-| 方法 | 触发时机 | 示例 |
-|------|---------|------|
-| `__repr__(self)` | `repr()` / 调试 | `User(name='Alice')` |
-| `__str__(self)` | `str()` / `print()` | `Alice` |
-| `__format__(self, spec)` | f-string / `format()` | `f"{user:>20}"` |
-| `__bytes__(self)` | `bytes()` | `b'...'` |
+| 方法                       | 触发时机                  | 示例                   |
+|--------------------------|-----------------------|----------------------|
+| `__repr__(self)`         | `repr()` / 调试         | `User(name='Alice')` |
+| `__str__(self)`          | `str()` / `print()`   | `Alice`              |
+| `__format__(self, spec)` | f-string / `format()` | `f"{user:>20}"`      |
+| `__bytes__(self)`        | `bytes()`             | `b'...'`             |
 
 > **最佳实践**：始终实现 `__repr__`（调试必备），`__str__` 可选。如果只实现一个，实现 `__repr__`。
 
@@ -320,6 +340,7 @@ class User(ValidatedModel):
 
 ```python
 from functools import total_ordering
+
 
 @total_ordering  # 只需定义 __eq__ 和 __lt__，自动生成其他比较方法
 class Version:
@@ -335,15 +356,15 @@ class Version:
 
 ### 5.4 容器与迭代
 
-| 方法 | 触发时机 |
-|------|---------|
-| `__len__(self)` | `len()` |
-| `__getitem__(self, key)` | `obj[key]` |
+| 方法                              | 触发时机               |
+|---------------------------------|--------------------|
+| `__len__(self)`                 | `len()`            |
+| `__getitem__(self, key)`        | `obj[key]`         |
 | `__setitem__(self, key, value)` | `obj[key] = value` |
-| `__delitem__(self, key)` | `del obj[key]` |
-| `__contains__(self, item)` | `item in obj` |
-| `__iter__(self)` | `for x in obj` |
-| `__next__(self)` | 迭代器协议 |
+| `__delitem__(self, key)`        | `del obj[key]`     |
+| `__contains__(self, item)`      | `item in obj`      |
+| `__iter__(self)`                | `for x in obj`     |
+| `__next__(self)`                | 迭代器协议              |
 
 ### 5.5 可调用对象
 
@@ -354,6 +375,7 @@ class Adder:
 
     def __call__(self, x):
         return self.n + x
+
 
 add5 = Adder(5)
 add5(10)  # 15
@@ -366,6 +388,7 @@ add5(10)  # 15
 ```python
 from functools import lru_cache, wraps, partial, singledispatch
 
+
 # 1. lru_cache - 缓存函数结果
 @lru_cache(maxsize=128)
 def fibonacci(n):
@@ -373,37 +396,45 @@ def fibonacci(n):
         return n
     return fibonacci(n - 1) + fibonacci(n - 2)
 
+
 # 2. wraps - 保留被装饰函数的元信息
 def my_decorator(func):
     @wraps(func)  # 保留 __name__, __doc__ 等
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
+
     return wrapper
+
 
 # 3. partial - 偏函数，固定部分参数
 def power(base, exp):
     return base ** exp
 
+
 square = partial(power, exp=2)
 cube = partial(power, exp=3)
 square(4)  # 16
-cube(3)    # 27
+cube(3)  # 27
+
 
 # 4. singledispatch - 单分派泛型函数
 @singledispatch
 def process(data):
     raise TypeError(f"Unsupported type: {type(data)}")
 
+
 @process.register(str)
 def _(data):
     return data.upper()
+
 
 @process.register(list)
 def _(data):
     return [process(item) for item in data]
 
-process("hello")       # "HELLO"
-process(["a", "b"])    # ["A", "B"]
+
+process("hello")  # "HELLO"
+process(["a", "b"])  # ["A", "B"]
 ```
 
 ---
@@ -415,6 +446,7 @@ process(["a", "b"])    # ["A", "B"]
 ```python
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Point:
     x: float
@@ -424,11 +456,13 @@ class Point:
     def distance_to(self, other: "Point") -> float:
         return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
 
+
 @dataclass(frozen=True)  # 不可变（可作为 dict key 或 set 元素）
 class Color:
     r: int
     g: int
     b: int
+
 
 @dataclass
 class Config:
@@ -440,16 +474,14 @@ class Config:
 
 ### 7.2 dataclass vs 普通类 vs NamedTuple
 
-| 特性 | dataclass | 普通类 | NamedTuple |
-|------|-----------|--------|------------|
-| 自动生成 `__init__` | ✅ | ❌ | ✅ |
-| 自动生成 `__repr__` | ✅ | ❌ | ✅ |
-| 可变性 | 默认可变 | 可变 | 不可变 |
-| 继承 | 支持 | 支持 | 不支持 |
-| 添加方法 | 支持 | 支持 | 支持 |
-| 性能 | 中等 | 最快 | 最快（元组底层） |
-| 类型检查 | 声明式 | 手动 | 声明式 |
+| 特性              | dataclass | 普通类 | NamedTuple |
+|-----------------|-----------|-----|------------|
+| 自动生成 `__init__` | ✅         | ❌   | ✅          |
+| 自动生成 `__repr__` | ✅         | ❌   | ✅          |
+| 可变性             | 默认可变      | 可变  | 不可变        |
+| 继承              | 支持        | 支持  | 不支持        |
+| 添加方法            | 支持        | 支持  | 支持         |
+| 性能              | 中等        | 最快  | 最快（元组底层）   |
+| 类型检查            | 声明式       | 手动  | 声明式        |
 
 ---
-
-*最后更新: 2026-05-11*

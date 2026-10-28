@@ -11,7 +11,6 @@ tags:
 # psutil：Python 系统监控指南
 
 > **安装**: `pip install psutil`
-> **最后更新**: 2026-05-11
 
 ---
 
@@ -36,11 +35,11 @@ psutil（Python System and Process Utilities）是一个跨平台库，用于获
 import psutil
 
 # CPU 使用率（百分比，阻塞调用需间隔）
-psutil.cpu_percent(interval=1)        # 1秒采样，返回总体使用率
+psutil.cpu_percent(interval=1)  # 1秒采样，返回总体使用率
 psutil.cpu_percent(interval=0, percpu=True)  # 每个核心的使用率列表
 
 # CPU 逻辑核心数
-psutil.cpu_count()          # 逻辑核心数（含超线程）
+psutil.cpu_count()  # 逻辑核心数（含超线程）
 psutil.cpu_count(logical=False)  # 物理核心数
 
 # CPU 时间统计（自启动以来的累计时间，单位秒）
@@ -62,6 +61,7 @@ psutil.cpu_stats()
 import psutil
 import time
 
+
 def monitor_cpu(interval=1, duration=60):
     """监控 CPU 使用率，输出每个核心的使用情况"""
     end_time = time.time() + duration
@@ -82,29 +82,30 @@ mem = psutil.virtual_memory()
 # svmem(total=17179869184, available=8589934592, percent=50.0,
 #        used=8589934592, free=0, active=... , inactive=..., buffers=..., cached=...)
 
-print(f"总内存: {mem.total / (1024**3):.1f} GB")
-print(f"可用:   {mem.available / (1024**3):.1f} GB")
+print(f"总内存: {mem.total / (1024 ** 3):.1f} GB")
+print(f"可用:   {mem.available / (1024 ** 3):.1f} GB")
 print(f"使用率: {mem.percent}%")
 
 # 交换分区
 swap = psutil.swap_memory()
-print(f"交换总: {swap.total / (1024**3):.1f} GB")
-print(f"交换用: {swap.used / (1024**3):.1f} GB")
+print(f"交换总: {swap.total / (1024 ** 3):.1f} GB")
+print(f"交换用: {swap.used / (1024 ** 3):.1f} GB")
 print(f"交换率: {swap.percent}%")
 ```
 
 **各平台内存字段差异**：
 
-| 字段 | Linux | macOS | Windows |
-|------|-------|-------|---------|
-| `total` | ✅ | ✅ | ✅ |
-| `available` | ✅ | ✅ | ✅ |
-| `used` | ✅ | ✅ | ✅ |
-| `free` | ✅ | ✅ | ✅ |
-| `buffers` | ✅ | ❌ | ❌ |
-| `cached` | ✅ | ✅ | ❌ |
+| 字段          | Linux | macOS | Windows |
+|-------------|-------|-------|---------|
+| `total`     | ✅     | ✅     | ✅       |
+| `available` | ✅     | ✅     | ✅       |
+| `used`      | ✅     | ✅     | ✅       |
+| `free`      | ✅     | ✅     | ✅       |
+| `buffers`   | ✅     | ❌     | ❌       |
+| `cached`    | ✅     | ✅     | ❌       |
 
-> **注意**：`used` 和 `available` 的定义在不同平台上不同。Linux 上 `used = total - available`（更准确）；某些平台 `used = total - free`。判断内存压力应优先看 `available` 和 `percent`。
+> **注意**：`used` 和 `available` 的定义在不同平台上不同。Linux 上 `used = total - available`（更准确）；某些平台
+`used = total - free`。判断内存压力应优先看 `available` 和 `percent`。
 
 ---
 
@@ -118,7 +119,7 @@ psutil.disk_partitions()
 
 # 磁盘使用率
 usage = psutil.disk_usage('/')
-print(f"总: {usage.total / (1024**3):.1f} GB, 使用: {usage.percent}%")
+print(f"总: {usage.total / (1024 ** 3):.1f} GB, 使用: {usage.percent}%")
 
 # 磁盘 I/O 统计（自启动以来的累计）
 io = psutil.disk_io_counters()
@@ -127,7 +128,7 @@ io = psutil.disk_io_counters()
 # 每个磁盘的 I/O
 per_disk = psutil.disk_io_counters(perdisk=True)
 for name, stat in per_disk.items():
-    print(f"{name}: read={stat.read_bytes/1024**2:.1f}MB, write={stat.write_bytes/1024**2:.1f}MB")
+    print(f"{name}: read={stat.read_bytes / 1024 ** 2:.1f}MB, write={stat.write_bytes / 1024 ** 2:.1f}MB")
 ```
 
 ---
@@ -141,8 +142,8 @@ psutil.net_if_addrs()
 
 # 网络 I/O 统计
 net = psutil.net_io_counters()
-print(f"发送: {net.bytes_sent / 1024**2:.1f} MB")
-print(f"接收: {net.bytes_recv / 1024**2:.1f} MB")
+print(f"发送: {net.bytes_sent / 1024 ** 2:.1f} MB")
+print(f"接收: {net.bytes_recv / 1024 ** 2:.1f} MB")
 
 # 每个网卡的 I/O
 per_nic = psutil.net_io_counters(pernic=True)
@@ -183,6 +184,7 @@ for proc in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']
     except (psutil.NoSuchProcess, psutil.AccessDenied):
         pass
 
+
 # 查找特定进程
 def find_process(name: str) -> list[psutil.Process]:
     """按名称查找进程"""
@@ -199,19 +201,19 @@ def find_process(name: str) -> list[psutil.Process]:
 p = psutil.Process(1234)
 
 # 基本信息
-p.pid              # PID
-p.ppid()           # 父进程 PID
-p.name()           # 进程名
-p.exe()            # 可执行文件路径
-p.cmdline()        # 命令行参数列表
-p.cwd()            # 工作目录
-p.status()         # 状态 (running, sleeping, ...)
+p.pid  # PID
+p.ppid()  # 父进程 PID
+p.name()  # 进程名
+p.exe()  # 可执行文件路径
+p.cmdline()  # 命令行参数列表
+p.cwd()  # 工作目录
+p.status()  # 状态 (running, sleeping, ...)
 
 # 资源使用
-p.cpu_percent(interval=0.1)   # CPU 使用率
-p.memory_percent()             # 内存使用百分比
-p.memory_info()                # 内存详情 (rss, vms, ...)
-p.io_counters()                # I/O 统计
+p.cpu_percent(interval=0.1)  # CPU 使用率
+p.memory_percent()  # 内存使用百分比
+p.memory_info()  # 内存详情 (rss, vms, ...)
+p.io_counters()  # I/O 统计
 
 # 网络连接
 p.connections()
@@ -236,11 +238,12 @@ p = psutil.Process(1234)
 p.send_signal(signal.SIGTERM)
 
 # 终止进程
-p.terminate()   # SIGTERM
-p.kill()        # SIGKILL（强制）
+p.terminate()  # SIGTERM
+p.kill()  # SIGKILL（强制）
 
 # 等待进程结束
 p.wait(timeout=5)  # 返回退出码，超时抛出 TimeoutExpired
+
 
 # 优雅终止模式
 def graceful_kill(pid: int, timeout: int = 10):
@@ -263,6 +266,7 @@ def graceful_kill(pid: int, timeout: int = 10):
 ```python
 import psutil
 
+
 def health_check():
     """一键系统健康检查"""
     # CPU
@@ -273,7 +277,7 @@ def health_check():
     # 内存
     mem = psutil.virtual_memory()
     status = "WARNING" if mem.percent > 85 else "OK"
-    print(f"Memory: {mem.percent:.1f}% ({mem.available/1024**3:.1f}GB available) [{status}]")
+    print(f"Memory: {mem.percent:.1f}% ({mem.available / 1024 ** 3:.1f}GB available) [{status}]")
 
     # 磁盘
     for part in psutil.disk_partitions():
@@ -289,6 +293,7 @@ def health_check():
     status = "WARNING" if swap.percent > 50 else "OK"
     print(f"Swap:   {swap.percent:.1f}% [{status}]")
 
+
 health_check()
 ```
 
@@ -296,6 +301,7 @@ health_check()
 
 ```python
 import psutil
+
 
 def top_memory(n=10):
     """按内存使用排序的 Top N 进程"""
@@ -312,6 +318,7 @@ def top_memory(n=10):
     for p in procs[:n]:
         print(f"{p['pid']:>7} {p['memory_percent']:>5.1f}% {p['name']}")
 
+
 top_memory()
 ```
 
@@ -319,14 +326,12 @@ top_memory()
 
 ## 八、注意事项
 
-| 注意点 | 说明 |
-|--------|------|
-| 权限 | 获取其他进程信息可能需要 root/管理员权限，否则抛出 `AccessDenied` |
-| 进程消失 | 进程可能在遍历时已终止，需要捕获 `NoSuchProcess` |
-| 性能 | `process_iter()` 开销较大，不要在高频循环中调用 |
-| 跨平台差异 | 部分字段只在特定平台可用（如 `buffers`/`cached` 仅 Linux） |
-| 阻塞 | `cpu_percent(interval=1)` 会阻塞指定秒数 |
+| 注意点   | 说明                                          |
+|-------|---------------------------------------------|
+| 权限    | 获取其他进程信息可能需要 root/管理员权限，否则抛出 `AccessDenied` |
+| 进程消失  | 进程可能在遍历时已终止，需要捕获 `NoSuchProcess`            |
+| 性能    | `process_iter()` 开销较大，不要在高频循环中调用            |
+| 跨平台差异 | 部分字段只在特定平台可用（如 `buffers`/`cached` 仅 Linux）  |
+| 阻塞    | `cpu_percent(interval=1)` 会阻塞指定秒数           |
 
 ---
-
-*最后更新: 2026-05-11*

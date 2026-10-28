@@ -17,7 +17,8 @@ Throwable
         └── IndexOutOfBoundsException
 ```
 
-**Java 最有特色的一点**:Checked Exception。方法签名要声明 `throws IOException`,调用方**必须** try-catch 或继续往上抛,否则**编译不过**。这是 Java 独有的,Python/C++/Go 都没有。
+**Java 最有特色的一点**:Checked Exception。方法签名要声明 `throws IOException`,调用方**必须** try-catch 或继续往上抛,否则
+**编译不过**。这是 Java 独有的,Python/C++/Go 都没有。
 
 ---
 
@@ -52,20 +53,21 @@ BaseException                          ← 所有异常的根
 
 ### 1. 根类不同
 
-| 对比项            | Java           | Python                              |
-| --------------- | -------------- | ----------------------------------- |
-| 根               | `Throwable`    | `BaseException`                     |
-| 日常用的父类          | `Exception`    | `Exception`                         |
-| 系统级不该 catch 的 | `Error`        | `SystemExit` / `KeyboardInterrupt` |
+| 对比项           | Java        | Python                             |
+|---------------|-------------|------------------------------------|
+| 根             | `Throwable` | `BaseException`                    |
+| 日常用的父类        | `Exception` | `Exception`                        |
+| 系统级不该 catch 的 | `Error`     | `SystemExit` / `KeyboardInterrupt` |
 
-> **注意**:Python 里 `except Exception` 不会捕获 `SystemExit` / `KeyboardInterrupt`(因为它们直接继承 `BaseException`),这是为了防止你 catch 太宽把 Ctrl+C 也吞了。所以**永远 catch `Exception`,不要 catch `BaseException`**。
+> **注意**:Python 里 `except Exception` 不会捕获 `SystemExit` / `KeyboardInterrupt`(因为它们直接继承 `BaseException`)
+> ,这是为了防止你 catch 太宽把 Ctrl+C 也吞了。所以**永远 catch `Exception`,不要 catch `BaseException`**。
 
 ### 2. 有无 Checked Exception
 
-| 对比项       | Java                  | Python   |
-| --------- | --------------------- | -------- |
-| Checked   | ✅ 有,编译器强制             | ❌ 没有     |
-| 签名声明      | `throws IOException`  | 无此语法     |
+| 对比项     | Java                 | Python |
+|---------|----------------------|--------|
+| Checked | 有,编译器强制              | 没有     |
+| 签名声明    | `throws IOException` | 无此语法   |
 
 - **Java 派**认为 checked exception 是好东西,强制处理错误
 - **Python 派**认为它太啰嗦,污染方法签名,而且实际中大家都是 `throws Exception` 一把梭,反而失去意义
@@ -95,8 +97,8 @@ try (BufferedReader br = new ...) { }
 try:
     read_file()
 except IOError as e:
-    # 处理,as e 绑定异常对象
-except (KeyError, ValueError):    # 多类型合并 catch
+# 处理,as e 绑定异常对象
+except (KeyError, ValueError):  # 多类型合并 catch
     pass
 else:
     # 没异常时才执行 (Java 没这个)
@@ -156,7 +158,7 @@ throw new RuntimeException("上层", originalException);
 try:
     db_query()
 except DBError as e:
-    raise ServiceError("查询失败") from e   # 保留原始堆栈
+    raise ServiceError("查询失败") from e  # 保留原始堆栈
 ```
 
 `from e` 把原始异常链上去,traceback 会显示 `The above exception was the direct cause of...`,调试时很有用。
@@ -207,12 +209,12 @@ Java 社区相反,推崇 **LBYL**(Look Before You Leap)先 check。
 
 ## 五、一句话总结
 
-| 维度     | Java                  | Python            |
-| ------ | --------------------- | ----------------- |
-| 强制处理   | 编译期强制                 | 运行时再说             |
-| 签名声明   | 必须                    | 没有                |
-| 风格     | LBYL(先查)              | EAFP(先干)          |
-| 根类     | Throwable             | BaseException     |
-| 资源管理   | try-with-resources    | with 语句           |
+| 维度   | Java               | Python        |
+|------|--------------------|---------------|
+| 强制处理 | 编译期强制              | 运行时再说         |
+| 签名声明 | 必须                 | 没有            |
+| 风格   | LBYL(先查)           | EAFP(先干)      |
+| 根类   | Throwable          | BaseException |
+| 资源管理 | try-with-resources | with 语句       |
 
 **Java 把异常当契约**(调用方必须知道会出什么错),**Python 把异常当事件**(出错了就处理,不强制提前声明)。两种设计哲学,各有优劣。
