@@ -271,10 +271,11 @@ export default defineConfig({
                     items: [
                         {text: '《经济学原理》', link: '/read/invest/《经济学原理》'},
                         {text: '《经济学的思维方式》', link: '/read/invest/《经济学的思维方式》'},
-                        {text: '《聪明的投资者》', link: '/read/invest/《聪明的投资者》'},
-                        {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
                         {text: '《富爸爸穷爸爸》', link: '/read/invest/《富爸爸穷爸爸》'},
+                        {text: '《聪明的投资者》', link: '/read/invest/《聪明的投资者》'},
+                        {text: '《巴菲特致股东的信》', link: '/read/invest/《巴菲特致股东的信》'},
                         {text: '《穷查理宝典》', link: '/read/invest/《穷查理宝典》'},
+                        {text: '《原则：应对变化中的世界秩序》', link: '/read/invest/《原则：应对变化中的世界秩序》'},
                         {text: '《纳瓦尔宝典》', link: '/read/invest/《纳瓦尔宝典》'},
                         {text: '《非对称风险》', link: '/read/invest/《非对称风险》'},
                         {text: '《段永平投资问答录》', link: '/read/invest/《段永平投资问答录》'},
