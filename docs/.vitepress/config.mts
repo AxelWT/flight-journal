@@ -1,12 +1,19 @@
 import {defineConfig, createContentLoader} from 'vitepress'
 import {writeFileSync} from 'node:fs'
 import {resolve} from 'node:path'
+import {lockPlugin} from './lock-plugin.mts'
 
 export default defineConfig({
     lang: 'zh-CN',
     title: 'Flight Journal',
     description: 'Felix的个人博客',
     base: '/flight-journal/',
+    vite: {
+        plugins: [lockPlugin()],
+        preview: {
+            host: '127.0.0.1',
+        },
+    },
     head: [
         ['link', {rel: 'icon', href: '/flight-journal/favicon.svg', type: 'image/svg+xml'}],
         ['link', {rel: 'alternate', type: 'application/rss+xml', title: 'Flight Journal RSS', href: '/flight-journal/feed.xml'}],
@@ -316,6 +323,7 @@ export default defineConfig({
                         {text: '《活出生命的意义》', link: '/read/dialogue/《活出生命的意义》'},
                         {text: '《How to Win Friends and Influence People》', link: '/read/dialogue/《How to Win Friends and Influence People》'},
                         {text: '《好好说话》', link: '/read/dialogue/《好好说话》'},
+                        {text: '职场的本质是利益共同体', link: '/read/dialogue/职场的本质是利益共同体'},
                     ],
                 },
                 {
@@ -359,6 +367,7 @@ export default defineConfig({
 
         const articles = posts
             .filter(p => p.frontmatter.date)
+            .filter(p => !p.frontmatter.lock)
             .sort((a, b) => +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date))
             .slice(0, 20)
 

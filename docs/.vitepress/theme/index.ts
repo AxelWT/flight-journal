@@ -2,8 +2,10 @@ import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
 import { h } from 'vue'
 import HomeHero from './components/HomeHero.vue'
+import Lock from './components/Lock.vue'
 import './style.css'
 import './gate.css'
+import 'virtual:fj-lock.css'
 
 export default {
     extends: DefaultTheme,
@@ -15,5 +17,6 @@ export default {
     },
     enhanceApp({ app }) {
         app.provide('site-data', {})
+        app.component('Lock', Lock)
     },
 } satisfies Theme

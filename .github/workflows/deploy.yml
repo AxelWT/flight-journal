@@ -33,6 +33,8 @@ jobs:
         run: npm ci
       - name: Build with VitePress
         run: npm run docs:build
+        env:
+          ENCRYPT_PASSWORD: ${{ secrets.ENCRYPT_PASSWORD }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
