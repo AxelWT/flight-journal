@@ -1,5 +1,5 @@
 ---
-title: "Python vs Java Web 架构全景对比：从 ASGI 到 Servlet"
+title: "Python vs Java Web 架构对比"
 date: 2026-11-13
 description: ASGI 原理、消息传递机制、与 Java Web 容器（Tomcat/Servlet）的核心对比
 tags:
@@ -9,7 +9,7 @@ tags:
   - Web 架构
 ---
 
-# Python vs Java Web 架构全景对比：从 ASGI 到 Servlet
+# Python vs Java Web 架构对比
 
 > **核心一句话**：ASGI 是 Python 为解决 GIL 并发短板而发明的"服务器-应用异步对话协议"；Java 凭借多线程 + NIO 生态，用
 > Servlet 容器就解决了同样的问题。

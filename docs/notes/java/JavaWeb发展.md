@@ -1,5 +1,5 @@
 ---
-title: "Java Web 技术栈深度解析"
+title: "Java Web 技术：从 Tomcat 线程模型到虚拟线程"
 date: 2026-11-13
 description: Spring Boot 默认架构、WebFlux 适用边界、Tomcat NIO 线程模型与 Java 21 虚拟线程 Pinned 陷阱
 tags:
