@@ -1,6 +1,7 @@
 import {defineConfig, createContentLoader} from 'vitepress'
 import {writeFileSync} from 'node:fs'
 import {resolve} from 'node:path'
+// @ts-ignore
 import {lockPlugin} from './lock-plugin.mts'
 
 export default defineConfig({
@@ -205,6 +206,7 @@ export default defineConfig({
                         {text: '爬虫指南', link: '/notes/python/scraper-guide'},
                         {text: '爬虫模板/干活', link: '/notes/python/scraper-guide-template'},
                         {text: 'Python vs Java 异常体系', link: '/notes/python/python-vs-java-exception'},
+                        {text: 'Python vs Java Web', link: '/notes/python/asgi'},
                     ],
                 },
                 {
@@ -212,6 +214,7 @@ export default defineConfig({
                     collapsed: true,
                     items: [
                         {text: 'Java 服务调优', link: '/notes/java/Java服务调优'},
+                        {text: 'Java Web 发展', link: '/notes/java/JavaWeb发展'},
                         {text: 'JVM 分析工具', link: '/notes/java/JVM分析工具'},
                         {text: 'APM 工具', link: '/notes/java/APM工具'},
                         {text: 'Dubbo 框架', link: '/notes/java/Dubbo框架'},
