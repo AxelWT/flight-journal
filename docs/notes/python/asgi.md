@@ -110,8 +110,8 @@ uvicorn app:application
 
 ### 1.5 什么时候该用 ASGI？
 
-- ✅ **适合**：需要 WebSocket / SSE / 长轮询等实时通信；高并发 I/O 密集型服务；流式响应（大文件、AI 逐字输出等）
-- ❌ **不一定需要**：简单 CRUD API 且不需要长连接（WSGI 够用）；CPU 密集型任务（异步不能提升性能）
+- **适合**：需要 WebSocket / SSE / 长轮询等实时通信；高并发 I/O 密集型服务；流式响应（大文件、AI 逐字输出等）
+- **不一定需要**：简单 CRUD API 且不需要长连接（WSGI 够用）；CPU 密集型任务（异步不能提升性能）
 
 **一句话总结**：ASGI = WSGI 的异步升级版，让 Python Web 应用能够原生处理 WebSocket、长连接和高并发异步 I/O，是现代 Python
 Web 框架的底层基石。
@@ -160,14 +160,14 @@ async def application(scope, receive, send):
 ```text
 客户端                  Uvicorn（服务器）               ASGI 应用
   │                        │                              │
-  │── TCP 连接 + HTTP 报文 ─▶│                              │
+  │──TCP 连接 + HTTP 报文 ─▶│                              │
   │                        │ 解析字节流                    │
   │                        │ 构造 scope                   │
   │                        │ 创建 receive/send 通道        │
-  │                        │── app(scope, receive, send) ─▶│
+  │                        │──app(scope, receive, send) ─▶│
   │                        │                              │ await receive()
   │                        │── {"type":"http.request",    │
-  │                        │     "body": b'{...}'}       │◀─┤
+  │                        │     "body": b'{...}'}        |
   │                        │                              │ 处理业务逻辑
   │                        │◀─ await send({"type":        │
   │                        │     "http.response.start"}) ─│
@@ -315,8 +315,15 @@ Tomcat 的 Acceptor 线程用 NIO 多路复用监听上万连接，业务线程�
 2. **JVM 生态成熟**：Netty、Undertow 等 NIO 框架已把高性能网络 I/O 做到极致
 3. **Servlet 规范已演进**：3.1 加入非阻塞 I/O（`ReadListener` / `WriteListener`），能处理流式场景
 
-**一句话总结**：ASGI 是 Python 为解决自身并发模型短板而发明的"服务器-应用对话协议"；Java 因为有强大的线程模型和 NIO 生态，直接用
-Servlet 容器 + 多线程/NIO 就解决了同样的问题。
+**一句话总结**：ASGI 是 Python 为解决自身并发模型短板而发明的"服务器-应用对话协议"；
+
+【Java 因为有强大的线程模型和 NIO 生态，直接用 Servlet 容器 + 多线程/NIO 就解决了同样的问题。】
+
+【注意 Tomcat 9.0 servlet 4.0 只做到了 NIO 非阻塞 IO 处理请求响应，但是业务线程池中的线程是同步在跑的（实际业务中常用）】
+
+【更精确的：Tomcat 9.0 的 NIO 连接器在 I/O 事件层面是非阻塞的；在默认的同步 Servlet 编程模型下，业务逻辑确实是在 Worker 线程池中同步执行的。
+但如果你在代码中显式启用了 Servlet 异步特性（或使用 Spring WebFlux 等响应式框架），
+业务逻辑的执行就可以从 Worker 线程上脱离，不再以同步方式占用容器线程。（实际业务中基本不会这么用）】
 
 ---
 
